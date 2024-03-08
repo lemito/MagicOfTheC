@@ -7,5 +7,5 @@ cc_library(
 cc_binary(
     name = "vector_bin",
     srcs = ["vector.c"],
-    deps = ["@MagicOfTheC//src/vector:vector_lib"],
+    deps = [":vector_lib"],
 )
