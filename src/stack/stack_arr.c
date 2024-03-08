@@ -52,6 +52,8 @@ int Top(stack *s)
 
 void Destroy(stack *s)
 {
+    s->size = 0;
+    free(s->data);
 }
 
 int main()
@@ -69,7 +71,6 @@ int main()
     {
 
         printf("%d ", Top(&stack));
-        // Top(&stack);
     }
 
     return 0;
