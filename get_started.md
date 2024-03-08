@@ -45,3 +45,7 @@ cc_binary(
     deps = ["@MagicOfTheC//src/vector:vector_lib"],
 )
 ```
+and to your C file
+```c
+#include "vector_lib.h"
+```
