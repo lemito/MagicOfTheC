@@ -1,7 +1,6 @@
 # How run test inside project?
 
 ## For ubuntu
-
 * Install bazel
 ```bash
 sudo apt install apt-transport-https curl gnupg -y
@@ -12,6 +11,17 @@ echo "deb [arch=amd64 signed-by=/usr/share/keyrings/bazel-archive-keyring.gpg] h
 ```bash
 sudo apt update && sudo apt install bazel
 ```
+## For MacOS    
+* Install bazel
+```bash
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+brew install bazel
+```
+## For Windows
+* Install bazel
+For install please see official docs by Bazel [Installing Bazel on Windows ](https://bazel.build/install/windows)
+
+--------
 * Run:
 ```bash
 bazel run //src/queue:queue_arr_bin
