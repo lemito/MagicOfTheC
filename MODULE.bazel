@@ -1,0 +1,2 @@
+""" Dependencies """
+bazel_dep(name = "rules_cc", version = "0.0.9")

@@ -1,0 +1,11 @@
+load("//bazel:c_compile.bzl", "c_compile")
+
+c_compile(
+    name = "vector",
+    src = "vector.c",
+)
+
+cc_binary(
+    name = "vector_bin",
+    srcs = ["vector.c"],
+)
