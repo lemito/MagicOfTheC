@@ -1,26 +1,19 @@
 # How run test inside project?
 
-## For ubuntu
-* Install bazel
-```bash
-sudo apt install apt-transport-https curl gnupg -y
-curl -fsSL https://bazel.build/bazel-release.pub.gpg | gpg --dearmor >bazel-archive-keyring.gpg
-sudo mv bazel-archive-keyring.gpg /usr/share/keyrings
-echo "deb [arch=amd64 signed-by=/usr/share/keyrings/bazel-archive-keyring.gpg] https://storage.googleapis.com/bazel-apt stable jdk1.8" | sudo tee /etc/apt/sources.list.d/bazel.list
-```
-```bash
-sudo apt update && sudo apt install bazel
-```
-## For MacOS    
-* Install bazel
-```bash
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-brew install bazel
-```
-## For Windows
-* Install bazel
-For install please see official docs by Bazel [Installing Bazel on Windows ](https://bazel.build/install/windows)
+## Install bazel
+On macOS: `brew install bazelisk`.
 
+On Windows: `choco install bazelisk`.
+
+Each adds bazelisk to the `PATH` as both `bazelisk` and `bazel`.
+
+On Linux: You can download Bazelisk binary on our [Releases](https://github.com/bazelbuild/bazelisk/releases) page and add it to your `PATH` manually, which also works on macOS and Windows.
+
+Bazelisk is also published to npm.
+Frontend developers may want to install it with `npm install -g @bazel/bazelisk`.
+
+> You will notice that it serves an analogous function for Bazel as the
+> [`nvm` utility](https://github.com/nvm-sh/nvm) which manages your version of Node.js.
 --------
 * Run:
 ```bash
@@ -29,4 +22,16 @@ bazel run //src/queue:queue_arr_bin
 * Build
 ```bash
 bazel build //src/queue:queue_arr_bin
+```
+
+# How to use libraries in your project?
+
+* Add library to your WORKSPACE file
+```py
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+
+http_archive(
+    name = "MagicOfTheC",
+    url = "https://github.com/lemito/MagicOfTheC/archive/refs/heads/main.zip",
+)
 ```
