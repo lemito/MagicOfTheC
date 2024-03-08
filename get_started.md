@@ -32,6 +32,16 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 http_archive(
     name = "MagicOfTheC",
-    url = "https://github.com/lemito/MagicOfTheC/archive/refs/heads/main.zip",
+    urls = ["https://github.com/lemito/MagicOfTheC/archive/refs/tags/release.zip"],
+    strip_prefix = "MagicOfTheC-release",
+)
+```
+
+* Then add deps to your BUILD file
+```
+cc_binary(
+    name = "my_file",
+    srcs = ["my_file.c"],
+    deps = ["@MagicOfTheC//src/vector:vector_lib"],
 )
 ```
