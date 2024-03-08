@@ -71,6 +71,17 @@ void Destroy(queue *q)
     q->size = 0;
 }
 
+void Reverse(queue *q)
+{
+    if (!Empty(q))
+    {
+        int t = Top(q);
+        Pop(q);
+        Reverse(q);
+        Push(q, t);
+    }
+}
+
 int main()
 {
     printf("Hello World!\n");
