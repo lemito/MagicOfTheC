@@ -1,10 +1,3 @@
-load("//bazel:c_compile.bzl", "c_compile")
-
-c_compile(
-    name = "vector",
-    src = "vector.c",
-)
-
 cc_library(
     name = "vector_lib",
     srcs = ["vector_lib.c"],
@@ -14,5 +7,5 @@ cc_library(
 cc_binary(
     name = "vector_bin",
     srcs = ["vector.c"],
-    deps = [":vector_lib"],
+    deps = ["@MagicOfTheC//src/vector:vector_lib"],
 )
