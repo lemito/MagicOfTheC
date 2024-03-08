@@ -1,6 +1,6 @@
 {
   "lockFileVersion": 3,
-  "moduleFileHash": "4f9a588f8e1c6c8fe3fdc32d7b608e10e84143dabdff368ee1f38999b6f1194c",
+  "moduleFileHash": "74cb6d5c2c826bcd3392ccde0d0ae98451131b8332d76bf1f2becbbd2854dd27",
   "flags": {
     "cmdRegistries": [
       "https://bcr.bazel.build/"
@@ -17,10 +17,10 @@
   },
   "moduleDepGraph": {
     "<root>": {
-      "name": "my-module",
+      "name": "magic_of_the_c",
       "version": "1.0",
       "key": "<root>",
-      "repoName": "my-module",
+      "repoName": "magic_of_the_c",
       "executionPlatformsToRegister": [],
       "toolchainsToRegister": [],
       "extensionUsages": [],

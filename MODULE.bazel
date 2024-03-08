@@ -1,5 +1,4 @@
 module(name = "magic_of_the_c", version = "1.0")
 
 """ Dependencies """
-git_override(module_name = "magic_of_the_c", remote = "https://github.com/lemito/MagicOfTheC.git")
 bazel_dep(name = "rules_cc", version = "0.0.9")
