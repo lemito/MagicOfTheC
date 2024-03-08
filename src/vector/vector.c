@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <stdlib.h>
-#include <emscripten/emscripten.h>
 
 typedef struct
 {
@@ -9,23 +8,23 @@ typedef struct
     int size;
 } Vector;
 
-void EMSCRIPTEN_KEEPALIVE Create(Vector *v, int sz)
+void Create(Vector *v, int sz)
 {
     v->size = sz;
     v->data = malloc(v->size * sizeof(int));
 }
 
-bool EMSCRIPTEN_KEEPALIVE Empty(Vector *v)
+bool Empty(Vector *v)
 {
     return v->size == 0;
 }
 
-int EMSCRIPTEN_KEEPALIVE Size(Vector *v)
+int Size(Vector *v)
 {
     return v->size;
 }
 
-int EMSCRIPTEN_KEEPALIVE Load(Vector *v, int i)
+int Load(Vector *v, int i)
 {
     if ((i >= 0) && i < v->size)
     {
@@ -38,7 +37,7 @@ int EMSCRIPTEN_KEEPALIVE Load(Vector *v, int i)
     }
 }
 
-void EMSCRIPTEN_KEEPALIVE Save(Vector *v, int i, int t)
+void Save(Vector *v, int i, int t)
 {
     if ((i >= 0) && i < v->size)
     {
@@ -46,13 +45,13 @@ void EMSCRIPTEN_KEEPALIVE Save(Vector *v, int i, int t)
     }
 }
 
-void EMSCRIPTEN_KEEPALIVE Resize(Vector *v, int sz)
+void Resize(Vector *v, int sz)
 {
     v->size = sz;
     v->data = realloc(v->data, v->size * sizeof(int));
 }
 
-bool EMSCRIPTEN_KEEPALIVE Eq(Vector *l, Vector *r)
+bool Eq(Vector *l, Vector *r)
 {
     if (l->size != r->size)
     {
@@ -68,7 +67,7 @@ bool EMSCRIPTEN_KEEPALIVE Eq(Vector *l, Vector *r)
     return true;
 }
 
-void EMSCRIPTEN_KEEPALIVE Destroy(Vector *v)
+void Destroy(Vector *v)
 {
     v->size = 0;
     free(v);
