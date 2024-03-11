@@ -2,3 +2,5 @@
 *.d
 bazel-*
 
+/cmake-build-debug/
+.idea
