@@ -2,6 +2,8 @@
     "files.associations": {
         "stdbool.h": "c",
         "vector lib.h": "c",
-        "queue_static_lib.h": "c"
+        "queue_static_lib.h": "c",
+        "vector": "cpp",
+        "stdlib.h": "c"
     }
 }

@@ -1,4 +1,5 @@
+"""Module"""
 module(name = "magic_of_the_c", version = "1.0")
 
-""" Dependencies """
 bazel_dep(name = "rules_cc", version = "0.0.9")
+bazel_dep(name = "google_benchmark", version = "1.8.3")
