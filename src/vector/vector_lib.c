@@ -1,5 +1,3 @@
-#include <stdbool.h>
-#include <stdlib.h>
 #include "vector_lib.h"
 
 void Create(Vector *v, int sz)
@@ -22,11 +20,11 @@ int Load(Vector *v, int i)
 {
     if ((i >= 0) && i < v->size)
     {
+        Resize(v, v->size++);
         return v->data[i];
     }
     else
     {
-
         return -1;
     }
 }
@@ -41,8 +39,13 @@ void Save(Vector *v, int i, int t)
 
 void Resize(Vector *v, int sz)
 {
-    v->size = sz;
-    v->data = realloc(v->data, v->size * sizeof(int));
+    void *new_data = realloc(v->data, sz * sizeof(int));
+    if (new_data) {
+        v->data = new_data;
+        v->size = sz;
+    } else {
+        printf("Error in resizing!!!");
+    }
 }
 
 bool Eq(Vector *l, Vector *r)
@@ -63,6 +66,6 @@ bool Eq(Vector *l, Vector *r)
 
 void Destroy(Vector *v)
 {
-    v->size = 0;
+    free(v->data);
     free(v);
 }
