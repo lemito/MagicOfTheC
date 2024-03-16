@@ -1,0 +1,6 @@
+package_group(
+    name = "magicofthec_internal",
+    packages = [
+        "//...",
+    ],
+)

@@ -1,0 +1,346 @@
+#include <stdlib.h>
+#include <stdio.h>
+#include "tree_lib.h"
+
+static int sum = 0;
+
+/**
+ * Печать в определенном уровне
+ * @param root
+ * @param level
+ * @return
+ */
+int print_level(const Tree *root, int level)
+{
+    if (root == NULL)
+        return 0;
+    if (level == 1)
+        return sum++;
+    else if (level > 0)
+    {
+        print_level(root->left, level--);
+        print_level(root->right, level--);
+    }
+    return 0;
+}
+/**
+ * Максимум
+ * @param x
+ * @param y
+ * @return максимальный из двух элементов
+ */
+int max(const int x, const int y)
+{
+    return (x >= y) ? x : y;
+}
+/**
+ * Находит высоту(глубину) графа
+ * @param tree
+ * @return высота(глубина) графа
+ */
+int height(const Tree *tree)
+{
+    if (tree == NULL)
+        return 0;
+    return max(height(tree->left), height(tree->right));
+}
+
+/**
+ * Создает граф с корнем-значением без дочерных элементов
+ * @param value
+ * @return граф с корнем-значением без дочерных элементов
+ */
+Tree *create_root_tree(const int value)
+{
+    Tree *tree = malloc(sizeof(Tree));
+    tree->data = value;
+    tree->left = NULL;
+    tree->right = NULL;
+    tree->parent = NULL;
+    return tree;
+}
+
+/**
+ * Добавить элемент в граф
+ * @param root
+ * @param value
+ * @return Граф с новым элементом
+ */
+Tree *add_element_tree(Tree *root, const int value)
+{
+    if (root == NULL)
+    {
+        printf("Root не обнаружен. Создан новый\n");
+        root = create_root_tree(value);
+    }
+    Tree *newTree = (Tree *)malloc(sizeof(Tree));
+    newTree->data = value;
+    Tree *tree1 = root;
+    Tree *tree2 = NULL;
+
+    while (tree1 != NULL)
+    {
+        tree2 = tree1;
+        if (value < tree1->data)
+        {
+            tree1 = tree1->left;
+        }
+        else if (value > tree1->data)
+        {
+            tree1 = tree1->right;
+        }
+        else
+        {
+            printf("Листик с таким значением уже есть, введите другой \n");
+            return root;
+        }
+    }
+    newTree->parent = tree2;
+    newTree->left = NULL;
+    newTree->right = NULL;
+    if (value < tree2->data)
+    {
+        tree2->left = newTree;
+    } else
+    {
+        tree2->right = newTree;
+    }
+    printf("Done!\n");
+    return root;
+}
+
+/**
+ * Вывод дерева
+ * @param tree
+ * @param n
+ * @todo Исправить последний перенос строки
+ */
+void print_tree(const Tree *tree, int n)
+{
+    if (tree != NULL)
+    {
+        print_tree(tree->right, n++);
+        for (int i = 0; i < n; i++)
+            putchar('\t');
+        printf("%d\n", tree->data);
+        print_tree(tree->left, n++);
+    }
+}
+
+/**
+ * поиск элемента в графе по значению
+ * @param tree
+ * @param value
+ * @return граф, если элемент существует
+ */
+Tree *search_in_tree(Tree *tree, const int value)
+{
+    if (tree == NULL)
+        return NULL;
+    if (tree->data == value)
+        return tree;
+    if (value > tree->data)
+        return search_in_tree(tree->right, value);
+    else
+        return search_in_tree(tree->left, value);
+}
+
+/**
+ * поиск наименьшего элемента в графе
+ * @param tree
+ * @return наибольший элемент в графе
+ */
+const Tree *maxi(Tree *tree)
+{
+    const Tree *cur = tree;
+    while (cur->right != NULL) {
+        cur = cur->right;
+    }
+    return cur;
+}
+
+/**
+ * поиск наименьшего элемента в графе
+ * @param tree
+ * @return наименьший элемент в графе
+ */
+const Tree *mini(Tree *tree)
+{
+    const Tree *cur = tree;
+    while (cur->left != NULL) {
+        cur = cur->left;
+    }
+    return cur;
+}
+
+/**
+ * Подсчёт листочков
+ * @param tree
+ * @return количество листьев
+ */
+int count_leaf(const Tree *tree)
+{
+    int cnt = 0;
+    if (tree->left == NULL && tree->right == NULL)
+    {
+        printf("%d\t", tree->data);
+        return 1;
+    }
+    if (tree->left != NULL && tree->right == NULL)
+    {
+        cnt += count_leaf(tree->left);
+    }
+    if (tree->left == NULL != 0)
+    {
+        cnt += count_leaf(tree->right);
+    }
+    if (tree->left != NULL && tree->right != NULL)
+    {
+        cnt += count_leaf(tree->left);
+        cnt += count_leaf(tree->right);
+    }
+    return cnt;
+}
+
+/**
+ * Удалить элемент из графа
+ * @param root
+ * @param value
+ * @return Граф без некоего элемента
+ */
+Tree *delete_element(Tree *root, const int value)
+{
+    Tree *tree1 = NULL;
+    Tree *tree2 = NULL;
+    Tree *tree3 = root;
+    Tree *tree4 = NULL;
+    if (root == NULL)
+    {
+        printf("Дерево пусто.\n");
+        return root;
+    }
+    tree1 = search_in_tree(tree3, value);
+    if (tree1 == NULL)
+    {
+        printf("Элемента с таким значением не существует.\n");
+        return root;
+    }
+    if (tree1->left == NULL && tree1->right == NULL)
+    {
+        if (tree1->parent == NULL)
+        {
+            free(tree1);
+            tree1 = NULL;
+            printf("Успешное удаление.\n");
+            return NULL;
+        }
+        tree2 = tree1->parent;
+        if (tree2->left == tree1)
+        {
+            tree2->left = NULL;
+        }
+        else
+        {
+            tree2->right = NULL;
+        }
+        free(tree1);
+    }
+    else if (tree1->left != NULL && tree1->right == NULL)
+    {
+        if (tree1->parent == NULL)
+        {
+            tree4 = tree1->left;
+            tree4->parent = NULL;
+            free(tree1);
+            printf("Успешное удаление.\n");
+            return tree4;
+        }
+        tree2 = tree1->parent;
+        if (tree2->left == tree1)
+        {
+            tree2->left = tree1->left;
+        }
+        else
+        {
+            tree2->right = tree1->left;
+        }
+        free(tree1);
+    }
+    else if (tree1->left == NULL && tree1->right != NULL)
+    {
+        if (tree1->parent == NULL)
+        {
+            tree4 = tree1->right;
+            tree4->parent = NULL;
+            free(tree1);
+            printf("Успешное удаление.\n");
+            return tree4;
+        }
+        tree2 = tree1->parent;
+        if (tree2->left == tree1)
+        {
+            tree2->left = tree1->right;
+        }
+        else
+        {
+            tree2->right = tree1->right;
+        }
+        free(tree1);
+    }
+    else if (tree1->left != NULL && tree1->right != NULL)
+    {
+        tree2 = mini(tree1->right);
+        tree1->data = tree2->data;
+        tree4 = tree2->parent;
+        if (tree4->left == tree2)
+        {
+            free(tree2);
+            tree4->left = NULL;
+        }
+        if (tree4->right == tree2)
+        {
+            free(tree2);
+            tree4->right = NULL;
+        }
+    }
+    printf("Успешное удаление.\n");
+    return root;
+}
+
+/**
+ * Нахождение степени
+ * @param tree
+ * @return степень
+ */
+int find_degree(Tree* tree){
+    if (tree == NULL) return 0;
+    int degree = 0;
+    if (tree->left != NULL || tree->right != NULL) degree++;
+    int left_degrees = find_degree(tree->left);
+    int right_degree = find_degree(tree->right);
+    return max(degree, max(left_degrees, right_degree));
+}
+
+/**
+ * Уничтожение графа (иначе - утечка памяти)
+ * @param tree
+ */
+void destroy_tree(const Tree* tree){
+    if (tree != NULL){
+        destroy_tree(tree->left);
+        destroy_tree(tree->right);
+        void *ptr = (void *)tree;
+        free(ptr);
+    }
+}
+
+/**
+ * Вывод меню
+ */
+void print_menu() {
+    printf("\nВыберите дейтвие и введите его номер:\n0) Выход\n");
+    printf("1) Ввести в дерево элемент.\n");
+    printf("2) Распечатать дерево.\n");
+    printf("3) Удалить элемент из дерева.\n");
+    printf("4) Определить степень двоичного дерева.\n");
+}

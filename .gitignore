@@ -4,3 +4,6 @@ bazel-*
 
 /cmake-build-debug/
 .idea
+node_modules
+/package-lock.json
+*.lock
