@@ -69,14 +69,14 @@ Tree *search_in_tree(Tree *tree, const int value);
  * @param tree
  * @return наибольший элемент в графе
  */
-const Tree *maxi(Tree *tree);
+Tree *maxi(Tree *tree);
 
 /**
  * поиск наименьшего элемента в графе
  * @param tree
  * @return наименьший элемент в графе
  */
-const Tree *mini(Tree *tree);
+Tree *mini(Tree *tree);
 
 /**
  * Подсчёт листочков

@@ -108,7 +108,7 @@ Tree *search_in_tree(Tree *tree, const int value)
         return search_in_tree(tree->left, value);
 }
 
-const Tree *maxi(Tree *tree)
+Tree *maxi(Tree *tree)
 {
     const Tree *cur = tree;
     while (cur->right != NULL)
@@ -118,7 +118,7 @@ const Tree *maxi(Tree *tree)
     return cur;
 }
 
-const Tree *mini(Tree *tree)
+Tree *mini(Tree *tree)
 {
     const Tree *cur = tree;
     while (cur->left != NULL)
@@ -140,7 +140,7 @@ int count_leaf(const Tree *tree)
     {
         cnt += count_leaf(tree->left);
     }
-    if (tree->left == NULL != 0)
+    if (tree->left == NULL && tree->right != NULL)
     {
         cnt += count_leaf(tree->right);
     }
