@@ -89,7 +89,7 @@ void print_tree(const Tree *tree, int n)
     if (tree != NULL)
     {
         print_tree(tree->right, n++);
-        for (int i = 0; i < n; i++)
+        for (size_t i = 0; i < n; i++)
             putchar('\t');
         printf("%d\n", tree->data);
         print_tree(tree->left, n++);
@@ -152,7 +152,7 @@ int count_leaf(const Tree *tree)
     return cnt;
 }
 
-Tree *delete_element(Tree *root, const int value)
+Tree *delete_element(Tree *root, int value)
 {
     Tree *tree1 = NULL;
     Tree *tree2 = NULL;
@@ -271,7 +271,7 @@ void destroy_tree(Tree *tree)
         destroy_tree(tree->right);
         void *ptr = (void *)tree;
         free(ptr);
-        tree->data = NULL;
+        tree->data = 0;
         tree->left = NULL;
         tree->parent = NULL;
         tree->right = NULL;

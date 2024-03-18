@@ -91,7 +91,7 @@ int count_leaf(const Tree *tree);
  * @param value
  * @return Граф без некоего элемента
  */
-Tree *delete_element(Tree *root, const int value);
+Tree *delete_element(Tree *root, int value);
 
 /**
  * Нахождение степени
@@ -104,7 +104,7 @@ int find_degree(Tree *tree);
  * Уничтожение графа (иначе - утечка памяти)
  * @param tree
  */
-void destroy_tree(const Tree *tree);
+void destroy_tree(Tree *tree);
 
 /**
  * Вывод меню
