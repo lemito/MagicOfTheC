@@ -67,7 +67,7 @@ void Destroy(queue *q)
         free(pi);
     }
     free(q->first);
-    q->first = q->last == 0;
+    q->first->data = q->last->data == 0;
     q->size = 0;
 }
 

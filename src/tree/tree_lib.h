@@ -1,11 +1,15 @@
 #ifndef VECTOR_LAB_H
 #define VECTOR_LAB_H
+/**
+ * @brief Структура графа содержи информацию (int), ссылку на левый и правый дочерный элемент, а также родительский
+ *
+ */
 typedef struct Tree
 {
     int data;
     struct Tree *left;
     struct Tree *right;
-    __attribute__((unused)) struct Tree *parent;
+    struct Tree *parent;
 } Tree;
 
 /**
@@ -94,13 +98,13 @@ Tree *delete_element(Tree *root, const int value);
  * @param tree
  * @return степень
  */
-int find_degree(Tree* tree);
+int find_degree(Tree *tree);
 
 /**
  * Уничтожение графа (иначе - утечка памяти)
  * @param tree
  */
-void destroy_tree(const Tree* tree);
+void destroy_tree(const Tree *tree);
 
 /**
  * Вывод меню
