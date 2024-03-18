@@ -54,7 +54,7 @@ Tree *add_element_tree(Tree *root, const int value);
  * @param n
  * @todo Исправить последний перенос строки
  */
-void print_tree(const Tree *tree, int n);
+void print_tree(Tree *tree, int n);
 
 /**
  * поиск элемента в графе по значению

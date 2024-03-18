@@ -42,16 +42,16 @@ Tree *create_root_tree(const int value)
 
 Tree *add_element_tree(Tree *root, const int value)
 {
+
     if (root == NULL)
     {
-        printf("Root не обнаружен. Создан новый\n");
-        root = create_root_tree(value);
+        printf("Выполнено.\n");
+        return create_root_tree(value);
     }
-    Tree *newTree = (Tree *)malloc(sizeof(Tree));
-    newTree->data = value;
+    Tree *NewTree = (Tree *)malloc(sizeof(Tree));
+    NewTree->data = value;
     Tree *tree1 = root;
     Tree *tree2 = NULL;
-
     while (tree1 != NULL)
     {
         tree2 = tree1;
@@ -65,35 +65,44 @@ Tree *add_element_tree(Tree *root, const int value)
         }
         else
         {
-            printf("Листик с таким значением уже есть, введите другой \n");
+            printf("Элемент с таким значением уже есть, введите новый.\n");
             return root;
         }
     }
-    newTree->parent = tree2;
-    newTree->left = NULL;
-    newTree->right = NULL;
+    NewTree->parent = tree2;
+    NewTree->left = NULL;
+    NewTree->right = NULL;
     if (value < tree2->data)
     {
-        tree2->left = newTree;
+        tree2->left = NewTree;
     }
     else
     {
-        tree2->right = newTree;
+        tree2->right = NewTree;
     }
-    printf("Done!\n");
+    printf("Выполнено\n");
     return root;
 }
 
-void print_tree(const Tree *tree, int n)
+// void print_tree(Tree *tree, int n)
+// {
+//     if (tree != NULL)
+//     {
+//         print_tree(tree->right, n + 1);
+//         for (int i = 0; i < n; i++)
+//             printf("\t");
+//         printf("%d\n", tree->data);
+//         print_tree(tree->left, n + 1);
+//     }
+// }
+void print_tree(Tree *tree, int n)
 {
-    if (tree != NULL)
-    {
-        print_tree(tree->right, n++);
-        for (size_t i = 0; i < n; i++)
-            putchar('\t');
-        printf("%d\n", tree->data);
+    if (tree == NULL)
+        return;
+    print_tree(tree->right, n++);
+    for (size_t i = 0; i < n; i++)
         print_tree(tree->left, n++);
-    }
+
 }
 
 Tree *search_in_tree(Tree *tree, const int value)
