@@ -43,6 +43,7 @@
         "typeinfo": "c",
         "valarray": "c",
         "variant": "c",
-        "tree_lib.h": "c"
+        "tree_lib.h": "c",
+        "stdio.h": "c"
     }
 }
