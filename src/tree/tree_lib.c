@@ -96,7 +96,8 @@ void print_tree(Tree *tree, int n)
     }
     else
     {
-        ERROR("ERROR: tree is a NULL or void");
+        // пустая строка
+        printf("");
     }
 }
 
@@ -259,12 +260,15 @@ int find_degree(Tree *tree)
 {
     if (tree == NULL)
         return 0;
-    int degree = 0;
-    if (tree->left != NULL || tree->right != NULL)
-        degree++;
-    int left_degrees = find_degree(tree->left);
-    int right_degree = find_degree(tree->right);
-    return max(degree, max(left_degrees, right_degree));
+    else
+    {
+        int degree = 0;
+        if (tree->left != NULL || tree->right != NULL)
+            degree++;
+        int left_degrees = find_degree(tree->left);
+        int right_degree = find_degree(tree->right);
+        return max(degree, max(left_degrees, right_degree));
+    }
 }
 
 void destroy_tree(Tree *tree)

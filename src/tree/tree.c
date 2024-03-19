@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include "tree_lib.h"
-const int DEBUG = 1;
+const int DEBUG = 0;
 #define D      \
-    if (DEBUG) \
+    if (DEBUG == 1) \
         ;
 
 // For visualisation use https://www.cs.usfca.edu/~galles/visualization/BST.html
