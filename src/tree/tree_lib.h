@@ -1,5 +1,4 @@
-#ifndef VECTOR_LAB_H
-#define VECTOR_LAB_H
+#pragma once
 /**
  * @brief Структура графа содержи информацию (int), ссылку на левый и правый дочерный элемент, а также родительский
  *
@@ -110,4 +109,3 @@ void destroy_tree(Tree *tree);
  * Вывод меню
  */
 void print_menu();
-#endif

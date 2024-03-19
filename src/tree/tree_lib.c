@@ -45,7 +45,7 @@ Tree *add_element_tree(Tree *root, const int value)
 
     if (root == NULL)
     {
-        printf("Выполнено.\n");
+        printf("\033[1;32mВыполнено.\033[0m\n");
         return create_root_tree(value);
     }
     Tree *NewTree = (Tree *)malloc(sizeof(Tree));
@@ -65,7 +65,7 @@ Tree *add_element_tree(Tree *root, const int value)
         }
         else
         {
-            printf("Элемент с таким значением уже есть, введите новый.\n");
+            printf("\033[1;33mЭлемент с таким значением уже есть, введите новый.\033[0m\n");
             return root;
         }
     }
@@ -80,29 +80,24 @@ Tree *add_element_tree(Tree *root, const int value)
     {
         tree2->right = NewTree;
     }
-    printf("Выполнено\n");
+    printf("\033[1;32mВыполнено.\033[0m\n");
     return root;
 }
 
-// void print_tree(Tree *tree, int n)
-// {
-//     if (tree != NULL)
-//     {
-//         print_tree(tree->right, n + 1);
-//         for (int i = 0; i < n; i++)
-//             printf("\t");
-//         printf("%d\n", tree->data);
-//         print_tree(tree->left, n + 1);
-//     }
-// }
 void print_tree(Tree *tree, int n)
 {
-    if (tree == NULL)
-        return;
-    print_tree(tree->right, n++);
-    for (size_t i = 0; i < n; i++)
-        print_tree(tree->left, n++);
-
+    if (tree != NULL)
+    {
+        print_tree(tree->right, n + 1);
+        for (int i = 0; i < n; i++)
+            printf("\t");
+        printf("%d\n", tree->data);
+        print_tree(tree->left, n + 1);
+    }
+    else
+    {
+        printf("\033[1;31mERROR: tree is a NULL or void\033[0m\n");
+    }
 }
 
 Tree *search_in_tree(Tree *tree, const int value)
@@ -169,13 +164,13 @@ Tree *delete_element(Tree *root, int value)
     Tree *tree4 = NULL;
     if (root == NULL)
     {
-        printf("Дерево пусто.\n");
+        printf("\033[1;31mДерево пустое\033[0m\n");
         return root;
     }
     tree1 = search_in_tree(tree3, value);
     if (tree1 == NULL)
     {
-        printf("Элемента с таким значением не существует.\n");
+        printf("\033[1;31mЭлемента с таким значением не существует.\033[0m\n");
         return root;
     }
     if (tree1->left == NULL && tree1->right == NULL)
@@ -184,7 +179,7 @@ Tree *delete_element(Tree *root, int value)
         {
             free(tree1);
             tree1 = NULL;
-            printf("Успешное удаление.\n");
+            printf("\033[1;32mУдаление выполнено.\033[0m\n");
             return NULL;
         }
         tree2 = tree1->parent;
@@ -205,7 +200,7 @@ Tree *delete_element(Tree *root, int value)
             tree4 = tree1->left;
             tree4->parent = NULL;
             free(tree1);
-            printf("Успешное удаление.\n");
+            printf("\033[1;32mУдаление выполнено.\033[0m\n");
             return tree4;
         }
         tree2 = tree1->parent;
@@ -226,7 +221,7 @@ Tree *delete_element(Tree *root, int value)
             tree4 = tree1->right;
             tree4->parent = NULL;
             free(tree1);
-            printf("Успешное удаление.\n");
+            printf("\033[1;32mУдаление выполнено.\033[0m\n");
             return tree4;
         }
         tree2 = tree1->parent;
@@ -256,7 +251,7 @@ Tree *delete_element(Tree *root, int value)
             tree4->right = NULL;
         }
     }
-    printf("Успешное удаление.\n");
+    printf("\033[1;32mУдаление выполнено.\033[0m\n");
     return root;
 }
 

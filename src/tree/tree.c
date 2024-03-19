@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <stdlib.h>
 #include "tree_lib.h"
 const int DEBUG = 1;
 #define D      \
@@ -41,7 +40,8 @@ int main()
             break;
         case 2:
             printf("\n-------------------------\n");
-            print_tree(work_tree, 1);
+           print_tree(work_tree, 0);
+                // printTree(work_tree);
             printf("\n-------------------------\n");
             break;
         case 3:
