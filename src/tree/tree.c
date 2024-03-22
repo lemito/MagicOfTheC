@@ -1,9 +1,5 @@
 #include <stdio.h>
 #include "tree_lib.h"
-const int DEBUG = 0;
-#define D      \
-    if (DEBUG == 1) \
-        ;
 
 // For visualisation use https://www.cs.usfca.edu/~galles/visualization/BST.html
 
@@ -20,16 +16,14 @@ int main()
     int value = 0;
     print_menu();
     int action = getchar() - '0';
-    D { printf("%d\n", action); }
     clearInputBuffer();
     while (action)
     {
-
         value = 0;
-
         switch (action)
         {
         case 0:
+            SUCCESS("Выход.");
             action = 0;
             break;
         case 1:
@@ -40,8 +34,7 @@ int main()
             break;
         case 2:
             printf("\n-------------------------\n");
-           print_tree(work_tree, 0);
-                // printTree(work_tree);
+            print_tree(work_tree, 0);
             printf("\n-------------------------\n");
             break;
         case 3:
@@ -58,10 +51,8 @@ int main()
             print_menu();
         }
         action = getchar() - '0';
-        D { printf("%d\n", action); }
         clearInputBuffer();
     }
-
     destroy_tree(work_tree);
     return 0;
 }

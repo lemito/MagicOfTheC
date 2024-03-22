@@ -40,28 +40,70 @@ Tree *create_root_tree(const int value)
     return tree;
 }
 
+//Tree *add_element_tree(Tree *root, const int value)
+//{
+//
+//    if (root == NULL)
+//    {
+//        SUCCESS("Выполнено.");
+//        return create_root_tree(value);
+//    }
+//    Tree *NewTree = (Tree *)malloc(sizeof(Tree));
+//    NewTree->data = value;
+//    Tree *tree1 = root;
+//    Tree *tree2 = NULL;
+//    while (tree1 != NULL)
+//    {
+//        tree2 = tree1;
+//        if (value < tree1->data)
+//        {
+//            tree1 = tree1->left;
+//        }
+//        else if (value > tree1->data)
+//        {
+//            tree1 = tree1->right;
+//        }
+//        else
+//        {
+//            WARNING("Элемент с таким значением уже есть, введите новый.");
+//            return root;
+//        }
+//    }
+//    NewTree->parent = tree2;
+//    NewTree->left = NULL;
+//    NewTree->right = NULL;
+//    if (value < tree2->data)
+//    {
+//        tree2->left = NewTree;
+//    }
+//    else
+//    {
+//        tree2->right = NewTree;
+//    }
+//    SUCCESS("Выполнено.");
+//    return root;
+//}
 Tree *add_element_tree(Tree *root, const int value)
 {
-
     if (root == NULL)
     {
         SUCCESS("Выполнено.");
         return create_root_tree(value);
     }
-    Tree *NewTree = (Tree *)malloc(sizeof(Tree));
-    NewTree->data = value;
-    Tree *tree1 = root;
-    Tree *tree2 = NULL;
-    while (tree1 != NULL)
+
+    Tree *current = root;
+    Tree *parent = NULL;
+
+    while (current != NULL)
     {
-        tree2 = tree1;
-        if (value < tree1->data)
+        parent = current;
+        if (value < current->data)
         {
-            tree1 = tree1->left;
+            current = current->left;
         }
-        else if (value > tree1->data)
+        else if (value > current->data)
         {
-            tree1 = tree1->right;
+            current = current->right;
         }
         else
         {
@@ -69,16 +111,20 @@ Tree *add_element_tree(Tree *root, const int value)
             return root;
         }
     }
-    NewTree->parent = tree2;
-    NewTree->left = NULL;
-    NewTree->right = NULL;
-    if (value < tree2->data)
+
+    Tree *newTree = (Tree *)malloc(sizeof(Tree));
+    newTree->data = value;
+    newTree->parent = parent;
+    newTree->left = NULL;
+    newTree->right = NULL;
+
+    if (value < parent->data)
     {
-        tree2->left = NewTree;
+        parent->left = newTree;
     }
     else
     {
-        tree2->right = NewTree;
+        parent->right = newTree;
     }
     SUCCESS("Выполнено.");
     return root;
@@ -86,6 +132,7 @@ Tree *add_element_tree(Tree *root, const int value)
 
 void print_tree(Tree *tree, int n)
 {
+    int work = 0;
     if (tree != NULL)
     {
         print_tree(tree->right, n + 1);
@@ -93,11 +140,12 @@ void print_tree(Tree *tree, int n)
             printf("\t");
         printf("%d\n", tree->data);
         print_tree(tree->left, n + 1);
+        work = 1;
     }
     else
     {
         // пустая строка
-        printf("");
+        printf(" ");
     }
 }
 
@@ -115,7 +163,7 @@ Tree *search_in_tree(Tree *tree, const int value)
 
 Tree *maxi(Tree *tree)
 {
-    const Tree *cur = tree;
+    Tree *cur = tree;
     while (cur->right != NULL)
     {
         cur = cur->right;
@@ -125,7 +173,7 @@ Tree *maxi(Tree *tree)
 
 Tree *mini(Tree *tree)
 {
-    const Tree *cur = tree;
+    Tree *cur = tree;
     while (cur->left != NULL)
     {
         cur = cur->left;
@@ -157,117 +205,49 @@ int count_leaf(const Tree *tree)
     return cnt;
 }
 
-Tree *delete_element(Tree *root, int value)
-{
-    Tree *tree1 = NULL;
-    Tree *tree2 = NULL;
-    Tree *tree3 = root;
-    Tree *tree4 = NULL;
-    if (root == NULL)
-    {
-        ERROR("Дерево пустое");
+Tree* delete_element(Tree* root, int value) {
+    if (root == NULL) {
         return root;
     }
-    tree1 = search_in_tree(tree3, value);
-    if (tree1 == NULL)
-    {
-        ERROR("Элемента с таким значением не существует.");
-        return root;
+    if (value < root->data) {
+        root->left = delete_element(root->left, value);
     }
-    if (tree1->left == NULL && tree1->right == NULL)
-    {
-        if (tree1->parent == NULL)
-        {
-            free(tree1);
-            tree1 = NULL;
-            SUCCESS("Удаление выполнено.");
-            return NULL;
-        }
-        tree2 = tree1->parent;
-        if (tree2->left == tree1)
-        {
-            tree2->left = NULL;
-        }
-        else
-        {
-            tree2->right = NULL;
-        }
-        free(tree1);
+    else if (value > root->data) {
+        root->right = delete_element(root->right, value);
     }
-    else if (tree1->left != NULL && tree1->right == NULL)
-    {
-        if (tree1->parent == NULL)
-        {
-            tree4 = tree1->left;
-            tree4->parent = NULL;
-            free(tree1);
-            SUCCESS("Удаление выполнено.");
-            return tree4;
+    else {
+        if (root->left == NULL) {
+            Tree* temp = root->right;
+            free(root);
+            return temp;
+        } else if (root->right == NULL) {
+            Tree* temp = root->left;
+            free(root);
+            return temp;
         }
-        tree2 = tree1->parent;
-        if (tree2->left == tree1)
-        {
-            tree2->left = tree1->left;
-        }
-        else
-        {
-            tree2->right = tree1->left;
-        }
-        free(tree1);
+
+        Tree* temp = mini(root->right);
+        root->data = temp->data;
+        root->right = delete_element(root->right, temp->data);
     }
-    else if (tree1->left == NULL && tree1->right != NULL)
-    {
-        if (tree1->parent == NULL)
-        {
-            tree4 = tree1->right;
-            tree4->parent = NULL;
-            free(tree1);
-            SUCCESS("Удаление выполнено.");
-            return tree4;
-        }
-        tree2 = tree1->parent;
-        if (tree2->left == tree1)
-        {
-            tree2->left = tree1->right;
-        }
-        else
-        {
-            tree2->right = tree1->right;
-        }
-        free(tree1);
-    }
-    else if (tree1->left != NULL && tree1->right != NULL)
-    {
-        tree2 = mini(tree1->right);
-        tree1->data = tree2->data;
-        tree4 = tree2->parent;
-        if (tree4->left == tree2)
-        {
-            free(tree2);
-            tree4->left = NULL;
-        }
-        if (tree4->right == tree2)
-        {
-            free(tree2);
-            tree4->right = NULL;
-        }
-    }
-    SUCCESS("Удаление выполнено.");
     return root;
 }
 
-int find_degree(Tree *tree)
-{
-    if (tree == NULL)
+int find_degree(Tree *tree) {
+    if (tree == NULL) {
         return 0;
-    else
-    {
+    } else {
         int degree = 0;
-        if (tree->left != NULL || tree->right != NULL)
+        if (tree->left != NULL) {
             degree++;
-        int left_degrees = find_degree(tree->left);
-        int right_degree = find_degree(tree->right);
-        return max(degree, max(left_degrees, right_degree));
+        }
+        if (tree->right != NULL) {
+            degree++;
+        }
+        int leftDegree = find_degree(tree->left);
+        int rightDegree = find_degree(tree->right);
+        int maxSubtreeDegree = max(leftDegree, rightDegree);
+        return max(degree, maxSubtreeDegree);
     }
 }
 
@@ -278,11 +258,11 @@ void destroy_tree(Tree *tree)
         destroy_tree(tree->left);
         destroy_tree(tree->right);
         void *ptr = (void *)tree;
-        free(ptr);
         tree->data = 0;
         tree->left = NULL;
         tree->parent = NULL;
         tree->right = NULL;
+        free(ptr);
     }
 }
 
