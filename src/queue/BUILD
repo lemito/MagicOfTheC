@@ -13,4 +13,11 @@ cc_library(
 cc_binary(
     name = "queue_dyn_bin",
     srcs = ["queue_dyn.c"],
+    deps = ["queue_dyn_lib"],
+)
+
+cc_library(
+    name = "queue_dyn_lib",
+    srcs = ["queue_dyn_lib.c"],
+    hdrs = ["queue_dyn_lib.h"],
 )
