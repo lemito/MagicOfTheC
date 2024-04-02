@@ -1,5 +1,5 @@
 #include "iterator/iterator.h"
-#include <stdlib.h> 
+#include <stdlib.h>
 
 typedef struct List
 {
@@ -66,27 +66,47 @@ Iterator Delete(List *list, Iterator *iterator)
     return res;
 }
 
-Iterator Destroy(List *list){
-    Item* item = list->head->next;
+Iterator Destroy(List *list)
+{
+    Item *item = list->head->next;
     while (item != list->head)
     {
-        Item* previtem = item;
+        Item *previtem = item;
         item = item->next;
         free(previtem);
     }
     free(list->head);
     list->head = NULL;
-    list->size = 0; 
+    list->size = 0;
 }
 
 int main(int argc, char const *argv[])
 {
     List listik;
+    Iterator lastElem = Last(&listik);
     Create(&listik);
-    Iterator iter = First(&listik);
-    Insert(&listik, &iter, 1);
-    Insert(&listik, &iter, 2);
-    Insert(&listik, &iter, 3);
+    Insert(&listik, &lastElem, 10);
+    Insert(&listik, &lastElem, 20);
+    Insert(&listik, &lastElem, 30);
+    Iterator it = First(&listik); // Получение итератора на первый элемент списка
+    for (int i = 0; i < size(&listik); i++)
+    {
+        int data = fetch(&it); // Получение данных из текущего элемента
+        // Действия с данными
+        // ...
+        it = *Next(&it); // Переход к следующему элементу
+    }
+
+    // Использование итератора в цикле 'for'
+    Iterator it = First(&listik); // Получение итератора на первый элемент списка
+    Iterator end = Last(&listik); // Получение итератора на последний элемент списка
+
+    for (; NotEqual(&it, &end); it = *Next(&it))
+    {
+        int data = fetch(&it); // Получение данных из текущего элемента
+        // Действия с данными
+        // ...
+    }
     Destroy(&listik);
     return 0;
 }
