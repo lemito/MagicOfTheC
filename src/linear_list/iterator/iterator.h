@@ -13,26 +13,14 @@ typedef struct Iterator
     Item *node;
 } Iterator;
 
-bool Equal(const Iterator *lhs, const Iterator *rhs)
-{
-}
+bool Equal(const Iterator *lhs, const Iterator *rhs);
 
-bool NotEqual(const Iterator *lhs, const Iterator *rhs)
-{
-}
+bool NotEqual(const Iterator *lhs, const Iterator *rhs);
 
-Iterator *Next(Iterator *iterator)
-{
-}
+Iterator *Next(Iterator *iterator);
 
-Iterator *Prev(Iterator *iterator)
-{
-}
+Iterator *Prev(Iterator *iterator);
 
-int fetch(const Iterator *iterator)
-{
-}
+int fetch(const Iterator *iterator);
 
-void Store(const Iterator *Iterator, const int t)
-{
-}
+void Store(const Iterator *Iterator, const int t);

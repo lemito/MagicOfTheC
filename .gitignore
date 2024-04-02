@@ -7,3 +7,4 @@ bazel-*
 node_modules
 /package-lock.json
 *.lock
+/meow.py

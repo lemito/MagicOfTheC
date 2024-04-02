@@ -38,24 +38,25 @@ bool Empty(const List *list)
     return Equal(&first, &last);
 }
 
-Iterator Insert(List *list, Iterator *iterator, const int t)
+Iterator Insert(List *l, Iterator *i, const int t)
 {
-    Iterator res = {malloc(sizeof(Item))};
+    Iterator res = {malloc(sizeof(
+        struct Item))};
     if (!res.node)
-        return Last(list);
+        return Last(l);
     res.node->data = t;
-    res.node->next = iterator->node;
-    res.node->prev = iterator->node->prev;
+    res.node->next = i->node;
+    res.node->prev = i->node->prev;
     res.node->prev->next = res.node;
-    iterator->node->prev = res.node;
-    list->size++;
+    i->node->prev = res.node;
+    l->size++;
     return res;
 }
 
 Iterator Delete(List *list, Iterator *iterator)
 {
     Iterator res = Last(list);
-    if (Equal(iterator, list))
+    if (Equal(iterator, (const Iterator *) list))
         return res;
     res.node = iterator->node->next;
     res.node->prev = iterator->node->prev;
@@ -66,7 +67,7 @@ Iterator Delete(List *list, Iterator *iterator)
     return res;
 }
 
-Iterator Destroy(List *list)
+void Destroy(List *list)
 {
     Item *item = list->head->next;
     while (item != list->head)
@@ -80,32 +81,30 @@ Iterator Destroy(List *list)
     list->size = 0;
 }
 
-int main(int argc, char const *argv[])
+int main()
 {
     List listik;
+    Create(&listik); // Ensure this is the first operation on listik
+
     Iterator lastElem = Last(&listik);
-    Create(&listik);
     Insert(&listik, &lastElem, 10);
     Insert(&listik, &lastElem, 20);
     Insert(&listik, &lastElem, 30);
-    Iterator it = First(&listik); // Получение итератора на первый элемент списка
+
+    Iterator it = First(&listik); // Now safe to use after Create
     for (int i = 0; i < size(&listik); i++)
     {
-        int data = fetch(&it); // Получение данных из текущего элемента
-        // Действия с данными
-        // ...
-        it = *Next(&it); // Переход к следующему элементу
+        int data = fetch(&it); // Assuming fetch is correctly implemented
+        printf("%d\n", data);
+        it = *Next(&it); // Assuming Next is correctly implemented
     }
 
-    // Использование итератора в цикле 'for'
-    Iterator it = First(&listik); // Получение итератора на первый элемент списка
-    Iterator end = Last(&listik); // Получение итератора на последний элемент списка
-
+    // Assuming NotEqual and Next are correctly implemented
+    Iterator end = Last(&listik);
     for (; NotEqual(&it, &end); it = *Next(&it))
     {
-        int data = fetch(&it); // Получение данных из текущего элемента
-        // Действия с данными
-        // ...
+        int data = fetch(&it);
+        printf("%d\n", data);
     }
     Destroy(&listik);
     return 0;
