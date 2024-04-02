@@ -1,8 +1,9 @@
 
+var title = ''
 if (argv[1] == '') { 
-    const title = await question('Enter title: ') } 
+    title = await question('Enter title: ') } 
 else {
-    const title = argv[1]
+    title = argv[1]
 }
 
 await $`mkdir ./src/${title}`
