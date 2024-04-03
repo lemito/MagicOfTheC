@@ -1,5 +1,5 @@
-#include "iterator/iterator.h"
 #include <stdlib.h>
+#include "iterator/iterator.h"
 
 typedef struct List
 {
@@ -91,19 +91,20 @@ int main()
     Insert(&listik, &lastElem, 20);
     Insert(&listik, &lastElem, 30);
 
-    Iterator it = First(&listik); // Now safe to use after Create
+    printf("===== iterator ala c loop =====\n");
+    Iterator it = First(&listik);
     for (int i = 0; i < size(&listik); i++)
     {
-        int data = fetch(&it); // Assuming fetch is correctly implemented
+        int data = fetch(&it);
         printf("%d\n", data);
-        it = *Next(&it); // Assuming Next is correctly implemented
+        it = *Next(&it);
     }
 
-    // Assuming NotEqual and Next are correctly implemented
-    Iterator end = Last(&listik);
-    for (; NotEqual(&it, &end); it = *Next(&it))
+    Iterator newit = First(&listik);
+    printf("===== iterator ala python =====\n");
+    for (; NotEqual(&newit, &lastElem); newit = *Next(&newit))
     {
-        int data = fetch(&it);
+        int data = fetch(&newit);
         printf("%d\n", data);
     }
     Destroy(&listik);
