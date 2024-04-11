@@ -8,7 +8,8 @@
                 "/usr/local/emscripten"
             ],
             "compilerPath": "/usr/bin/clang-14",
-            "intelliSenseMode": "linux-clang-x64"
+            "intelliSenseMode": "linux-clang-x64",
+            "configurationProvider": "ms-vscode.makefile-tools"
         }
     ],
     "version": 4

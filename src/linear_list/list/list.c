@@ -1,11 +1,7 @@
-#include <stdlib.h>
-#include "iterator/iterator.h"
-
-typedef struct List
-{
-    Item *head;
-    int size;
-} List;
+//
+// Created by lemito on 4/6/24.
+//
+#include "list.h"
 
 void Create(List *list)
 {
@@ -38,13 +34,14 @@ bool Empty(const List *list)
     return Equal(&first, &last);
 }
 
-Iterator Insert(List *l, Iterator *i, const int t)
+Iterator Insert(List *l, Iterator *i, const char* t)
 {
     Iterator res = {malloc(sizeof(
-        struct Item))};
+                                   struct Item))};
     if (!res.node)
         return Last(l);
-    res.node->data = t;
+    // res.node->data = t;
+    strcpy(res.node->data, t);
     res.node->next = i->node;
     res.node->prev = i->node->prev;
     res.node->prev->next = res.node;
@@ -79,34 +76,4 @@ void Destroy(List *list)
     free(list->head);
     list->head = NULL;
     list->size = 0;
-}
-
-int main()
-{
-    List listik;
-    Create(&listik); // Ensure this is the first operation on listik
-
-    Iterator lastElem = Last(&listik);
-    Insert(&listik, &lastElem, 10);
-    Insert(&listik, &lastElem, 20);
-    Insert(&listik, &lastElem, 30);
-
-    printf("===== iterator ala c loop =====\n");
-    Iterator it = First(&listik);
-    for (int i = 0; i < size(&listik); i++)
-    {
-        int data = fetch(&it);
-        printf("%d\n", data);
-        it = *Next(&it);
-    }
-
-    Iterator newit = First(&listik);
-    printf("===== iterator ala python =====\n");
-    for (; NotEqual(&newit, &lastElem); newit = *Next(&newit))
-    {
-        int data = fetch(&newit);
-        printf("%d\n", data);
-    }
-    Destroy(&listik);
-    return 0;
 }

@@ -1,3 +1,6 @@
+#ifndef ITERATOR_H
+#define ITERATOR_H
+
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
@@ -10,7 +13,7 @@ typedef struct Item
 {
     struct Item *prev;
     struct Item *next;
-    char data[];
+    char data[15];
 } Item;
 
 /**
@@ -72,3 +75,5 @@ char* fetch(const Iterator *iterator);
  * @param Iterator 
  */
 void Store(const Iterator *Iterator, const char*);
+
+#endif // ITERATOR_H

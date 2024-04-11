@@ -47,5 +47,12 @@
         "stdio.h": "c",
         "limits": "c",
         "iterator.h": "c"
-    }
+    },
+    "makefile.launchConfigurations": [
+        {
+            "cwd": "/home/lemito/MagicOfTheC",
+            "binaryPath": "/home/lemito/MagicOfTheC/list_cycled",
+            "binaryArgs": []
+        }
+    ]
 }
