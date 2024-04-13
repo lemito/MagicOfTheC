@@ -1,36 +1,34 @@
 #include "iterator.h"
 
-
-bool Equal(const Iterator* lhs, const Iterator* rhs){
-    return lhs->node == rhs->node;
+bool Equal(const Iterator *lhs, const Iterator *rhs)
+{
+    if (lhs != NULL && rhs != NULL)
+    {
+        return lhs->node == rhs->node;
+    }
 }
 
-bool NotEqual(const Iterator* lhs, const Iterator* rhs){
+bool NotEqual(const Iterator *lhs, const Iterator *rhs)
+{
     return !Equal(lhs, rhs);
 }
 
-Iterator* Next(Iterator* iterator){
+Iterator *Next(Iterator *iterator)
+{
     iterator->node = iterator->node->next;
     return iterator;
 }
 
-Iterator* Prev(Iterator* iterator){
-    iterator->node = iterator->node->prev;
-    return iterator;
-}
-
-char* fetch(const Iterator* iterator){
+char *fetch(const Iterator *iterator)
+{
     return iterator->node->data;
 }
 
-void Store(const Iterator* Iterator, const char* t){
-    // Iterator->node->data = t;
-    strcpy(Iterator->node->data, t);
+void Store(const Iterator *iterator, const char *t)
+{
+    if (iterator != NULL && iterator->node != NULL)
+    {
+        strncpy(iterator->node->data, t, sizeof(iterator->node->data) - 1);
+        iterator->node->data[sizeof(iterator->node->data) - 1] = '\0';
+    }
 }
-
-// int main(int argc, char const *argv[])
-// {
-//     /* code */
-//     return 0;
-// }
-

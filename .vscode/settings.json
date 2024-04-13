@@ -46,7 +46,9 @@
         "tree_lib.h": "c",
         "stdio.h": "c",
         "limits": "c",
-        "iterator.h": "c"
+        "iterator.h": "c",
+        "string": "c",
+        "unordered_map": "c"
     },
     "makefile.launchConfigurations": [
         {

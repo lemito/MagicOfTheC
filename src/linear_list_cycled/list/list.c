@@ -7,23 +7,20 @@ void Create(List *list)
     list->size = 0;
 }
 
-Item *Last(const List *list)
+Iterator Last(const List *list)
 {
-    if (size(list) == 0)
+    Iterator current = {list->head};
+    while (current.node->next != list->head && current.node->next != NULL)
     {
-        return NULL;
-    }
-    Item *current = list->head;
-    while (current->next != list->head && current->next != NULL)
-    {
-        current = current->next;
+        Next(&current);
     }
     return current;
 }
 
-Item * First(const List *list)
+Iterator First(const List *list)
 {
-    return list->head;
+    Iterator res = {list->head};
+    return res;
 }
 
 int size(const List *list)
@@ -33,88 +30,109 @@ int size(const List *list)
 
 bool Empty(const List *list)
 {
-    Item* first = First(list);
-    Item *last = Last(list);
-    return first == last;
+    Iterator first = First(list);
+    Iterator last = Last(list);
+    return first.node == last.node;
 }
 
 void Destroy(List *list)
 {
 
-    Item *item = list->head->next;
-    while (item != list->head)
+    Iterator current = First(list);
+
+    while (current.node != list->head)
     {
-        Item *previtem = item;
-        item = item->next;
-        free(previtem);
+        Item *itemToFree = current.node;
+        Next(&current);
+        free(itemToFree);
     }
     free(list->head);
     list->head = NULL;
     list->size = 0;
 }
 
-
-
-void Append(List *list, const char *t)
+bool Append(List *list, int pos, const char *t)
 {
+    if (size(list) > 0)
+        pos = pos % size(list);
     Item *newItem = malloc(sizeof(Item));
-    if (!newItem)
+    if (pos < 0)
     {
-        return;
+        puts("Ай-яй-яй, num должен быть > 0");
+        return false;
     }
 
-    // тут утечка памяти
-    // strcpy(newItem->data, t);
+    if (!newItem)
+    {
+        return false;
+    }
 
-    strncpy(newItem->data, t, sizeof(newItem->data) - 1);
-    newItem->data[sizeof(newItem->data) - 1] = '\0';
+    Iterator cur = {newItem};
+    Store(&cur, t);
 
-    newItem->next = NULL;
+    if (pos == 1)
+    {
+        // если первый элемент -- самый первый
+        if (size(list) == 0) {
+            newItem->next = list->head;
+            list->head = newItem;
+        }
+        // если первый элемент -- первый после прокрутки, т.е. == последний
+        else {
+            pos = size(list) + 1;
+            Iterator current = First(list);
+            for (int i = 0; i < pos - 2; i++) {
+                Next(&current);
+            }
+            // повторка кода ниже
+            Iterator tmp = {current.node->next};
 
-    Item *last = Last(list);
-    if (last != NULL)
-        last->next = newItem;
-    else
-        list->head = newItem;
+            current.node->next = newItem;
+            Next(&current);
+            Store(&current, t);
 
+            current.node->next = tmp.node;
+            current.node->next = list->head;
+        }
+    } else {
+
+        Iterator current = First(list);
+        for (int i = 0; i < pos - 2; i++) {
+            Next(&current);
+        }
+        Iterator tmp = {current.node->next};
+
+        current.node->next = newItem;
+        Next(&current);
+        Store(&current, t);
+
+        current.node->next = tmp.node;
+    }
     list->size++;
+    return true;
 }
 
-bool Remove(List *list, const char *t)
+bool Remove(List *list, int num)
 {
     if (size(list) == 0)
     {
         return false;
     }
 
-    Item *current = list->head;
-    Item *previusly = NULL;
+    Item **elem = &(list->head);
+    int pos = (num % size(list)) - 1;
 
-    if (current != NULL && strcmp(current->data, t) == 0)
-    {
-        list->head = current->next;
-        free(current);
-        list->size--;
-        return true;
+    for (int i = 0; i < pos; i++){
+        elem = &((*elem)->next);
     }
-
-    while (current != NULL && strcmp(current->data, t) != 0)
-    {
-        previusly = current;
-        current = current->next;
-    }
-
-    if (current == NULL)
-        return false;
-
-    previusly->next = current->next;
-    free(current);
+    Item *next = (*elem)->next;
+    free(*elem);
+    *elem = next;
     list->size--;
 
     return true;
 }
 
-// Функция для ручного вывода элементов списка в нужном формате
 void PrintList(List *list)
 {
     if (size(list) == 0 || list == NULL)
@@ -122,12 +140,14 @@ void PrintList(List *list)
         printf("Список-то пуст\n");
         return;
     }
-    Item *current = list->head;
+    Iterator current = First(list);
     printf("[ ");
-    while (current != NULL)
+    int k = size(list);
+    while (k != 0)
     {
-        printf("%s ", current->data);
-        current = current->next;
+        printf("%s ", fetch(&current));
+        Next(&current);
+        k--;
     }
     printf("]\n");
 }
@@ -144,7 +164,7 @@ void AddLastToHead(List *list, int k)
         printf("Пустой список!!!\n");
         return;
     }
-    Item *last = Last(list);
+    Iterator last = Last(list);
     while (k--)
     {
         // СОЗДАЕМ ВРЕМЕННЫЙ ОБЪЕКТ
@@ -154,7 +174,7 @@ void AddLastToHead(List *list, int k)
             fprintf(stderr, "Ошибка в выделении памяти!!!");
         }
         // добавляем в него инфу из последнего элемента
-        strcpy(tmp->data, last->data);
+        strcpy(tmp->data, fetch(&last));
 
         // за ним идет первый элемент
         tmp->next = list->head;

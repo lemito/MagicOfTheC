@@ -7,17 +7,7 @@
 #include <string.h>
 #include <stdbool.h>
 #include <stdio.h>
-
-/**
- * @brief структура элемента
- *
- */
-typedef struct Item
-{
-//    struct Item *prev;
-    struct Item *next;
-    char data[25];
-} Item;
+#include "../iterator/iterator.h"
 
 typedef struct List
 {
@@ -36,14 +26,14 @@ void Create(List *list);
  * @param list
  * @return
  */
-Item *First(const List *list);
+Iterator First(const List *list);
 
 /**
  * Ищем последний итератор
  * @param list
  * @return
  */
-Item *Last(const List *list);
+Iterator Last(const List *list);
 
 /**
  * Размер
@@ -75,18 +65,20 @@ void PrintList(List *list);
  * То же что и Insert, только без итератора [вставка в конец]
  * @param list лист
  * @param char* кого вставляем
+ * @param pos куда вставляем
  */
-void Append(List *list, const char* t);
+bool Append(List *list, int pos, const char* t);
 
 /**
  * @brief Удаляет элемент
  * 
  * @param list откуда удаляем
- * @param t кого удаляем
+ * @param num откуда удаляем?
  * @return true удален
  * @return false не удален
+ * 
  */
-bool Remove(List * list, const char *t);
+bool Remove(List * list, int num);
 
 /**
  * @brief Добавляет последней элемент в начало K раз

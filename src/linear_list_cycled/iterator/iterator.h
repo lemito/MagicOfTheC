@@ -11,7 +11,6 @@
  */
 typedef struct Item
 {
-    struct Item *prev;
     struct Item *next;
     char data[15];
 } Item;
@@ -52,14 +51,6 @@ bool NotEqual(const Iterator *lhs, const Iterator *rhs);
  * @return Iterator* 
  */
 Iterator *Next(Iterator *iterator);
-
-/**
- * @brief шаг в предыдущий итератор
- * 
- * @param iterator 
- * @return Iterator* 
- */
-Iterator *Prev(Iterator *iterator);
 
 /**
  * @brief достаем инфу из итератора

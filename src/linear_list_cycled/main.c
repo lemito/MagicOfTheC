@@ -4,19 +4,19 @@
 void clearInputBuffer()
 {
     int c;
-    while ((c = getchar()) != '\n' && c != EOF);
+    while ((c = getchar()) != '\n' && c != EOF)
+        ;
 }
 
 void print_menu()
 {
-    printf("0) Выйти\n");
-    printf("1) Печать списка\n");
-    printf("2) Вставка нового жлемента в список\n");
-    printf("3) Удаление элемента из списка\n");
-    printf("4) Подсчет длины списка\n");
-    printf("5) Добавить k экзампляров последнего элемента в начало списка\n");
+    puts("0) Выйти");
+    puts("1) Печать списка");
+    puts("2) Вставка нового жлемента в список");
+    puts("3) Удаление элемента из списка");
+    puts("4) Подсчет длины списка");
+    puts("5) Добавить k экзампляров последнего элемента в начало списка");
 }
-
 
 int main()
 {
@@ -47,22 +47,25 @@ int main()
         case '2':
             printf("Что добавим в список? : ");
             scanf("%s", tmp);
-            Append(&listik, tmp);
-            printf("Добавлено\n");
+            int pos = 0;
+            printf("Куда добавим? : ");
+            scanf("%d", &pos);
+            if (Append(&listik, pos, tmp)) printf("Добавлено\n");
             clearInputBuffer();
             break;
 
         // удаление элемента из списка
         case '3':
             printf("Что удалим из списка? : ");
-            scanf("%s", tmp);
-            if (Remove(&listik, tmp))
+            int delPos = 0;
+            scanf("%d", &delPos);
+            if (Remove(&listik, delPos))
             {
-                printf("Элемент %s успешно удален.\n", tmp);
+                printf("Элемент # %d успешно удален.\n", delPos);
             }
             else
             {
-                printf("Элемент %s не найден в списке.\n", tmp);
+                printf("Элемент # %d не найден в списке.\n", delPos);
             }
             clearInputBuffer();
             break;
@@ -82,12 +85,13 @@ int main()
 
         case '0':
             printf("Выход из программы.\n");
+            clearInputBuffer();
             exit(0);
         default:
             printf("Неверный выбор. Попробуйте снова.\n");
         }
         print_menu();
-        scanf("%c", &choise);
+        scanf("\n%c", &choise);
         clearInputBuffer();
     }
     Destroy(&listik);
