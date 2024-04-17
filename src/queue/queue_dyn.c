@@ -8,17 +8,19 @@ int main()
     queue qwer;
 
     Create(&qwer);
-    Push(&qwer, 1);
-    Push(&qwer, 2);
-    Push(&qwer, 3);
-    Push(&qwer, 4);
-    printf("%d\t", Top(&qwer));
+    Push(&qwer, "1");
+    Push(&qwer, "2");
+    Push(&qwer, "3");
+    Push(&qwer, "4");
+    printf("%s\t", Top(&qwer));
     Pop(&qwer);
-    printf("%d\t", Top(&qwer));
+    printf("%s\t", Top(&qwer));
     Pop(&qwer);
-    printf("%d\t", Top(&qwer));
+    printf("%s\t", Top(&qwer));
     Pop(&qwer);
-    printf("%d\t", Top(&qwer));
+    printf("%s\t", Top(&qwer));
+
+    printf("\n");
 
     return 0;
 }
