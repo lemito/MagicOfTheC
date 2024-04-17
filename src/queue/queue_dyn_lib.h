@@ -6,7 +6,7 @@
  */
 struct Item
 {
-    int data;
+    char data[25];
     struct Item *next;
 };
 
@@ -53,7 +53,7 @@ int Size(queue *q);
  * @return true 
  * @return false 
  */
-bool Push(queue *q, const int t);
+bool Push(queue *q, const char* t);
 
 /**
  * @brief 
@@ -70,7 +70,7 @@ bool Pop(queue *q);
  * @param q 
  * @return int 
  */
-int Top(const queue *q);
+char* Top(const queue *q);
 
 /**
  * @brief 

@@ -1,4 +1,6 @@
 #include "queue_dyn_lib.h"
+#include <stdlib.h>
+#include <string.h>
 
 void Create(queue *q)
 {
@@ -16,11 +18,11 @@ int Size(queue *q)
     return q->size;
 }
 
-bool Push(queue *q, const int t)
+bool Push(queue *q, const char* t)
 {
     if (!(q->last->next = malloc(sizeof(struct Item))))
         return false;
-    q->last->data = t;
+    strcpy(q->last->data, t);
     q->last = q->last->next;
     q->size++;
     return true;
@@ -37,7 +39,7 @@ bool Pop(queue *q)
     return true;
 }
 
-int Top(const queue *q)
+char* Top(const queue *q)
 {
     if (q->first != q->last)
         return q->first->data;
@@ -49,18 +51,19 @@ void Destroy(queue *q)
     {
         struct Item *pi = q->first;
         q->first = q->first->next;
+        free(pi->data);
         free(pi);
     }
-    free(q->first);
-    q->first->data = q->last->data == 0;
     q->size = 0;
+    q->first = NULL;
+    q->last = NULL;
 }
 
 void Reverse(queue *q)
 {
     if (!Empty(q))
     {
-        int t = Top(q);
+        char *t = Top(q);
         Pop(q);
         Reverse(q);
         Push(q, t);
