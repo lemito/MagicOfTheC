@@ -14,11 +14,11 @@ Vector, Queue, Dequeue and other and other useful things like in C++, but in C
 - - [ ] Dynamicaly
 - [ ] Dequeue
 - Iterator
-- - [ ] Static (arrays)
-- - [ ] Dynamicaly
+- - [] Static (arrays)
+- - [x] Dynamicaly
 - List
 - - [ ] Static (arrays)
-- - [ ] Dynamicaly
+- - [x] Dynamicaly
 - [ ] Tree
 - Tree algorithms
 - - [ ] Tree traversal
