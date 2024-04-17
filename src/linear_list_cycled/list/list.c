@@ -53,8 +53,8 @@ void Destroy(List *list)
 
 bool Append(List *list, int pos, const char *t)
 {
-    if (size(list) > 0)
-        pos = pos % size(list);
+   if (size(list) > 0)
+       pos = pos % size(list);
     Item *newItem = malloc(sizeof(Item));
     if (pos < 0)
     {
@@ -73,15 +73,18 @@ bool Append(List *list, int pos, const char *t)
     if (pos == 1)
     {
         // если первый элемент -- самый первый
-        if (size(list) == 0) {
+        if (size(list) == 0)
+        {
             newItem->next = list->head;
             list->head = newItem;
         }
         // если первый элемент -- первый после прокрутки, т.е. == последний
-        else {
-            pos = size(list) + 1;
+        else
+        {
+           pos = size(list) + 1;
             Iterator current = First(list);
-            for (int i = 0; i < pos - 2; i++) {
+           for (int i = 0; i < pos - 2; i++)
+            {
                 Next(&current);
             }
             // повторка кода ниже
@@ -94,10 +97,13 @@ bool Append(List *list, int pos, const char *t)
             current.node->next = tmp.node;
             current.node->next = list->head;
         }
-    } else {
+    }
+    else
+    {
 
         Iterator current = First(list);
-        for (int i = 0; i < pos - 2; i++) {
+       for (int i = 0; i < pos - 2; i++)
+        {
             Next(&current);
         }
         Iterator tmp = {current.node->next};
@@ -112,7 +118,7 @@ bool Append(List *list, int pos, const char *t)
     return true;
 }
 
-bool Remove(List *list, int num)
+bool Remove(List *list, int user_pos)
 {
     if (size(list) == 0)
     {
@@ -120,9 +126,10 @@ bool Remove(List *list, int num)
     }
 
     Item **elem = &(list->head);
-    int pos = (num % size(list)) - 1;
+    int pos = (user_pos % size(list)) - 1;
 
-    for (int i = 0; i < pos; i++){
+    for (int i = 0; i < pos; i++)
+    {
         elem = &((*elem)->next);
     }
     Item *next = (*elem)->next;

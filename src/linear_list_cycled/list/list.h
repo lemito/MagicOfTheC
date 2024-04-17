@@ -73,12 +73,12 @@ bool Append(List *list, int pos, const char* t);
  * @brief Удаляет элемент
  * 
  * @param list откуда удаляем
- * @param num откуда удаляем?
+ * @param user_pos откуда удаляем?
  * @return true удален
  * @return false не удален
  * 
  */
-bool Remove(List * list, int num);
+bool Remove(List * list, int user_pos);
 
 /**
  * @brief Добавляет последней элемент в начало K раз
