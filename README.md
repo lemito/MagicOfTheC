@@ -19,7 +19,7 @@ Vector, Queue, Dequeue and other and other useful things like in C++, but in C
 - List
 - - [ ] Static (arrays)
 - - [x] Dynamicaly
-- [ ] Tree
+- [x] Tree
 - Tree algorithms
 - - [ ] Tree traversal
 - - [ ] Tree visualization
