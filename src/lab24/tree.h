@@ -1,0 +1,21 @@
+п»ї#ifndef __tree_h__
+#define __tree_h__
+
+#include <stdbool.h>
+
+#include "symbol.h"
+
+// Изменил объявление структуры для большей наглядности.
+
+//typedef struct _SN SN;
+
+//struct _TN {
+typedef struct SN {
+    symbol t;
+//    SN* r;  // Изменил объявление левого, правого потомка для большей наглядности.
+//    SN* l;
+	struct SN* r;
+    struct SN* l;
+} TN;
+
+#endif
