@@ -1,0 +1,60 @@
+
+#include <stdio.h>
+#include <stdbool.h>
+#include <limits.h>
+
+#define MAX_NODES 100
+
+int time = 0;
+int tin[MAX_NODES];
+int up[MAX_NODES];
+bool visited[MAX_NODES];
+
+void dfs(int v, int p, int n, int G[MAX_NODES][MAX_NODES]) {
+    time++;
+    tin[v] = up[v] = time;
+    visited[v] = true;
+    int count = 0;
+
+    for (int u = 0; u < n; u++) {
+        if (G[v][u] == 1) {
+            if (u == p) continue;
+            if (visited[u]) {
+                up[v] = up[v] < tin[u] ? up[v] : tin[u];
+            } else {
+                dfs(u, v, n, G);
+                count++;
+                up[v] = up[v] < up[u] ? up[v] : up[u];
+                if (p != -1 && up[u] >= tin[v]) {
+                    printf("Vertex %d is a cutpoint\n", v);
+                }
+            }
+        }
+    }
+
+    if (p == -1 && count >= 2) {
+        printf("Vertex %d is a cutpoint\n", v);
+    }
+}
+
+int main() {
+    int n;
+    printf("Enter the number of nodes: ");
+    scanf("%d", &n);
+
+    int G[MAX_NODES][MAX_NODES] = {0};
+    printf("Enter the adjacency matrix:\n");
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            scanf("%d", &G[i][j]);
+        }
+    }
+
+    for (int i = 0; i < n; i++) {
+        if (!visited[i]) {
+            dfs(i, -1, n, G);
+        }
+    }
+
+    return 0;
+}
