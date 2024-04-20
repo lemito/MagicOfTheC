@@ -60,7 +60,7 @@ void merge_sort(queue *q)
     }
 
     // заполняем вторую половину
-    for (size_t i = 0; i < Size(q) + 1; i++)
+    for (size_t i = 0; i < Size(q); i++)
     {
         Push(&q2, Top(q));
         Pop(q);
