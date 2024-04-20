@@ -13,7 +13,7 @@
  * @param q2 вторая очередь
  * @param q выходная очередь
  */
-void merge(queue *q1, queue* q2, const queue* q);
+void merge(queue *q1, queue* q2, queue* q);
 
 /**
  * Функция сортировки
