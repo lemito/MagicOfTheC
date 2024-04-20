@@ -49,7 +49,8 @@
         "iterator.h": "c",
         "string": "c",
         "unordered_map": "c",
-        "queue_dyn_lib.h": "c"
+        "queue_dyn_lib.h": "c",
+        "merge_sort.h": "c"
     },
     "makefile.launchConfigurations": [
         {
