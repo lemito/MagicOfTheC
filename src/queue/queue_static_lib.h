@@ -2,22 +2,31 @@
 #define QUEUE_STATIC_LIB_H
 
 #include <stdbool.h>
+#include <stddef.h>
 
 #define POOL_SIZE 100
 
+typedef struct data_type
+{
+    int key;
+    int value;
+} data_type;
+
+
 typedef struct queue
 {
-    int first;
-    int size;
-    int data[POOL_SIZE];
+    data_type first;
+    size_t size;
+    data_type data[POOL_SIZE];
 } queue;
 
 void Create(queue *q);
 bool Empty(queue *q);
-int Size(queue *q);
-bool Push(queue *q, const int t);
+size_t Size(queue *q);
+bool Push(queue *q, data_type t);
 bool Pop(queue *q);
-int Top(const queue *q);
+data_type Top(const queue *q);
+int Top_value(const queue *q);
 void Destroy(queue *q);
 
 #endif // QUEUE_STATIC_LIB_H

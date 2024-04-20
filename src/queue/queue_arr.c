@@ -1,6 +1,4 @@
 #include <stdio.h>
-#include <stdbool.h>
-#include <stdlib.h>
 #include "queue_static_lib.h"
 
 int main()
@@ -8,19 +6,25 @@ int main()
     printf("Hello World!\n");
 
     queue qwer;
+    
+    data_type zero = {0, 11};
+    data_type one = {1, 11234};
+    data_type two = {2, 2124};
+    data_type three = {3, 23456};
 
     Create(&qwer);
-    Push(&qwer, 1);
-    Push(&qwer, 2);
-    Push(&qwer, 3);
-    Push(&qwer, 4);
-    printf("%d\t", Top(&qwer));
+    Push(&qwer, zero);
+    Push(&qwer, one);
+    Push(&qwer, two);
+    Push(&qwer, three);
+    printf("Size = %zu\n", Size(&qwer));
+    printf("%d\t", Top_value(&qwer));
     Pop(&qwer);
-    printf("%d\t", Top(&qwer));
+    printf("%d\t", Top_value(&qwer));
     Pop(&qwer);
-    printf("%d\t", Top(&qwer));
+    printf("%d\t", Top_value(&qwer));
     Pop(&qwer);
-    printf("%d\t", Top(&qwer));
+    printf("%d\t", Top_value(&qwer));
 
     return 0;
 }

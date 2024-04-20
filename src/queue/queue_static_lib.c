@@ -2,7 +2,8 @@
 
 void Create(queue *q)
 {
-    q->first = 0;
+    q->first.value = 0;
+    q->first.key = 0;
     q->size = 0;
 }
 
@@ -11,16 +12,16 @@ bool Empty(queue *q)
     return q->size == 0;
 }
 
-int Size(queue *q)
+size_t Size(queue *q)
 {
     return q->size;
 }
 
-bool Push(queue *q, const int t)
+bool Push(queue *q, const data_type t)
 {
     if (q->size == POOL_SIZE)
         return false;
-    q->data[(q->first + q->size++) % POOL_SIZE] = t;
+    q->data[(q->first.key + q->size++) % POOL_SIZE] = t;
     return true;
 }
 
@@ -28,19 +29,25 @@ bool Pop(queue *q)
 {
     if (!q->size)
         return false;
-    q->first++;
-    q->first %= POOL_SIZE;
+    q->first.key = (q->first.key + 1) % POOL_SIZE;
     q->size--;
     return true;
 }
 
-int Top(const queue *q)
+data_type Top(const queue *q)
 {
     if (!q->size)
-        return q->data[q->first];
+        return (data_type){0, 0};
+    return q->data[q->first.key];
+}
+
+int Top_value(const queue *q){
+    return Top(q).value;
 }
 
 void Destroy(queue *q)
 {
     q->size = 0;
+    q->first.key = 0;
+    q->first.value = 0;
 }

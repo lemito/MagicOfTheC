@@ -9,3 +9,5 @@ node_modules
 *.lock
 /meow.py
 /build
+__.*
+*.out
