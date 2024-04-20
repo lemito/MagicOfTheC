@@ -1,31 +1,36 @@
 CC = gcc
 CFLAGS = -Werror -Wpedantic
 
-# Define the list of source files for each target
+
 LIST_CYCLED_SRC = src/linear_list_cycled/main.c src/linear_list_cycled/list/list.c src/linear_list_cycled/iterator/iterator.c
 QUEUE_DYN_SRC = src/queue/queue_dyn_bin.c src/queue/queue_dyn_lib.c src/queue/queue_dyn_lib.h
+QUEUE_STATIC_SRC = src/queue/queue_static_lib.h src/queue/queue_static_lib.c
+MERGE_SORT_SRC = src/sort/merge_sort.h src/sort/merge_sort.c
+LAB26_SRC = src/lab26/main.c
 
-# Define the object files for each target
 LIST_CYCLED_OBJ = $(LIST_CYCLED_SRC:.c=.o)
 QUEUE_DYN_OBJ = $(QUEUE_DYN_SRC:.c=.o)
+QUEUE_STATIC_OBJ = $(QUEUE_STATIC_SRC:.c=.o)
+MERGE_SORT_OBJ = $(MERGE_SORT_SRC:.c=.o)
+LAB26_OBJ = $(LAB26_SRC:.c=.o)
 
-# Default target
-all: list_cycled queue_dyn
 
-# Target for list_cycled
+all: list_cycled queue_dyn lab26
+
 list_cycled: $(LIST_CYCLED_OBJ)
-	$(CC) $(CFLAGS) $^ -o $@
+	$(CC) $(CFLAGS) $^ -o $@.out
 
-# Target for queue_dyn
 queue_dyn: $(QUEUE_DYN_OBJ)
-	$(CC) $(CFLAGS) $^ -o $@
+	$(CC) $(CFLAGS) $^ -o $@.out
 
-# Pattern rule for compiling .c files to .o files
+lab26: $(QUEUE_STATIC_OBJ) $(MERGE_SORT_OBJ) $(LAB26_OBJ)
+	$(CC) $(CFLAGS) $^ -o $@.out
+
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 # Clean target
 .PHONY: clean
 clean:
-	rm -f $(LIST_CYCLED_OBJ) $(QUEUE_DYN_OBJ) list_cycled queue_dyn
+	rm -f $(LIST_CYCLED_OBJ) $(QUEUE_DYN_OBJ) $(QUEUE_STATIC_OBJ) $(MERGE_SORT_OBJ) $(LAB26_OBJ) *.out
 
