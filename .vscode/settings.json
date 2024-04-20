@@ -48,7 +48,8 @@
         "limits": "c",
         "iterator.h": "c",
         "string": "c",
-        "unordered_map": "c"
+        "unordered_map": "c",
+        "queue_dyn_lib.h": "c"
     },
     "makefile.launchConfigurations": [
         {

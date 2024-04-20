@@ -10,12 +10,17 @@ add_library(MagicOfTheC_stack_arr STATIC src/stack/stack_arr_lib.c
         src/linear_list/main.c)
 add_library(MagicOfTheC_tree_lib STATIC src/tree/tree_lib.c)
 add_library(MagicOfTheC_queue_dyn_lib STATIC src/queue/queue_dyn_lib.c)
-add_library(MagicOfTheC_queue_static_lib STATIC src/queue/queue_static_lib.h src/queue/queue_static_lib.c)
+add_library(MagicOfTheC_queue_static_lib STATIC src/queue/queue_static_lib.c src/queue/queue_static_lib.h)
 
 add_library(MagicOfTheC_iterator_lib STATIC src/linear_list/iterator/iterator.c
         src/linear_list/list/list.c
         src/linear_list/list/list.h)
+add_library(merge_sort src/sort/merge_sort.c
+        src/sort/merge_sort.h)
+
+
 # Create executable point
+add_executable(lab26 src/lab26/main.c)
 add_executable(MagicOfTheC_vector_bin src/vector/vector.c)
 add_executable(MagicOfTheC_tree_bin src/tree/tree.c)
 add_executable(MagicOfTheC_queue_dyn_bin src/queue/queue_dyn.c)
@@ -33,6 +38,6 @@ target_link_libraries(MagicOfTheC_list_bin MagicOfTheC_iterator_lib)
 target_link_libraries(MagicOfTheC_queue_dyn_bin MagicOfTheC_queue_dyn_lib)
 target_link_libraries(MagicOfTheC_queue_static_bin MagicOfTheC_queue_static_lib)
 target_link_libraries(MagicOfTheC_exp_tree MagicOfTheC_exp_tree_libs)
-add_library(merge_sort src/sort/merge_sort.c
-        src/sort/merge_sort.h)
-add_executable(lab26 src/lab26/main.c)
+target_link_libraries(MagicOfTheC_exp_tree MagicOfTheC_exp_tree_libs)
+target_link_libraries(lab26 merge_sort MagicOfTheC_queue_static_lib)
+target_link_libraries(lab26 MagicOfTheC_queue_static_lib) 
