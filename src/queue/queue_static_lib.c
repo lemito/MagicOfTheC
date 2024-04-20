@@ -41,7 +41,8 @@ data_type Top(const queue *q)
     return q->data[q->first.key];
 }
 
-int Top_value(const queue *q){
+int Top_value(const queue *q)
+{
     return Top(q).value;
 }
 
@@ -52,15 +53,42 @@ void Destroy(queue *q)
     q->first.value = -1;
 }
 
-void Print(queue *q){
+void Print(queue *q)
+{
+    if (Empty(q))
+    {
+        puts("Пусто!");
+        return;
+    }
     puts("Очередь выглядит так: ");
     putchar('[');
     putchar(' ');
+
     int original_first_key = q->first.key;
-    while (!Empty(q)){
+
+    // Временная очередь
+    queue temp;
+    Create(&temp);
+
+    // Выводим элементы, попутно сохраняя их во временную очередь
+    while (!Empty(q))
+    {
         printf("%d:%d ", Top(q).key, Top(q).value);
+        Push(&temp, Top(q));
         Pop(q);
     }
+
     q->first.key = original_first_key;
+
+    // Пихаем элементы обратно; в нашу изначальную очередь
+    while (!Empty(&temp))
+    {
+        Push(q, Top(&temp));
+        Pop(&temp);
+    }
+
+    // временный - временный, поэтому его удаляем
+    Destroy(&temp);
+
     puts("]");
 }

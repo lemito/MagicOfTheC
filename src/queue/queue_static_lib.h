@@ -43,10 +43,10 @@ size_t Size(queue *q);
 /**
  * Добавляет элемент в конец
  * @param q
- * @param t
+ * @param elem
  * @return
  */
-bool Push(queue *q, data_type t);
+bool Push(queue *q, data_type elem);
 
 /**
  * Удаляет элемент
