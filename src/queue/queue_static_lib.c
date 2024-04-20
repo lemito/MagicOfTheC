@@ -17,11 +17,11 @@ size_t Size(queue *q)
     return q->size;
 }
 
-bool Push(queue *q, const data_type t)
+bool Push(queue *q, const data_type elem)
 {
     if (q->size == POOL_SIZE)
         return false;
-    q->data[(q->first.key + q->size++) % POOL_SIZE] = t;
+    q->data[(q->first.key + q->size++) % POOL_SIZE] = elem;
     return true;
 }
 
@@ -48,6 +48,19 @@ int Top_value(const queue *q){
 void Destroy(queue *q)
 {
     q->size = 0;
-    q->first.key = 0;
-    q->first.value = 0;
+    q->first.key = -1;
+    q->first.value = -1;
+}
+
+void Print(queue *q){
+    puts("Очередь выглядит так: ");
+    putchar('[');
+    putchar(' ');
+    int original_first_key = q->first.key;
+    while (!Empty(q)){
+        printf("%d:%d ", Top(q).key, Top(q).value);
+        Pop(q);
+    }
+    q->first.key = original_first_key;
+    puts("]");
 }
