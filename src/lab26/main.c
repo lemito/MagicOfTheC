@@ -29,7 +29,7 @@ int main(void)
 
     print_menu();
     char choise;
-    while (scanf("%c", &choise) != EOF && choise != '0' )
+    while (scanf("%c", &choise) != EOF && choise != '0')
     {
         if (choise == EOF)
         {
@@ -39,6 +39,7 @@ int main(void)
         {
         case '1':
             Print(&work_queue);
+            // clearInputBuffer();
             break;
 
         case '2':
@@ -46,21 +47,24 @@ int main(void)
             scanf("%d:%d", &worker_type.key, &worker_type.value);
             if (Push(&work_queue, worker_type))
                 puts("Добавлено!");
-            clearInputBuffer();
+            // clearInputBuffer();
             break;
 
         case '3':
             printf("Удален элемент %d:%d\n", Top(&work_queue).key, Top(&work_queue).value);
             Pop(&work_queue);
+            // clearInputBuffer();
             break;
 
         case '4':
             printf("Длина очереди = %zu\n", Size(&work_queue));
+            // clearInputBuffer();
             break;
 
         case '5':
             merge_sort(&work_queue);
             puts("Отсортировано");
+            // clearInputBuffer();
             break;
 
         default:
@@ -68,8 +72,8 @@ int main(void)
             break;
         }
         print_menu();
+        // clearInputBuffer();
         scanf("%c", &choise);
-        clearInputBuffer();
     }
 
     Destroy(&work_queue);

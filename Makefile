@@ -32,5 +32,5 @@ lab26: $(QUEUE_STATIC_OBJ) $(MERGE_SORT_OBJ) $(LAB26_OBJ)
 # Clean target
 .PHONY: clean
 clean:
-	rm -f $(LIST_CYCLED_OBJ) $(QUEUE_DYN_OBJ) $(QUEUE_STATIC_OBJ) $(MERGE_SORT_OBJ) $(LAB26_OBJ) *.out
+	rm -f *.o *.out
 
