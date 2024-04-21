@@ -1,8 +1,5 @@
-//
-// Created by lemito on 4/20/24.
-//
 #include "merge_sort.h"
-
+// TODO: попробовать на случайных числах нечетное кол-во чисел. Ощущение, что 5 4 3 2 1 работает не так, как надо... Поэтому надо посмотреть еще алгоритм
 void merge(queue *q1, queue *q2, queue *q)
 {
     /*
@@ -48,6 +45,7 @@ void merge_sort(queue *q)
 
     // начинаем делить на две половинки
     size_t mid = Size(q) / 2;
+    size_t second = Size(q) - mid;
     queue q1, q2;
     Create(&q1);
     Create(&q2);
@@ -60,7 +58,7 @@ void merge_sort(queue *q)
     }
 
     // заполняем вторую половину
-    for (size_t i = 0; i < Size(q); i++)
+    for (size_t i = 0; i < second; i++)
     {
         Push(&q2, Top(q));
         Pop(q);
