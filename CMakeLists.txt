@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.27)
-project(MagicOfTheC C)
+project(MagicOfTheC LANGUAGES C CXX)
 
 set(CMAKE_C_STANDARD 11)
 
@@ -40,4 +40,6 @@ target_link_libraries(MagicOfTheC_queue_static_bin MagicOfTheC_queue_static_lib)
 target_link_libraries(MagicOfTheC_exp_tree MagicOfTheC_exp_tree_libs)
 target_link_libraries(MagicOfTheC_exp_tree MagicOfTheC_exp_tree_libs)
 target_link_libraries(lab26 merge_sort MagicOfTheC_queue_static_lib)
-target_link_libraries(lab26 MagicOfTheC_queue_static_lib) 
+
+add_executable(stress26 src/lab26/stress.c)
+target_link_libraries(stress26 merge_sort MagicOfTheC_queue_static_lib)
