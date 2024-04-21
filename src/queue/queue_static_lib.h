@@ -31,14 +31,14 @@ void Create(queue *q);
  * @param q
  * @return
  */
-bool Empty(queue *q);
+bool Empty(const queue *q);
 
 /**
  * Размер очереди
  * @param q
  * @return
  */
-size_t Size(queue *q);
+size_t Size(const queue *q);
 
 /**
  * Добавляет элемент в конец

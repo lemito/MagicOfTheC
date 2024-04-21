@@ -7,12 +7,12 @@ void Create(queue *q)
     q->size = 0;
 }
 
-bool Empty(queue *q)
+bool Empty(const queue *q)
 {
     return q->size == 0;
 }
 
-size_t Size(queue *q)
+size_t Size(const queue *q)
 {
     return q->size;
 }

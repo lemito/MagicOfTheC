@@ -33,7 +33,6 @@ void merge(queue *q1, queue *q2, queue *q)
     }
 }
 
-
 void merge_sort(queue *q)
 {
     // выход из рекурсии
