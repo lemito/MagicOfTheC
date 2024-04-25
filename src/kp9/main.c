@@ -86,11 +86,12 @@ void clearInputBuffer()
 void print_menu()
 {
     puts("0) Выйти");
-    puts("1) Печать очереди");
-    puts("2) Вставика в очередь элемента в формате key:value");
-    puts("3) Удалить из очереди и вывести элемент в формате key:value");
-    puts("4) Длина очереди");
-    puts("5) Отсортировать (метод: сортировка слиянием)");
+    puts("1) Создать таблицу");
+    puts("2) Произвести сортировку");
+    puts("3) Бинарный поиск по ключу");
+    puts("4) Распечатать таблицу");
+    puts("5) Перевернуть таблицу");
+    puts("6) Перемешать таблицу");
 }
 
 int main(void)
@@ -100,61 +101,54 @@ int main(void)
 
     // В Cmake (и CLion) файйл берется из директории cmake-...
     // В vscode из  директории build
-    FILE *input = fopen("input.txt", "r");
-    if (input == NULL)
+
+    print_menu();
+    char choise;
+    while (scanf("%c", &choise) != EOF && choise != '0')
     {
-        printf("Не удалось открыть файл\n");
-        return 1;
+        if (choise == EOF)
+        {
+            break;
+        }
+        switch (choise)
+        {
+        case '1':
+            FILE *input = fopen("input.txt", "r");
+            if (input == NULL)
+            {
+                printf("Не удалось открыть файл\n");
+                return 1;
+            }
+            Create_Table(input, keys, datas);
+            break;
+
+        case '2':
+            puts("Введите ключ и значение элемента в формате key:value");
+            // scanf("%d:%d", &worker_type.key, &worker_type.value);
+            // if ()
+            puts("Добавлено!");
+            break;
+
+        case '3':
+            break;
+
+        case '4':
+            Print_Table(keys, datas);
+            break;
+
+        case '5':
+            puts("Отсортировано");
+            break;
+
+        default:
+            puts("Неверный вариант!");
+            break;
+        }
+        print_menu();
+        scanf("%c", &choise);
     }
-    Create_Table(input, keys, datas);
-    Print_Table(keys, datas);
 
-    fclose(input);
-    // print_menu();
-    // char choise;
-    // while (scanf("%c", &choise) != EOF && choise != '0')
-    // {
-    //     if (choise == EOF)
-    //     {
-    //         break;
-    //     }
-    //     switch (choise)
-    //     {
-    //     case '1':
-    //         // clearInputBuffer();
-    //         break;
-
-    //     case '2':
-    //         puts("Введите ключ и значение элемента в формате key:value");
-    //         // scanf("%d:%d", &worker_type.key, &worker_type.value);
-    //         // if ()
-    //             puts("Добавлено!");
-    //         // clearInputBuffer();
-    //         break;
-
-    //     case '3':
-    //         // clearInputBuffer();
-    //         break;
-
-    //     case '4':
-    //         // clearInputBuffer();
-    //         break;
-
-    //     case '5':
-    //         puts("Отсортировано");
-    //         // clearInputBuffer();
-    //         break;
-
-    //     default:
-    //         puts("Неверный вариант!");
-    //         break;
-    //     }
-    //     print_menu();
-    //     // clearInputBuffer();
-    //     scanf("%c", &choise);
-    // }
-
-    // puts("Работа окончена!");
+    puts("Работа окончена!");
 
     return 0;
 }
