@@ -1,79 +1,31 @@
-#include <stdio.h>
+#include <string.h>
+#include <stdbool.h>
+#include "table.h"
+#include "../sort/heap_sort.h"
 
-#define N 8
+void Binary_Search(const Key* keys, const Data* datas){
+    Key search_elem;
+    puts("Введите значение ключа");
+    scanf("%4s", search_elem.key_value);
+    int l = 0, r = N - 1;
+    bool flag = false;
+    while (l <= r) {
+        int mid = l + (r - l) / 2;
 
-typedef struct Key
-{
-    char key_value[5];
-    int to;
-} Key;
+        if (strcmp(keys[mid].key_value, search_elem.key_value) == 0) {
+            printf("ключ найден, его значение: %s\n", datas[keys[mid].to].data);
+            flag = true;
+            break;
+        }
 
-typedef struct Data
-{
-    char data[50];
-} Data;
+        if (strcmp(keys[mid].key_value, search_elem.key_value) > 0)
+            l = mid + 1;
 
-void Create_Table(FILE *file, Key *keys, Data *datas)
-{
-    for (int i = 0; i < N; i++)
-    {
-        fscanf(file, "%s %[^\n]\n", keys[i].key_value, datas[i].data);
-        keys[i].to = i;
+        else
+            r = mid - 1;
     }
-}
 
-void Print_Table(const Key *keys, const Data *datas)
-{
-    printf("|---------------------------------------------------------|\n");
-    printf("| Ключ | Строка |\n");
-    printf("|---------------------------------------------------------|\n");
-    for (int i = 0; i < N; i++)
-    {
-        printf(" %s | %-50s\n", keys[i].key_value, datas[keys[i].to].data);
-        printf("|---------------------------------------------------------|\n");
-    }
-}
-
-void heapify(int arr[], int n, int i)
-{
-    int temp, maximum, left_index, right_index;
-
-    maximum = i;
-
-    right_index = 2 * i + 2;
-
-    left_index = 2 * i + 1;
-
-    if (left_index < n && arr[left_index] > arr[maximum])
-        maximum = left_index;
-
-    if (right_index < n && arr[right_index] > arr[maximum])
-        maximum = right_index;
-
-    if (maximum != i)
-    {
-        temp = arr[i];
-        arr[i] = arr[maximum];
-        arr[maximum] = temp;
-        heapify(arr, n, maximum);
-    }
-}
-
-void heapsort(int arr[], int n)
-{
-    int i, temp;
-
-    for (i = n / 2 - 1; i >= 0; i--)
-    {
-        heapify(arr, n, i);
-    }
-    for (i = n - 1; i > 0; i--)
-    {
-        temp = arr[0];
-        arr[0] = arr[i];
-        arr[i] = temp;
-        heapify(arr, i, 0);
-    }
+    if (flag == false) puts("Значение по ключу не найдено :(");
 }
 
 void clearInputBuffer()
@@ -98,7 +50,7 @@ int main(void)
 {
     Key keys[N];
     Data datas[N];
-
+    FILE *input;
     // В Cmake (и CLion) файйл берется из директории cmake-...
     // В vscode из  директории build
 
@@ -113,23 +65,23 @@ int main(void)
         switch (choise)
         {
         case '1':
-            FILE *input = fopen("input.txt", "r");
+            input = fopen("input.txt", "r");
             if (input == NULL)
             {
-                printf("Не удалось открыть файл\n");
+                puts("Не удалось открыть файл\n");
                 return 1;
             }
             Create_Table(input, keys, datas);
+            puts("Создано");
             break;
 
         case '2':
-            puts("Введите ключ и значение элемента в формате key:value");
-            // scanf("%d:%d", &worker_type.key, &worker_type.value);
-            // if ()
-            puts("Добавлено!");
+            heapSort((Key *) keys->key_value, N);
+            puts("Отсортировано!");
             break;
 
         case '3':
+            Binary_Search(keys, datas);
             break;
 
         case '4':
@@ -137,7 +89,13 @@ int main(void)
             break;
 
         case '5':
-            puts("Отсортировано");
+            Reverse(keys);
+            puts("Таблица перевернута");
+            break;
+
+        case '6':
+            CruchuVerchu(keys);
+            puts("Таблица перемешана");
             break;
 
         default:
@@ -148,6 +106,8 @@ int main(void)
         scanf("%c", &choise);
     }
 
+
+    fclose(input);
     puts("Работа окончена!");
 
     return 0;

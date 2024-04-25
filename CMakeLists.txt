@@ -13,6 +13,8 @@ add_library(MagicOfTheC_queue_dyn_lib STATIC src/queue/queue_dyn_lib.c)
 add_library(MagicOfTheC_queue_static_lib STATIC src/queue/queue_static_lib.c src/queue/queue_static_lib.h)
 # add_library(MagicOfTheC_iterator_lib STATIC src/linear_list/iterator/iterator.c src/linear_list/list/list.c src/linear_list/list/list.h)
 add_library(merge_sort src/sort/merge_sort.c src/sort/merge_sort.h)
+add_library(heap_sort src/sort/heap_sort.c
+        src/sort/heap_sort.h)
 
 # Создание исполняемых файлов
 add_executable(lab26 src/lab26/main.c)
@@ -23,7 +25,9 @@ add_executable(MagicOfTheC_queue_static_bin src/queue/queue_arr.c)
 # add_executable(MagicOfTheC_list_bin src/linear_list/main.c)
 add_executable(list_cycled src/linear_list_cycled/main.c src/linear_list_cycled/list/list.c src/linear_list_cycled/iterator/iterator.c)
 add_executable(main src/meow/main.c)
-add_executable(kp9 src/kp9/main.c)
+add_executable(kp9 src/kp9/main.c
+        src/kp9/table.h
+        src/kp9/table.c)
 add_executable(MagicOfTheC_exp_tree src/lab24/main.c)
 
 # Связывание библиотек с исполняемыми файлами
@@ -37,3 +41,4 @@ target_link_libraries(lab26 merge_sort MagicOfTheC_queue_static_lib)
 
 add_executable(stress26 src/lab26/stress.c)
 target_link_libraries(stress26 merge_sort MagicOfTheC_queue_static_lib)
+target_link_libraries(kp9 heap_sort)
