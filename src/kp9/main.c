@@ -1,5 +1,7 @@
 #include <stdio.h>
 
+#define N 8
+
 typedef struct Key
 {
     char key_value[5];
@@ -13,7 +15,7 @@ typedef struct Data
 
 void Create_Table(FILE *file, Key *keys, Data *datas)
 {
-    for (int i = 0; i < 8; i++)
+    for (int i = 0; i < N; i++)
     {
         fscanf(file, "%s %[^\n]\n", keys[i].key_value, datas[i].data);
         keys[i].to = i;
@@ -25,7 +27,7 @@ void Print_Table(const Key *keys, const Data *datas)
     printf("|---------------------------------------------------------|\n");
     printf("| Ключ | Строка |\n");
     printf("|---------------------------------------------------------|\n");
-    for (int i = 0; i < 8; i++)
+    for (int i = 0; i < N; i++)
     {
         printf(" %s | %-50s\n", keys[i].key_value, datas[keys[i].to].data);
         printf("|---------------------------------------------------------|\n");
@@ -90,8 +92,8 @@ void print_menu()
 
 int main(void)
 {
-    Key keys[8];
-    Data data[8];
+    Key keys[N];
+    Data data[N];
     FILE* input = fopen("input.txt", "r");
     if (input == NULL) {
         printf("Не удалось открыть файл\n");
