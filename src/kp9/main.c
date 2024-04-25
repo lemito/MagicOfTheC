@@ -34,44 +34,47 @@ void Print_Table(const Key *keys, const Data *datas)
     }
 }
 
-void heapify(int arr[], int n, int i) 
-{ 
-    int temp, maximum, left_index, right_index; 
-  
-    maximum = i; 
-  
-    right_index = 2 * i + 2; 
-  
-    left_index = 2 * i + 1; 
-  
-    if (left_index < n && arr[left_index] > arr[maximum]) 
-        maximum = left_index; 
-  
-    if (right_index < n && arr[right_index] > arr[maximum]) 
-        maximum = right_index; 
-  
-    if (maximum != i) { 
-        temp = arr[i]; 
-        arr[i] = arr[maximum]; 
-        arr[maximum] = temp; 
-        heapify(arr, n, maximum); 
-    } 
-} 
-  
-void heapsort(int arr[], int n)
-{ 
-    int i, temp; 
+void heapify(int arr[], int n, int i)
+{
+    int temp, maximum, left_index, right_index;
 
-    for (i = n / 2 - 1; i >= 0; i--) { 
-        heapify(arr, n, i); 
-    }   
-    for (i = n - 1; i > 0; i--) { 
-        temp = arr[0]; 
-        arr[0] = arr[i]; 
-        arr[i] = temp; 
-        heapify(arr, i, 0); 
-    } 
-} 
+    maximum = i;
+
+    right_index = 2 * i + 2;
+
+    left_index = 2 * i + 1;
+
+    if (left_index < n && arr[left_index] > arr[maximum])
+        maximum = left_index;
+
+    if (right_index < n && arr[right_index] > arr[maximum])
+        maximum = right_index;
+
+    if (maximum != i)
+    {
+        temp = arr[i];
+        arr[i] = arr[maximum];
+        arr[maximum] = temp;
+        heapify(arr, n, maximum);
+    }
+}
+
+void heapsort(int arr[], int n)
+{
+    int i, temp;
+
+    for (i = n / 2 - 1; i >= 0; i--)
+    {
+        heapify(arr, n, i);
+    }
+    for (i = n - 1; i > 0; i--)
+    {
+        temp = arr[0];
+        arr[0] = arr[i];
+        arr[i] = temp;
+        heapify(arr, i, 0);
+    }
+}
 
 void clearInputBuffer()
 {
@@ -93,14 +96,20 @@ void print_menu()
 int main(void)
 {
     Key keys[N];
-    Data data[N];
-    FILE* input = fopen("input.txt", "r");
-    if (input == NULL) {
+    Data datas[N];
+
+    // В Cmake (и CLion) файйл берется из директории cmake-...
+    // В vscode из  директории build
+    FILE *input = fopen("input.txt", "r");
+    if (input == NULL)
+    {
         printf("Не удалось открыть файл\n");
         return 1;
     }
-    Create_Table(input, &keys, &data);
-    Print_Table(&keys, &data);
+    Create_Table(input, keys, datas);
+    Print_Table(keys, datas);
+
+    fclose(input);
     // print_menu();
     // char choise;
     // while (scanf("%c", &choise) != EOF && choise != '0')
