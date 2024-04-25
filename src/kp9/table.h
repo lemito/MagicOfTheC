@@ -2,7 +2,7 @@
 #define MAGICOFTHEC_TABLE_H
 #include <stdio.h>
 
-#define N 8
+#define N 14
 
 typedef struct Key
 {
