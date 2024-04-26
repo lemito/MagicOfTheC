@@ -4,28 +4,30 @@
 #include "../sort/heap_sort.h"
 
 void Binary_Search(const Key* keys, const Data* datas){
+
     Key search_elem;
     puts("Введите значение ключа");
-    scanf("%4s", search_elem.key_value);
+    scanf("%5s", search_elem.key_value);
+
     int l = 0, r = N - 1;
-    bool flag = false;
+    bool findStatus = false;
     while (l <= r) {
         int mid = l + (r - l) / 2;
 
         if (strcmp(keys[mid].key_value, search_elem.key_value) == 0) {
             printf("Ключ найден, его значение: %s\n", datas[keys[mid].to].data);
-            flag = true;
+            findStatus = true;
             break;
         }
 
-        if (strcmp(keys[mid].key_value, search_elem.key_value) > 0)
+        if (strcmp(keys[mid].key_value, search_elem.key_value) < 0)
             l = mid + 1;
 
         else
             r = mid - 1;
     }
 
-    if (flag == false) puts("Значение по ключу не найдено :(");
+    if (findStatus == false) puts("Значение по ключу не найдено");
 }
 
 void clearInputBuffer()
@@ -103,8 +105,7 @@ int main(void)
             break;
         }
         print_menu();
-        if (scanf("%c", &choise) == 1) continue;
-        else puts("Ошибка чтения");
+        scanf("%c", &choise);
     }
 
 
