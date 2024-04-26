@@ -2,6 +2,7 @@
 #define MAGICOFTHEC_TABLE_H
 #include <stdio.h>
 
+// цифра зависит от количества строк во входной файле
 #define N 14
 
 typedef struct Key
@@ -14,6 +15,13 @@ typedef struct Data
 {
     char data[60];
 } Data;
+
+/**
+ * Меняет ключи местами -- свап
+ * @param a первый ключ
+ * @param b второй ключ
+ */
+void swapify(Key* a, Key* b);
 
 /**
  * Читает файл и создает по нему два массив: с ключами и со значениями

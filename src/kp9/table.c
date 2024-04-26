@@ -2,6 +2,13 @@
 #include <time.h>
 #include "table.h"
 
+void swapify(Key *a, Key *b)
+{
+    Key temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
 void Create_Table(FILE *file, Key *keys, Data *datas)
 {
     int res = 0;
@@ -10,10 +17,12 @@ void Create_Table(FILE *file, Key *keys, Data *datas)
         res = fscanf(file, "%s %[^\n]\n", keys[i].key_value, datas[i].data);
         keys[i].to = i;
     }
-    if (res){
+    if (res)
+    {
         puts("Таблица успешно создана");
     }
-    else {
+    else
+    {
         fprintf(stderr, "Возникла ошибка при создании таблицы!\n");
     }
 }
@@ -30,24 +39,21 @@ void Print_Table(const Key *keys, const Data *datas)
     }
 }
 
-void CruchuVerchu(Key* keys){
+void CruchuVerchu(Key *keys)
+{
     srand(time(NULL));
-    for (int i = 0; i < N; i++){
+    for (int i = 0; i < N; i++)
+    {
         int seedA = rand() % N;
         int seedB = rand() % N;
-        Key tmp = keys[seedA];
-        keys[seedA] = keys[seedB];
-        keys[seedB] = tmp;
+        swapify(&keys[seedA], &keys[seedB]);
     }
 }
 
-void Reverse(Key* keys)
+void Reverse(Key *keys)
 {
     for (int i = 0; i < N / 2; i++)
     {
-        Key reverse;
-        reverse = keys [i];
-        keys [i] = keys [N - i];
-        keys [N - i] = reverse;
+        swapify(&keys[i], &keys[N - i - 1]);
     }
 }
