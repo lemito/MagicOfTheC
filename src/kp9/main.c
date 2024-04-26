@@ -3,18 +3,24 @@
 #include "table.h"
 #include "../sort/heap_sort.h"
 
-void Binary_Search(const Key* keys, const Data* datas){
+void Binary_Search(const Key *keys, const Data *datas)
+{
 
     Key search_elem;
     puts("Введите значение ключа");
-    scanf("%5s", search_elem.key_value);
+    int scan_res = scanf("%5s", search_elem.key_value);
+    if (scan_res != 1){
+        puts("Ошибка. Введите ключ правильно - строка из пяти символов");
+    }
 
     int l = 0, r = N - 1;
     bool findStatus = false;
-    while (l <= r) {
+    while (l <= r)
+    {
         int mid = l + (r - l) / 2;
 
-        if (strcmp(keys[mid].key_value, search_elem.key_value) == 0) {
+        if (strcmp(keys[mid].key_value, search_elem.key_value) == 0)
+        {
             printf("Ключ найден, его значение: %s\n", datas[keys[mid].to].data);
             findStatus = true;
             break;
@@ -27,7 +33,8 @@ void Binary_Search(const Key* keys, const Data* datas){
             r = mid - 1;
     }
 
-    if (findStatus == false) puts("Значение по ключу не найдено");
+    if (findStatus == false)
+        puts("Значение по ключу не найдено");
 }
 
 void clearInputBuffer()
@@ -52,7 +59,6 @@ int main(void)
 {
     Key keys[N];
     Data datas[N];
-    FILE *input;
     // В Cmake (и CLion) файйл берется из директории cmake-...
     // В vscode из  директории build
 
@@ -67,6 +73,7 @@ int main(void)
         switch (choise)
         {
         case '1':
+            FILE *input;
             input = fopen("input.txt", "r");
             if (input == NULL)
             {
@@ -74,11 +81,12 @@ int main(void)
                 return 1;
             }
             Create_Table(input, keys, datas);
+            fclose(input);
             puts("Создано");
             break;
 
         case '2':
-            heapSort((Key *) keys->key_value);
+            heapSort(keys);
             puts("Отсортировано!");
             break;
 
@@ -108,8 +116,6 @@ int main(void)
         scanf("%c", &choise);
     }
 
-
-    fclose(input);
     puts("Работа окончена!");
 
     return 0;
