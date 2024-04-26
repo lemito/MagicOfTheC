@@ -9,23 +9,16 @@
 #include <string.h>
 
 /**
- * Меняет ключи местами -- свап
- * @param a первый ключ
- * @param b второй ключ
- */
-void swapify(Key* a, Key* b);
-
-/**
  * Просеивание, тяжелые элементы падают вниз
- * @param arr
- * @param start
- * @param end
+ * @param arr  массив для просеивания
+ * @param start откуда начинаем
+ * @param end где заканчиваем
  */
 void siftdown(Key* arr, int start, int end);
 
 /**
  * Функция сортировки
- * @param arr
+ * @param arr массив для сортировки
  */
 void heapSort(Key* arr);
 
