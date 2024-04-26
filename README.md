@@ -5,7 +5,7 @@ Vector, Queue, Dequeue and other and other useful things like in C++, but in C
 
 
 ## Realise list
--  [ ] Vector
+-  [x] Vector
 - Queue
 - [x] Dynamicaly
 - [x] Static (arrays)
@@ -27,8 +27,9 @@ Vector, Queue, Dequeue and other and other useful things like in C++, but in C
 - Sort and search
 - - Search
 - - - [ ] Linear
-- - - [ ] Binary
+- - - [x] Binary
 - - Sort
-- - - [ ] Array sort
+- - - [x] Heap sort
+- - - [x] Merge sort
 
 Tecnhically TODO [here](./TODO.md)
