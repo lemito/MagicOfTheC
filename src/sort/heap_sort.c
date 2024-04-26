@@ -1,7 +1,14 @@
 #include "heap_sort.h"
 
-void siftdown(Key arr[], int start, int end)
+void swapify(Key* a, Key* b) {
+    Key temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+void siftdown(Key* arr, int start, int end)
 {
+    // текущий узел
     int root = start;
     while (root * 2 + 1 <= end)
     {
@@ -18,9 +25,7 @@ void siftdown(Key arr[], int start, int end)
         }
         if (swap != root)
         {
-            Key temp = arr[root];
-            arr[root] = arr[swap];
-            arr[swap] = temp;
+            swapify(&arr[root], &arr[swap]);
             root = swap;
         }
         else
@@ -30,17 +35,15 @@ void siftdown(Key arr[], int start, int end)
     }
 }
 
-void heapSort(Key arr[], int n)
+void heapSort(Key* arr)
 {
-    for (int i = n / 2 - 1; i >= 0; i--)
+    for (int i = N / 2 - 1; i >= 0; i--)
     {
-        siftdown(arr, i, n - 1);
+        siftdown(arr, i, N - 1);
     }
-    for (int i = n - 1; i >= 0; i--)
+    for (int i = N - 1; i >= 0; i--)
     {
-        Key temp = arr[0];
-        arr[0] = arr[i];
-        arr[i] = temp;
+        swapify(&arr[0], &arr[i]);
         siftdown(arr, 0, i - 1);
     }
 }

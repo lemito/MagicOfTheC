@@ -8,8 +8,25 @@
 #include "../kp9/table.h"
 #include <string.h>
 
-void siftdown(Key arr[], int start, int end);
+/**
+ * Меняет ключи местами -- свап
+ * @param a первый ключ
+ * @param b второй ключ
+ */
+void swapify(Key* a, Key* b);
 
-void heapSort(Key arr[], int n);
+/**
+ * Просеивание, тяжелые элементы падают вниз
+ * @param arr
+ * @param start
+ * @param end
+ */
+void siftdown(Key* arr, int start, int end);
+
+/**
+ * Функция сортировки
+ * @param arr
+ */
+void heapSort(Key* arr);
 
 #endif //MAGICOFTHEC_HEAP_SORT_H

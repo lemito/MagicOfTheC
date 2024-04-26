@@ -12,7 +12,7 @@ typedef struct Key
 
 typedef struct Data
 {
-    char data[50];
+    char data[60];
 } Data;
 
 /**

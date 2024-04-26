@@ -13,7 +13,7 @@ void Binary_Search(const Key* keys, const Data* datas){
         int mid = l + (r - l) / 2;
 
         if (strcmp(keys[mid].key_value, search_elem.key_value) == 0) {
-            printf("ключ найден, его значение: %s\n", datas[keys[mid].to].data);
+            printf("Ключ найден, его значение: %s\n", datas[keys[mid].to].data);
             flag = true;
             break;
         }
@@ -76,7 +76,7 @@ int main(void)
             break;
 
         case '2':
-            heapSort((Key *) keys->key_value, N);
+            heapSort((Key *) keys->key_value);
             puts("Отсортировано!");
             break;
 
@@ -103,7 +103,8 @@ int main(void)
             break;
         }
         print_menu();
-        scanf("%c", &choise);
+        if (scanf("%c", &choise) == 1) continue;
+        else puts("Ошибка чтения");
     }
 
 
