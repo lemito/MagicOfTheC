@@ -4,8 +4,7 @@
             "name": "Linux",
             "includePath": [
                 "${workspaceFolder}/**",
-                "/usr/local/emscripten/system/include/**",
-                "/usr/local/emscripten"
+                "${workspaceFolder}/include"
             ],
             "compilerPath": "/usr/bin/clang-14",
             "intelliSenseMode": "linux-clang-x64",

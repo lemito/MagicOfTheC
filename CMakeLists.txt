@@ -15,6 +15,8 @@ add_library(MagicOfTheC_queue_static_lib STATIC src/queue/queue_static_lib.c src
 add_library(merge_sort src/sort/merge_sort.c src/sort/merge_sort.h)
 add_library(heap_sort src/sort/heap_sort.c
         src/sort/heap_sort.h)
+add_library(MagicOfTheC_binary_search_lib STATIC src/search/binary_search.h src/search/binary_search.c)
+
 
 # Создание исполняемых файлов
 add_executable(lab26 src/lab26/main.c)
@@ -41,4 +43,4 @@ target_link_libraries(lab26 merge_sort MagicOfTheC_queue_static_lib)
 
 add_executable(stress26 src/lab26/stress.c)
 target_link_libraries(stress26 merge_sort MagicOfTheC_queue_static_lib)
-target_link_libraries(kp9 heap_sort)
+target_link_libraries(kp9 heap_sort MagicOfTheC_binary_search_lib)
