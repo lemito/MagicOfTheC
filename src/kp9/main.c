@@ -1,7 +1,7 @@
 #include <string.h>
 #include <stdbool.h>
 #include "table.h"
-#include "../sort/heap_sort.h"
+#include "../sort/heap/heap_sort.h"
 #include "../search/binary_search.h"
 
 void clearInputBuffer()

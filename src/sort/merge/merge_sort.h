@@ -1,9 +1,7 @@
 //
 // Created by lemito on 4/20/24.
 //
-
-#include "../queue/queue_static_lib.h"
-
+#include "../../queue/queue_static_lib.h"
 #ifndef MAGICOFTHEC_MERGE_SORT_H
 #define MAGICOFTHEC_MERGE_SORT_H
 

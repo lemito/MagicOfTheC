@@ -5,7 +5,7 @@
 #ifndef MAGICOFTHEC_HEAP_SORT_H
 #define MAGICOFTHEC_HEAP_SORT_H
 
-#include "../kp9/table.h"
+#include "../../kp9/table.h"
 #include <string.h>
 
 /**

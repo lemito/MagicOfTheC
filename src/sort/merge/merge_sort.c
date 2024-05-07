@@ -1,4 +1,5 @@
 #include "merge_sort.h"
+
 void merge(queue *q1, queue *q2, queue *q)
 {
     /*

@@ -2,7 +2,7 @@
 // Created by lemito on 4/20/24.
 //
 #include <stdio.h>
-#include "../sort/merge_sort.h"
+#include "../sort/merge/merge_sort.h"
 
 void clearInputBuffer()
 {

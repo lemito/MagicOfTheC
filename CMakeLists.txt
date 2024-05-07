@@ -10,11 +10,11 @@ add_library(MagicOfTheC_exp_tree_libs STATIC src/lab24/stack.c src/lab24/stack.h
 # add_library(MagicOfTheC_stack_arr STATIC src/stack/stack_arr_lib.c src/linear_list/main.c)
 add_library(MagicOfTheC_tree_lib STATIC src/tree/tree_lib.c)
 add_library(MagicOfTheC_queue_dyn_lib STATIC src/queue/queue_dyn_lib.c)
-add_library(MagicOfTheC_queue_static_lib STATIC src/queue/queue_static_lib.c src/queue/queue_static_lib.h)
+add_library(MagicOfTheC_queue_static_lib STATIC src/queue/queue_static_lib.h src/queue/queue_static_lib.c)
 # add_library(MagicOfTheC_iterator_lib STATIC src/linear_list/iterator/iterator.c src/linear_list/list/list.c src/linear_list/list/list.h)
-add_library(merge_sort src/sort/merge_sort.c src/sort/merge_sort.h)
-add_library(heap_sort src/sort/heap_sort.c
-        src/sort/heap_sort.h)
+add_library(merge_sort src/sort/merge/merge_sort.c src/sort/merge/merge_sort.h)
+add_library(heap_sort src/sort/heap/heap_sort.c
+        src/sort/heap/heap_sort.h)
 add_library(MagicOfTheC_binary_search_lib STATIC src/search/binary_search.h src/search/binary_search.c)
 
 

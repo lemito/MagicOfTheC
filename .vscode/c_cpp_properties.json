@@ -4,7 +4,7 @@
             "name": "Linux",
             "includePath": [
                 "${workspaceFolder}/**",
-                "${workspaceFolder}/include"
+                // "${workspaceFolder}/include"
             ],
             "compilerPath": "/usr/bin/clang-14",
             "intelliSenseMode": "linux-clang-x64",
