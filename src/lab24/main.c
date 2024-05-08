@@ -296,45 +296,46 @@ void print_menu()
     printf("4) Упростить выражение\n");
 }
 
-// Функция для упрощения выражения
-// void simplify_expression(TN *node) {
-//     if (node == NULL) {
-//         return;
-//     }
-
-//     // Рекурсивно обходим левое поддерево
-//     simplify_expression(node->l);
-
-//     // Рекурсивно обходим правое поддерево
-//     simplify_expression(node->r);
-
-//     // Проверяем, является ли текущий узел операцией деления
-//     if (node->t.type == symb_OP && node->t.data.op == OP_DIVIDE) {
-//         // Проверяем, является ли левый операнд умножением
-//         if (node->l != NULL && node->l->t.type == symb_OP && node->l->t.data.op == OP_MULT) {
-//             // Проверяем, является ли правый операнд числом
-//             if (node->r != NULL && node->r->t.type == symb_NUMBER) {
-//                 // Заменяем узел деления на узел умножения
-//                 node->t.data.op = OP_MULT;
-
-//                 // меняем левое поддерево на цифру
-//                 node->l->t.type = symb_NUMBER;
-//                 node->l->t.data.number = node->l->l->t.data.number / node->r->t.data.number;
-
-//                 // правое - на переменную
-//                 node->r->t.type = symb_VAR;
-//                 strcpy(node->r->t.data.var, node->l->r->t.data.var);
-//                 node->r->t.data.c = node->l->r->t.data.c;
-
-//                 // чистим-чистим-чистим
-//                 FREE_AND_NULL(node->l->l);
-//                 FREE_AND_NULL(node->l->r);
-//             }
-//         }
-//     }
-// }
-
+// Функция для упрощения выражения 4*a/2->2*a
 void simplify_expression(TN *node) {
+    if (node == NULL) {
+        return;
+    }
+
+    // Рекурсивно обходим левое поддерево
+    simplify_expression(node->l);
+
+    // Рекурсивно обходим правое поддерево
+    simplify_expression(node->r);
+
+    // Проверяем, является ли текущий узел операцией деления
+    if (node->t.type == symb_OP && node->t.data.op == OP_DIVIDE) {
+        // Проверяем, является ли левый операнд умножением
+        if (node->l != NULL && node->l->t.type == symb_OP && node->l->t.data.op == OP_MULT) {
+            // Проверяем, является ли правый операнд числом
+            if (node->r != NULL && node->r->t.type == symb_NUMBER) {
+                // Заменяем узел деления на узел умножения
+                node->t.data.op = OP_MULT;
+
+                // меняем левое поддерево на цифру
+                node->l->t.type = symb_NUMBER;
+                node->l->t.data.number = node->l->l->t.data.number / node->r->t.data.number;
+
+                // правое - на переменную
+                node->r->t.type = symb_VAR;
+                strcpy(node->r->t.data.var, node->l->r->t.data.var);
+                node->r->t.data.c = node->l->r->t.data.c;
+
+                // чистим-чистим-чистим
+                FREE_AND_NULL(node->l->l);
+                FREE_AND_NULL(node->l->r);
+            }
+        }
+    }
+}
+
+//(a/b)*(c/d)->(a*c)/(b*d)
+void simplify_expression2(TN *node) {
     if (node == NULL) {
         return;
     }
