@@ -51,8 +51,13 @@ void Destroy(queue *q)
     {
         struct Item *pi = q->first;
         q->first = q->first->next;
-        free(pi->data);
-        free(pi);
+        if (pi->data!= NULL) {
+            for (int i = 0; i < 25; i++) {
+                free(pi->data[i]);
+            }
+            free(pi->data);
+        }
+        FREE_AND_NULL(pi);
     }
     q->size = 0;
     q->first = NULL;

@@ -66,6 +66,7 @@ bool Eq(Vector *l, Vector *r)
 
 void Destroy(Vector *v)
 {
-    free(v->data);
-    free(v);
+    if (v->data != NULL) {
+        FREE_AND_NULL(v->data);
+    }
 }

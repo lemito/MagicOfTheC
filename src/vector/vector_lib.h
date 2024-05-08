@@ -4,6 +4,7 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include "../utils/utils.h"
 
 typedef struct Vector
 {
