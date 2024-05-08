@@ -346,37 +346,37 @@ void simplify_expression2(TN *node) {
     // Рекурсивно обходим правое поддерево
     simplify_expression(node->r);
 
-    // Проверяем, является ли текущий узел операцией умножения
+    // Проверка корня
     if (node->t.type == symb_OP && node->t.data.op == OP_MULT) {
-        // Проверяем, являются ли оба операнда операциями деления
+        // Проверки
         if (node->l != NULL && node->l->t.type == symb_OP && node->l->t.data.op == OP_DIVIDE &&
             node->r != NULL && node->r->t.type == symb_OP && node->r->t.data.op == OP_DIVIDE) {
 
-            // Создаём новый узел деления
-            TN *newDivideNode = malloc(sizeof(TN));
-            newDivideNode->t.type = symb_OP;
-            newDivideNode->t.data.op = OP_DIVIDE;
+            // Создаём ноду деления
+            TN *newOpNode = malloc(sizeof(TN));
+            newOpNode->t.type = symb_OP;
+            newOpNode->t.data.op = OP_DIVIDE;
             
-            // Множим числители (новый узел умножения для левой части)
-            TN *newNumerator = malloc(sizeof(TN));
-            newNumerator->t.type = symb_OP;
-            newNumerator->t.data.op = OP_MULT;
-            newNumerator->l = node->l->l; // Числитель левого деления
-            newNumerator->r = node->r->l; // Числитель правого деления
+            // Нода числителя
+            TN *newNum = malloc(sizeof(TN));
+            newNum->t.type = symb_OP;
+            newNum->t.data.op = OP_MULT;
+            newNum->l = node->l->l; // Числитель левого деления
+            newNum->r = node->r->l; // Числитель правого деления
 
-            // Множим знаменатели (новый узел умножения для правой части)
-            TN *newDenominator = malloc(sizeof(TN));
-            newDenominator->t.type = symb_OP;
-            newDenominator->t.data.op = OP_MULT;
-            newDenominator->l = node->l->r; // Знаменатель левого деления
-            newDenominator->r = node->r->r; // Знаменатель правого деления
+            // Нода знаменателя
+            TN *newDen = malloc(sizeof(TN));
+            newDen->t.type = symb_OP;
+            newDen->t.data.op = OP_MULT;
+            newDen->l = node->l->r; // Знаменатель левого деления
+            newDen->r = node->r->r; // Знаменатель правого деления
 
-            // Устанавливаем новые узлы в узел деления
-            newDivideNode->l = newNumerator;
-            newDivideNode->r = newDenominator;
+            // Линкуем ноды
+            newOpNode->l = newNum;
+            newOpNode->r = newDen;
 
             // Заменяем текущий узел на новый узел деления
-            *node = *newDivideNode;
+            *node = *newOpNode;
         }
     }
 }
