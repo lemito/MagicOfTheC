@@ -8,6 +8,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include "../iterator/iterator.h"
+#include "../../utils/utils.h"
 
 typedef struct List
 {

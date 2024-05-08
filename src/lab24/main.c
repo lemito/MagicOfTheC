@@ -327,10 +327,8 @@ void simplify_expression(TN *node) {
                 node->r->t.data.c = node->l->r->t.data.c;
 
                 // чистим-чистим-чистим
-                free(node->l->l);
-                free(node->l->r);
-                node->l->l = NULL;
-                node->l->r = NULL;
+                FREE_AND_NULL(node->l->l);
+                FREE_AND_NULL(node->l->r);
             }
         }
     }

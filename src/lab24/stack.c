@@ -29,7 +29,9 @@ STACK *stack_copy(STACK *original) {
 
 void stack_delete(STACK *stack) {
     // free(stack->body);
-    free(stack);
+    // free(stack);
+    FREE_AND_NULL(stack);
+
 }
 bool stack_empty(STACK *stack) {
     return stack->size == 0;

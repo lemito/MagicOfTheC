@@ -37,17 +37,18 @@ bool Empty(const List *list)
 
 void Destroy(List *list)
 {
-
     Iterator current = First(list);
+    Iterator *next;
 
-    while (current.node != list->head)
+    while (current.node != NULL)
     {
-        Item *itemToFree = current.node;
-        Next(&current);
-        free(itemToFree);
+        next = Next(&current);
+        FREE_AND_NULL(current.node);
+        current = *next;
     }
-    free(list->head);
-    list->head = NULL;
+
+    FREE_AND_NULL(list->head);
+
     list->size = 0;
 }
 

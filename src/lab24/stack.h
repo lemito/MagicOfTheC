@@ -4,6 +4,7 @@
 #include <stdbool.h>
 
 #include "symbol.h"
+#include "../utils/utils.h"
 
 typedef struct {
     symbol *body;
