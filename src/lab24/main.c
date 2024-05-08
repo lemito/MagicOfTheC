@@ -297,6 +297,43 @@ void print_menu()
 }
 
 // Функция для упрощения выражения
+// void simplify_expression(TN *node) {
+//     if (node == NULL) {
+//         return;
+//     }
+
+//     // Рекурсивно обходим левое поддерево
+//     simplify_expression(node->l);
+
+//     // Рекурсивно обходим правое поддерево
+//     simplify_expression(node->r);
+
+//     // Проверяем, является ли текущий узел операцией деления
+//     if (node->t.type == symb_OP && node->t.data.op == OP_DIVIDE) {
+//         // Проверяем, является ли левый операнд умножением
+//         if (node->l != NULL && node->l->t.type == symb_OP && node->l->t.data.op == OP_MULT) {
+//             // Проверяем, является ли правый операнд числом
+//             if (node->r != NULL && node->r->t.type == symb_NUMBER) {
+//                 // Заменяем узел деления на узел умножения
+//                 node->t.data.op = OP_MULT;
+
+//                 // меняем левое поддерево на цифру
+//                 node->l->t.type = symb_NUMBER;
+//                 node->l->t.data.number = node->l->l->t.data.number / node->r->t.data.number;
+
+//                 // правое - на переменную
+//                 node->r->t.type = symb_VAR;
+//                 strcpy(node->r->t.data.var, node->l->r->t.data.var);
+//                 node->r->t.data.c = node->l->r->t.data.c;
+
+//                 // чистим-чистим-чистим
+//                 FREE_AND_NULL(node->l->l);
+//                 FREE_AND_NULL(node->l->r);
+//             }
+//         }
+//     }
+// }
+
 void simplify_expression(TN *node) {
     if (node == NULL) {
         return;
@@ -308,28 +345,37 @@ void simplify_expression(TN *node) {
     // Рекурсивно обходим правое поддерево
     simplify_expression(node->r);
 
-    // Проверяем, является ли текущий узел операцией деления
-    if (node->t.type == symb_OP && node->t.data.op == OP_DIVIDE) {
-        // Проверяем, является ли левый операнд умножением
-        if (node->l != NULL && node->l->t.type == symb_OP && node->l->t.data.op == OP_MULT) {
-            // Проверяем, является ли правый операнд числом
-            if (node->r != NULL && node->r->t.type == symb_NUMBER) {
-                // Заменяем узел деления на узел умножения
-                node->t.data.op = OP_MULT;
+    // Проверяем, является ли текущий узел операцией умножения
+    if (node->t.type == symb_OP && node->t.data.op == OP_MULT) {
+        // Проверяем, являются ли оба операнда операциями деления
+        if (node->l != NULL && node->l->t.type == symb_OP && node->l->t.data.op == OP_DIVIDE &&
+            node->r != NULL && node->r->t.type == symb_OP && node->r->t.data.op == OP_DIVIDE) {
 
-                // меняем левое поддерево на цифру
-                node->l->t.type = symb_NUMBER;
-                node->l->t.data.number = node->l->l->t.data.number / node->r->t.data.number;
+            // Создаём новый узел деления
+            TN *newDivideNode = malloc(sizeof(TN));
+            newDivideNode->t.type = symb_OP;
+            newDivideNode->t.data.op = OP_DIVIDE;
+            
+            // Множим числители (новый узел умножения для левой части)
+            TN *newNumerator = malloc(sizeof(TN));
+            newNumerator->t.type = symb_OP;
+            newNumerator->t.data.op = OP_MULT;
+            newNumerator->l = node->l->l; // Числитель левого деления
+            newNumerator->r = node->r->l; // Числитель правого деления
 
-                // правое - на переменную
-                node->r->t.type = symb_VAR;
-                strcpy(node->r->t.data.var, node->l->r->t.data.var);
-                node->r->t.data.c = node->l->r->t.data.c;
+            // Множим знаменатели (новый узел умножения для правой части)
+            TN *newDenominator = malloc(sizeof(TN));
+            newDenominator->t.type = symb_OP;
+            newDenominator->t.data.op = OP_MULT;
+            newDenominator->l = node->l->r; // Знаменатель левого деления
+            newDenominator->r = node->r->r; // Знаменатель правого деления
 
-                // чистим-чистим-чистим
-                FREE_AND_NULL(node->l->l);
-                FREE_AND_NULL(node->l->r);
-            }
+            // Устанавливаем новые узлы в узел деления
+            newDivideNode->l = newNumerator;
+            newDivideNode->r = newDenominator;
+
+            // Заменяем текущий узел на новый узел деления
+            *node = *newDivideNode;
         }
     }
 }
