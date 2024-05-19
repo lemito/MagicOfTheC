@@ -42,6 +42,7 @@ void merge_sort(queue *q)
         return;
     }
 
+
     // начинаем делить на две половинки
     size_t mid = Size(q) / 2;
     size_t second = Size(q) - mid;
