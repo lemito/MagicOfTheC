@@ -1,8 +1,6 @@
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
-#include <math.h>
-#include <limits.h>
 
 typedef struct block {
     struct block* next;
@@ -20,7 +18,13 @@ typedef struct BigInt {
 #ifndef BIGINT_INIT
 #define BIGINT_INIT(name) BigInt name = {0, NULL}
 // переопределение функций
+/**
+ * Выводит большой инт в консоль
+ */
 #define print_num(name) print_num_f(&name)
+/**
+ * Создаёт большой инт из строки
+ */
 #define init_from_str(dest, src ) init_from_str_f(&dest, src);
 /**
  * Сложение: res = a+b
@@ -29,6 +33,10 @@ typedef struct BigInt {
  * @param b
  */
 #define BigInt_add(res, a, b) BigInt_sum(&res, &a, &b)
+/**
+ * Очистить (удалить) BigInt
+ */
+#define BigInt_clear(dest) Destroy_BigInt_f(&dest)
 #endif
 
 block* create_block(int data) {
@@ -66,7 +74,7 @@ void print_num_f(BigInt* myInt) {
     printf("\n");
 }
 
-void print_blocks(BigInt* myInt) {
+[[maybe_unused]] void print_blocks(BigInt* myInt) {
     block* current = myInt->blocks;
     int cnt = 1;
     while(current != NULL) {
@@ -111,7 +119,7 @@ void init_from_str_f(BigInt* dest, const char* src) {
     dest->size = numBlocks;
 }
 
-int poww(double base, double exp) {
+[[maybe_unused]] int poww(double base, double exp) {
     long double answ = 1;
     if (exp < 0) {
         exp *= -1;
@@ -168,6 +176,18 @@ void BigInt_sum(BigInt *res, BigInt *a, BigInt *b) {
     }
 }
 
+void Destroy_BigInt_f(BigInt *bigInt) {
+    block* current = bigInt->blocks;
+    while (current != NULL) {
+        block* nextBlock = current->next;
+        free(current);
+        current = nextBlock;
+    }
+    bigInt->blocks = NULL;
+    bigInt->size = 0;
+}
+
+
 
 int main(){
     BIGINT_INIT(a);
@@ -185,4 +205,8 @@ int main(){
     BigInt_add(res, a, b);
     printf("=============================\n");
     print_num(res);
+
+    BigInt_clear(a);
+    BigInt_clear(b);
+    BigInt_clear(res);
 }
