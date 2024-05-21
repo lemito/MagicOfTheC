@@ -21,22 +21,22 @@ typedef struct BigInt {
 /**
  * Выводит большой инт в консоль
  */
-#define print_num(name) print_num_f(&name)
+#define print_num(name) __print_num(&name)
 /**
  * Создаёт большой инт из строки
  */
-#define init_from_str(dest, src ) init_from_str_f(&dest, src);
+#define init_from_str(dest, src ) __init_from_str(&dest, src);
 /**
  * Сложение: res = a+b
  * @param res BigInt с результатом
  * @param a
  * @param b
  */
-#define BigInt_add(res, a, b) BigInt_sum(&res, &a, &b)
+#define BigInt_add(res, a, b) __BigInt_sum(&res, &a, &b)
 /**
  * Очистить (удалить) BigInt
  */
-#define BigInt_clear(dest) Destroy_BigInt_f(&dest)
+#define BigInt_clear(dest) __Destroy_BigInt(&dest)
 #endif
 
 block* create_block(int data) {
@@ -65,7 +65,7 @@ void add_block_to_bigint(BigInt* bigInt, block* newBlock) {
     bigInt->size++;
 }
 
-void print_num_f(BigInt* myInt) {
+void __print_num(BigInt* myInt) {
     block* current = myInt->blocks;
     while(current != NULL) {
         printf("%d", current->data);
@@ -86,7 +86,7 @@ void print_num_f(BigInt* myInt) {
 }
 
 
-void init_from_str_f(BigInt* dest, const char* src) {
+void __init_from_str(BigInt* dest, const char* src) {
     size_t len = strlen(src);
     size_t numBlocks = len / BLOCK_SIZE;
     if (len % BLOCK_SIZE != 0) {
@@ -135,7 +135,7 @@ void init_from_str_f(BigInt* dest, const char* src) {
 #define GO_TO_PREV(blockName) if (blockName != NULL) blockName = blockName->prev;
 
 
-void BigInt_sum(BigInt *res, BigInt *a, BigInt *b) {
+void __BigInt_sum(BigInt *res, BigInt *a, BigInt *b) {
     size_t lenn = MAX(a->size, b->size) + 1;
     res->size = lenn;
     res->blocks = NULL;
@@ -176,7 +176,7 @@ void BigInt_sum(BigInt *res, BigInt *a, BigInt *b) {
     }
 }
 
-void Destroy_BigInt_f(BigInt *bigInt) {
+void __Destroy_BigInt(BigInt *bigInt) {
     block* current = bigInt->blocks;
     while (current != NULL) {
         block* nextBlock = current->next;
@@ -188,15 +188,14 @@ void Destroy_BigInt_f(BigInt *bigInt) {
 }
 
 
-
 int main(){
     BIGINT_INIT(a);
     BIGINT_INIT(b);
     BIGINT_INIT(res);
 
-    init_from_str(a, "12345678909876543210");
+    init_from_str(a, "1");
 
-    init_from_str(b, "12345678909876543210");
+    init_from_str(b, "9");
 
     print_num(a);
     printf("+\n");
@@ -205,6 +204,8 @@ int main(){
     BigInt_add(res, a, b);
     printf("=============================\n");
     print_num(res);
+    printf("-----------------------------\n");
+
 
     BigInt_clear(a);
     BigInt_clear(b);
