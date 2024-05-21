@@ -1,8 +1,12 @@
 cmake_minimum_required(VERSION 3.27)
 project(MagicOfTheC LANGUAGES C CXX)
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
+include(FindGMP)
 
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_CXX_STANDARD 17)
+
+find_package(GMP REQUIRED)
 
 # Создание библиотек
 add_library(MagicOfTheC_vector STATIC src/vector/vector_lib.c)
@@ -44,4 +48,8 @@ target_link_libraries(lab26 merge_sort MagicOfTheC_queue_static_lib)
 add_executable(stress26 src/lab26/stress.c)
 target_link_libraries(stress26 merge_sort MagicOfTheC_queue_static_lib)
 target_link_libraries(kp9 heap_sort MagicOfTheC_binary_search_lib)
-add_executable(BigAlgebra src/BigAlgebra/summ.cpp)
+
+add_executable(BigAlgebra_vector src/BigAlgebra/on_vectors.cpp)
+add_executable(BigAlegra_gmp src/BigAlgebra/gmp_example.cpp)
+target_link_libraries(BigAlegra_gmp gmp gmpxx)
+add_executable(BigAlegra_new src/BigAlgebra/new_algo.cpp)

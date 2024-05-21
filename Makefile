@@ -26,6 +26,10 @@ queue_dyn: $(QUEUE_DYN_OBJ)
 lab26: $(QUEUE_STATIC_OBJ) $(MERGE_SORT_OBJ) $(LAB26_OBJ)
 	$(CC) $(CFLAGS) $^ -o $@.out
 
+gmp_example:
+	gcc $(CFLAGS) src/BigAlgebra/gmp_example.cpp -o $@.out -lgmp -lgmpxx
+	./gmp_example.out
+
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
