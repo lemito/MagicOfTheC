@@ -1,36 +1,53 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-#define MAX 20
+#define MAX 100
 
-int cnt = 0;
+int min(int a, int b) {
+    return a < b ? a : b;
+}
+
+int n, edgeCount;
+int adjMatrix[MAX][MAX];
+int ids[MAX];
+int low[MAX];
 bool visited[MAX];
-int tin[MAX];
-int up[MAX];
+int id = 0;
 
-void dfs(int v, int p, int n, int G[MAX][MAX]){
-    cnt++;
-    tin[v] = up[v] = cnt;
-    visited[v] = true;
-    int count = 0;
+void findCutVertices(int node, int parent) {
+    visited[node] = true;
+    ids[node] = low[node] = id++;
 
-    for (int u = 0; u < n; u++){
-        if (G[v][u] == 1) {
-            if (u == p) continue;
-            if (visited[u]){
-                up[v] = up[v] < tin[v] ? up[v] : tin[v];
-            } else {
-                dfs(u, v, n, G);
-                count++;
-                up[v] = up[v] < up[u] ? up[v] : up[u];
-                if (p != -1 && up[u] >= tin[v]) {
-                    printf("Vertex %d is a cutpoint\n", v);
+    for (int i = 0; i < n; i++) {
+        if (adjMatrix[node][i]) {
+            if (!visited[i]) {
+                findCutVertices(i, node);
+                low[node] = min(low[node], low[i]);
+                if (ids[node] < low[i]) {
+                    printf("Шарнир: %d - %d\n", node, i);
                 }
+            } else if (i != parent) {
+                low[node] = min(low[node], ids[i]);
+            }
+        }
+    }
+}
+
+int main() {
+    printf("Введите количество вершин графа: ");
+    scanf("%d", &n);
+    printf("Введите матрицу смежности %d x %d:\n", n, n);
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            scanf("%d", &adjMatrix[i][j]);
+            if (adjMatrix[i][j] == 1) {
+                edgeCount++;
             }
         }
     }
 
-    if (p == -1 && count >= 2) {
-        printf("Vertex %d is a cutpoint\n", v);
-    }
+    printf("Шарниры графа:\n");
+    findCutVertices(0, -1);
+
+    return 0;
 }

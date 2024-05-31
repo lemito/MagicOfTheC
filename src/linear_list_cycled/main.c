@@ -20,6 +20,11 @@ void print_menu()
 
 int main()
 {
+    // для КП9
+    // for (int n = 1; n < 28; ++n)
+    // {printf("%d: %d_%d\n", n, ((n-1)%15)+1, ((n+5)%9)+1);}
+
+
     List listik;
     Create(&listik);
 
