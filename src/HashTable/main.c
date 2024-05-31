@@ -5,6 +5,7 @@
 #include <time.h>
 #include <uuid/uuid.h>
 #include <sys/types.h>
+#include <stdbool.h>
 
 #define FREE_AND_NULL(p) \
     do                   \
@@ -60,6 +61,16 @@ cell *create_cell(const char *key, const char *name, const char *age, const char
     return res;
 }
 
+void print_cell(cell *current_cell)
+{
+    printf("Key: %s, Name: %s, Age: %s, Institute: %s, GPA: %.2f\n",
+           current_cell->key,
+           current_cell->value->name,
+           current_cell->value->age,
+           current_cell->value->institute,
+           current_cell->value->gpa);
+}
+
 void print_table(Table *table)
 {
     for (unsigned int i = 0; i < TABLE_SIZE; i++)
@@ -67,12 +78,7 @@ void print_table(Table *table)
         cell *current_cell = table->cells[i];
         while (current_cell != NULL)
         {
-            printf("Key: %s, Name: %s, Age: %s, Institute: %s, GPA: %.2f\n",
-                   current_cell->key,
-                   current_cell->value->name,
-                   current_cell->value->age,
-                   current_cell->value->institute,
-                   current_cell->value->gpa);
+            print_cell(current_cell);
             current_cell = current_cell->next;
         }
     }
@@ -128,7 +134,7 @@ void set(Table *table, const char *key, const char *name, const char *age, const
     prev->next = create_cell(key, name, age, institute, gpa);
 }
 
-row *get(Table *table, const char *key)
+row *get_row(Table *table, const char *key)
 {
     unsigned int slot = gen_hash(key);
     cell *cell = table->cells[slot];
@@ -138,6 +144,23 @@ row *get(Table *table, const char *key)
         if (strcmp(cell->key, key) == 0)
         {
             return cell->value;
+        }
+        cell = cell->next;
+    }
+
+    return NULL;
+}
+
+cell *get_cell(Table *table, const char *key)
+{
+    unsigned int slot = gen_hash(key);
+    cell *cell = table->cells[slot];
+
+    while (cell != NULL)
+    {
+        if (strcmp(cell->key, key) == 0)
+        {
+            return cell;
         }
         cell = cell->next;
     }
@@ -252,6 +275,7 @@ void new_gpa(Table *table, const char *key, float new_gpa)
     {
         if (strcmp(current_cell->key, key) == 0)
         {
+            fprintf(stdout, "%.2f->%.2f\n", current_cell->value->gpa, new_gpa);
             current_cell->value->gpa = new_gpa;
             return;
         }
@@ -305,6 +329,103 @@ void print_average_gpa_by_institute(Table *my, const char *institute_name)
     const char *key_var = generate_key();                       \
     set(table, key_var, name, age, institute, gpa);
 
+bool add_to_table_from_user(Table *table)
+{
+    char *name = malloc(sizeof(char) * 10);
+    char *age = malloc(sizeof(char) * 3);
+    char *institute = malloc(sizeof(char) * 3);
+    float gpa = 0.0f;
+
+#define CLEAR_VARS_IN_ADD_FROM_USER \
+    FREE_AND_NULL(name);            \
+    FREE_AND_NULL(age);             \
+    FREE_AND_NULL(institute);
+
+    if (!name || !age || !institute)
+    {
+        fprintf(stderr, "Ошибка выделения памяти\n");
+        CLEAR_VARS_IN_ADD_FROM_USER;
+        return false;
+    }
+
+    puts("Добавление нового студента:");
+    printf("Имя:\n▷▷▷ ");
+    if (scanf("%9s", name) != 1)
+    {
+        fprintf(stderr, "Ошибка при вводе имени\n");
+        CLEAR_VARS_IN_ADD_FROM_USER;
+        return false;
+    }
+
+    printf("\nВозраст:\n▷▷▷ ");
+    if (scanf("%2s", age) != 1)
+    {
+        fprintf(stderr, "Ошибка при вводе возраста\n");
+        CLEAR_VARS_IN_ADD_FROM_USER;
+        return false;
+    }
+
+    printf("\nИнститут:\n▷▷▷ ");
+    if (scanf("%2s", institute) != 1)
+    {
+        fprintf(stderr, "Ошибка при вводе института\n");
+        CLEAR_VARS_IN_ADD_FROM_USER;
+        return false;
+    }
+
+    printf("\nОценка:\n▷▷▷ ");
+    if (scanf("%f", &gpa) != 1)
+    {
+        fprintf(stderr, "Ошибка при вводе оценки\n");
+        CLEAR_VARS_IN_ADD_FROM_USER;
+        return false;
+    }
+
+    ADD_TO_TABLE(table, key, name, age, institute, gpa);
+    CLEAR_VARS_IN_ADD_FROM_USER;
+    return true;
+}
+
+char *search_name_by_key(Table *table, char *key)
+{
+    if (table == NULL)
+        fprintf(stderr, "Нет таблицы");
+    for (unsigned int i = 0; i < TABLE_SIZE; i++)
+    {
+        cell *current_cell = table->cells[i];
+        while (current_cell != NULL)
+        {
+            if (strcmp(current_cell->key, key) == 0)
+            {
+                return current_cell->value->name;
+            }
+            current_cell = current_cell->next;
+        }
+    }
+    printf("Студент с ключом: %s не найден в таблице\n", key);
+    return NULL;
+}
+
+char *search_key_by_name(Table *table, char *name)
+{
+    if (table == NULL)
+        fprintf(stderr, "Нет таблицы");
+    for (unsigned int i = 0; i < TABLE_SIZE; i++)
+    {
+        cell *current_cell = table->cells[i];
+        while (current_cell != NULL)
+        {
+            if (strcmp(current_cell->value->name, name) == 0)
+            {
+                return current_cell->key;
+            }
+            current_cell = current_cell->next;
+        }
+    }
+    printf("Студент с именем: %s не найден в таблице\n", name);
+    return NULL;
+}
+
 int main(void)
 {
     printf("hash1 = %d\n", gen_hash("Клубника"));
@@ -316,23 +437,37 @@ int main(void)
     ADD_TO_TABLE(my, key2, "Вова", "19", "8", 4.44f);
     ADD_TO_TABLE(my, key3, "Петя", "19", "4", 3.84f);
     ADD_TO_TABLE(my, key4, "Денис", "19", "4", 3.44f);
+
+    // if (!add_to_table_from_user(my))
+    //     fprintf(stderr, "Ошибка!!!\n");
+
     puts("==============");
     print_table(my);
     puts("==============");
+    char *nname = strdup("Кирилл");
+    printf("Ключ для %s = %s\n", nname, search_key_by_name(my, nname));
+    puts("==============");
 
     printf("Поиск по ключу = %s : \n", key1);
-    row *info = get(my, key1);
-    if (info)
-    {
-        printf("Name: %s, Age: %s, Institute: %s, GPA: %.2f\n", info->name, info->age, info->institute, info->gpa);
-    }
+    cell *info = get_cell(my, key1);
+    print_cell(info);
     puts("==============");
     puts("Удаление");
     delete_by_name(my, "Иван");
     puts("==============");
     print_table(my);
     puts("==============");
-    new_gpa(my, key4, 4.01f);
+    puts("Сменить балл студента:");
+    char *name = malloc(sizeof(char) * 15);
+    printf("Имя:\n▷▷▷ ");
+    if (scanf("%15s", name) != 1)
+    {
+        fprintf(stderr, "Ошибка при вводе имени\n");
+        FREE_AND_NULL(name);
+        return false;
+    }
+    new_gpa(my, search_key_by_name(my, name), 4.01f);
+    FREE_AND_NULL(name);
     print_table(my);
     puts("==============");
     print_average_gpa_by_institute(my, "8");
@@ -340,6 +475,7 @@ int main(void)
     puts("==============");
     puts("Удаление таблицы:");
     free_table(my);
+    puts("");
 
     return EXIT_SUCCESS;
 }
