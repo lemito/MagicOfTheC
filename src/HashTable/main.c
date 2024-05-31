@@ -73,6 +73,11 @@ void print_cell(cell *current_cell)
 
 void print_table(Table *table)
 {
+    if (table == NULL)
+    {
+        fprintf(stdout, "Таблица пуста");
+        return;
+    }
     for (unsigned int i = 0; i < TABLE_SIZE; i++)
     {
         cell *current_cell = table->cells[i];
@@ -325,6 +330,14 @@ void print_average_gpa_by_institute(Table *my, const char *institute_name)
     }
 }
 
+void clear_stdin(void)
+{
+    int c;
+    while ((c = getchar()) != '\n' && c != EOF)
+    {
+    }
+}
+
 #define ADD_TO_TABLE(table, key_var, name, age, institute, gpa) \
     const char *key_var = generate_key();                       \
     set(table, key_var, name, age, institute, gpa);
@@ -356,7 +369,7 @@ bool add_to_table_from_user(Table *table)
         CLEAR_VARS_IN_ADD_FROM_USER;
         return false;
     }
-
+    clear_stdin();
     printf("\nВозраст:\n▷▷▷ ");
     if (scanf("%2s", age) != 1)
     {
@@ -364,7 +377,7 @@ bool add_to_table_from_user(Table *table)
         CLEAR_VARS_IN_ADD_FROM_USER;
         return false;
     }
-
+    clear_stdin();
     printf("\nИнститут:\n▷▷▷ ");
     if (scanf("%2s", institute) != 1)
     {
@@ -372,7 +385,7 @@ bool add_to_table_from_user(Table *table)
         CLEAR_VARS_IN_ADD_FROM_USER;
         return false;
     }
-
+    clear_stdin();
     printf("\nОценка:\n▷▷▷ ");
     if (scanf("%f", &gpa) != 1)
     {
@@ -380,7 +393,7 @@ bool add_to_table_from_user(Table *table)
         CLEAR_VARS_IN_ADD_FROM_USER;
         return false;
     }
-
+    clear_stdin();
     ADD_TO_TABLE(table, key, name, age, institute, gpa);
     CLEAR_VARS_IN_ADD_FROM_USER;
     return true;
@@ -426,6 +439,18 @@ char *search_key_by_name(Table *table, char *name)
     return NULL;
 }
 
+void print_menu()
+{
+    puts("Меню:");
+    puts("1. Добавить студента");
+    puts("2. Удалить студента по имени");
+    puts("3. Изменить GPA студенту");
+    puts("4. Показать средний GPA по институту");
+    puts("5. Вывести всю таблицу");
+    puts("0. Выход");
+    puts("Выберите действие: ");
+}
+
 int main(void)
 {
     Table *my = create_table();
@@ -434,15 +459,7 @@ int main(void)
 
     while (1)
     {
-        printf("\nМеню:\n");
-        printf("1. Добавить студента\n");
-        printf("2. Удалить студента по имени\n");
-        printf("3. Изменить GPA студенту\n");
-        printf("4. Показать средний GPA по институту\n");
-        printf("5. Вывести всю таблицу\n");
-        printf("0. Выход\n");
-        printf("Выберите действие: ");
-
+        print_menu();
         if (scanf("%d", &choice) != 1)
         {
             printf("Ошибка ввода. Попробуйте снова.\n");
@@ -488,8 +505,7 @@ int main(void)
         default:
             printf("Неверный выбор. Попробуйте снова.\n");
         }
-        free_table(my);
-
-        return EXIT_SUCCESS;
     }
+    free_table(my);
+    return EXIT_SUCCESS;
 }
