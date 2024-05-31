@@ -2,14 +2,15 @@
     "version": 2,
     "configurePresets": [
         {
-            "name": "clang-run",
-            "displayName": "Clang 14.0.6 x86_64-pc-linux-gnu",
-            "description": "Using compilers: C = /usr/bin/clang-14, CXX = /usr/bin/clang++-14",
+            "name": "gcc",
+            "displayName": "GCC 13.2.0 x86_64-linux-gnu",
+            "description": "Using compilers: C = /usr/bin/gcc, CXX = /usr/bin/g++",
             "binaryDir": "${sourceDir}/out/build/${presetName}",
+            "generator": "Ninja",
             "cacheVariables": {
                 "CMAKE_INSTALL_PREFIX": "${sourceDir}/out/install/${presetName}",
-                "CMAKE_C_COMPILER": "/usr/bin/clang-14",
-                "CMAKE_CXX_COMPILER": "/usr/bin/clang++-14",
+                "CMAKE_C_COMPILER": "/usr/bin/gcc",
+                "CMAKE_CXX_COMPILER": "/usr/bin/g++",
                 "CMAKE_BUILD_TYPE": "Debug"
             }
         }

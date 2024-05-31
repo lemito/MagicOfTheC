@@ -8,6 +8,9 @@ set(CMAKE_CXX_STANDARD 17)
 
 find_package(GMP REQUIRED)
 
+find_library(UUID_LIBRARIES uuid)
+find_path(UUID_INCLUDE_DIRS uuid/uuid.h)
+
 # Создание библиотек
 add_library(MagicOfTheC_vector STATIC src/vector/vector_lib.c)
 add_library(MagicOfTheC_exp_tree_libs STATIC src/lab24/stack.c src/lab24/stack.h src/lab24/symbol.h src/lab24/token.h src/lab24/tree.h)
@@ -52,4 +55,8 @@ target_link_libraries(kp9 heap_sort MagicOfTheC_binary_search_lib)
 add_executable(BigAlgebra_vector src/BigAlgebra/on_vectors.cpp)
 add_executable(BigAlegra_gmp src/BigAlgebra/gmp_example.cpp)
 target_link_libraries(BigAlegra_gmp gmp gmpxx)
-add_executable(BigAlegra_new src/BigAlgebra/new_algo.cpp)
+add_executable(BigAlegra_new src/BigAlgebra/new_algo.c
+        src/BigAlgebra/new_algo.cpp)
+add_executable(HashTable src/HashTable/main.c)
+target_include_directories(HashTable PRIVATE ${UUID_INCLUDE_DIRS})
+target_link_libraries(HashTable PRIVATE ${UUID_LIBRARIES})
