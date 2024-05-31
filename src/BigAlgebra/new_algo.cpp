@@ -1,213 +1,132 @@
-#include <cstdio>
-#include <cstdlib>
-#include <cstring>
+#include <cstddef>
+#include <algorithm>
+#include <iostream>
 
-typedef struct block {
-    struct block* next;
-    struct block* prev;
-    int data;
-} block;
+#define BLOCK_SIZE  8
 
-typedef struct BigInt {
+
+class Block{
+public:
+    Block* prev{};
+    Block* next{};
+    int data{};
+
+    explicit Block(int value): data(value), next(nullptr), prev(nullptr) {}
+private:
+};
+
+class BigInt{
+public:
     size_t size;
-    block* blocks;
-} BigInt;
+    Block* blocks;
 
-#define BLOCK_SIZE 8
-#define MAX(a, b) ((a) > (b) ? (a) : (b))
-#ifndef BIGINT_INIT
-#define BIGINT_INIT(name) BigInt name = {0, NULL}
-// переопределение функций
-/**
- * Выводит большой инт в консоль
- */
-#define print_num(name) __print_num(&name)
-/**
- * Создаёт большой инт из строки
- */
-#define init_from_str(dest, src ) __init_from_str(&dest, src);
-/**
- * Сложение: res = a+b
- * @param res BigInt с результатом
- * @param a
- * @param b
- */
-#define BigInt_add(res, a, b) __BigInt_sum(&res, &a, &b)
-/**
- * Очистить (удалить) BigInt
- */
-#define BigInt_clear(dest) __Destroy_BigInt(&dest)
-#endif
+    BigInt(): size(0), blocks(nullptr) {}
 
-block* create_block(int data) {
-    block* newBlock = (block*)malloc(sizeof(block));
-    if(newBlock == NULL) {
-        fprintf(stderr, "Error\n");
-        exit(1);
+    ~BigInt(){
+        destroy_bigint();
     }
-    newBlock->data = data;
-    newBlock->prev = NULL;
-    newBlock->next = NULL;
-    return newBlock;
-}
 
-void add_block_to_bigint(BigInt* bigInt, block* newBlock) {
-    if(bigInt->blocks == NULL) {
-        bigInt->blocks = newBlock;
-    } else {
-        block* last = bigInt->blocks;
-        while(last->next!= NULL) {
-            last = last->next;
+    void destroy_bigint() {
+        Block* current = blocks;
+        while (current!= nullptr) {
+            Block* nextBlock = current->next;
+            delete current;
+            current = nextBlock;
         }
-        last->next = newBlock;
-        newBlock->prev = last;
-    }
-    bigInt->size++;
-}
-
-void __print_num(BigInt* myInt) {
-    block* current = myInt->blocks;
-    while(current != NULL) {
-        printf("%d", current->data);
-        current = current->next;
-    }
-    printf("\n");
-}
-
-[[maybe_unused]] void print_blocks(BigInt* myInt) {
-    block* current = myInt->blocks;
-    int cnt = 1;
-    while(current != NULL) {
-        printf("%d)%d\n", cnt, current->data);
-        current = current->next;
-        ++cnt;
-    }
-    printf("\n");
-}
-
-
-void __init_from_str(BigInt* dest, const char* src) {
-    size_t len = strlen(src);
-    size_t numBlocks = len / BLOCK_SIZE;
-    if (len % BLOCK_SIZE != 0) {
-        numBlocks++;
+        blocks = nullptr;
+        size = 0;
     }
 
-    size_t start = len % BLOCK_SIZE;
-    if(start == 0) {
-        start = BLOCK_SIZE;
-    }
 
-    block* currentBlock = create_block(0);
-    dest->blocks = currentBlock;
-
-    for (size_t i = 0; i < len; i++) {
-        int digit = src[i] - '0';
-        currentBlock->data = currentBlock->data * 10 + digit;
-        start--;
-        if (start == 0) {
-            start = BLOCK_SIZE;
-            if (i != len - 1) {
-                block* newBlock = create_block(0);
-                currentBlock->next = newBlock;
-                newBlock->prev = currentBlock;
-                currentBlock = newBlock;
-            }
-        }
-    }
-
-    dest->size = numBlocks;
-}
-
-[[maybe_unused]] int poww(double base, double exp) {
-    long double answ = 1;
-    if (exp < 0) {
-        exp *= -1;
-        for (int i = 0; i < exp; i++) answ *= base;
-        answ = 1 / answ;
-    } else if (exp > 0) {
-        for (int i = 0; i < exp; i++) answ *= base;
-    }
-    return answ;
-}
-
-#define GO_TO_LAST(blockName) while (blockName != NULL && blockName->next != NULL) blockName = blockName->next;
-#define GO_TO_PREV(blockName) if (blockName != NULL) blockName = blockName->prev;
-
-
-void __BigInt_sum(BigInt *res, BigInt *a, BigInt *b) {
-    size_t lenn = MAX(a->size, b->size) + 1;
-    res->size = lenn;
-    res->blocks = NULL;
-
-    block *curA = a->blocks;
-    block *curB = b->blocks;
-    GO_TO_LAST(curA);
-    GO_TO_LAST(curB);
-
-    int results[lenn];
-    int add = 0;
-
-    for (int i = lenn - 1; i >= 0; --i) {
-        int valA = (curA != NULL) ? curA->data : 0;
-        int valB = (curB != NULL) ? curB->data : 0;
-
-        int sum = valA + valB + add;
-        add = sum / 100000000;
-        sum %= 100000000;
-
-        results[i] = sum;
-
-        GO_TO_PREV(curA);
-        GO_TO_PREV(curB);
-    }
-
-    block *curRes = NULL;
-    for (size_t i = 0; i < lenn; ++i) {
-        block *newBlock = create_block(results[i]);
-        if (curRes == NULL) {
-            res->blocks = newBlock;
-            curRes = newBlock;
+    void addBlock(int value) {
+        auto* newBlock = new Block(value);
+        if (blocks == nullptr) {
+            blocks = newBlock;
         } else {
-            curRes->next = newBlock;
-            newBlock->prev = curRes;
-            curRes = newBlock;
+            Block* last = blocks;
+            while (last->next!= nullptr) {
+                last = last->next;
+            }
+            last->next = newBlock;
+            newBlock->prev = last;
+        }
+        size++;
+    }
+
+    void print() const {
+        Block* current = blocks;
+        while (current!= nullptr) {
+            std::cout << current->data;
+            current = current->next;
+        }
+        std::cout << std::endl;
+    }
+
+    void fromString(const std::string& str) {
+        destroy_bigint(); // Очищаем текущие данные перед заполнением новыми
+        size_t len = str.length();
+        size_t numBlocks = len / BLOCK_SIZE;
+        if (len % BLOCK_SIZE!= 0) {
+            numBlocks++;
+        }
+
+        for (size_t i = 0; i < numBlocks; ++i) {
+            int startIdx = i * BLOCK_SIZE;
+            int endIdx = std::min(startIdx + BLOCK_SIZE, len);
+            std::string blockStr = str.substr(startIdx, endIdx - startIdx);
+            int blockValue = std::stoi(blockStr); // Преобразование подстроки в число
+            addBlock(blockValue);
         }
     }
-}
 
-void __Destroy_BigInt(BigInt *bigInt) {
-    block* current = bigInt->blocks;
-    while (current != NULL) {
-        block* nextBlock = current->next;
-        free(current);
-        current = nextBlock;
+
+    static void sum(BigInt& res, const BigInt& a, const BigInt& b) {
+        size_t len = std::max(a.size, b.size) + 1;
+        res.destroy_bigint(); // Clear existing blocks
+        res.size = len;
+        res.blocks = nullptr;
+
+        Block* curA = a.blocks;
+        Block* curB = b.blocks;
+        while (curA!= nullptr && curA->next!= nullptr) curA = curA->next;
+        while (curB!= nullptr && curB->next!= nullptr) curB = curB->next;
+
+        int results[len];
+        int carry = 0;
+
+        for (int i = len - 1; i >= 0; --i) {
+            int valA = (curA!= nullptr)? curA->data : 0;
+            int valB = (curB!= nullptr)? curB->data : 0;
+
+            int sum = valA + valB + carry;
+            carry = sum / 100000000;
+            sum %= 100000000;
+
+            results[i] = sum;
+
+            if (curA!= nullptr) curA = curA->prev;
+            if (curB!= nullptr) curB = curB->prev;
+        }
+
+        for (size_t i = 0; i < len; ++i) {
+            res.addBlock(results[i]);
+        }
     }
-    bigInt->blocks = NULL;
-    bigInt->size = 0;
-}
+};
 
+int main() {
+    BigInt a, b, res;
 
-int main(){
-    BIGINT_INIT(a);
-    BIGINT_INIT(b);
-    BIGINT_INIT(res);
+    a.fromString("7412589632145698741258963214753698417525");
+    b.fromString("1234567890512345678912345671234561234563");
 
-    init_from_str(a, "1");
+    a.print();
+    std::cout << "+" << std::endl;
+    b.print();
+    std::cout << "=============================" << std::endl;
+    BigInt::sum(res, a, b);
+    res.print();
+    std::cout << "-----------------------------" << std::endl;
 
-    init_from_str(b, "9");
-
-    print_num(a);
-    printf("+\n");
-    print_num(b);
-
-    BigInt_add(res, a, b);
-    printf("=============================\n");
-    print_num(res);
-    printf("-----------------------------\n");
-
-
-    BigInt_clear(a);
-    BigInt_clear(b);
-    BigInt_clear(res);
+    return 0;
 }
