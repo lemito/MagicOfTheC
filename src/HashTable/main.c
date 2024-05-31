@@ -428,54 +428,68 @@ char *search_key_by_name(Table *table, char *name)
 
 int main(void)
 {
-    printf("hash1 = %d\n", gen_hash("Клубника"));
-    printf("hash2 = %d\n", gen_hash("Клубника"));
-
     Table *my = create_table();
+    int choice;
+    char input[256];
 
-    ADD_TO_TABLE(my, key1, "Иван", "18", "8", 4.5f);
-    ADD_TO_TABLE(my, key2, "Вова", "19", "8", 4.44f);
-    ADD_TO_TABLE(my, key3, "Петя", "19", "4", 3.84f);
-    ADD_TO_TABLE(my, key4, "Денис", "19", "4", 3.44f);
-
-    // if (!add_to_table_from_user(my))
-    //     fprintf(stderr, "Ошибка!!!\n");
-
-    puts("==============");
-    print_table(my);
-    puts("==============");
-    char *nname = strdup("Кирилл");
-    printf("Ключ для %s = %s\n", nname, search_key_by_name(my, nname));
-    puts("==============");
-
-    printf("Поиск по ключу = %s : \n", key1);
-    cell *info = get_cell(my, key1);
-    print_cell(info);
-    puts("==============");
-    puts("Удаление");
-    delete_by_name(my, "Иван");
-    puts("==============");
-    print_table(my);
-    puts("==============");
-    puts("Сменить балл студента:");
-    char *name = malloc(sizeof(char) * 15);
-    printf("Имя:\n▷▷▷ ");
-    if (scanf("%15s", name) != 1)
+    while (1)
     {
-        fprintf(stderr, "Ошибка при вводе имени\n");
-        FREE_AND_NULL(name);
-        return false;
-    }
-    new_gpa(my, search_key_by_name(my, name), 4.01f);
-    FREE_AND_NULL(name);
-    print_table(my);
-    puts("==============");
-    print_average_gpa_by_institute(my, "8");
-    print_average_gpa_by_institute(my, "3");
-    puts("==============");
-    puts("Удаление таблицы:");
-    free_table(my);
-    puts("");
+        printf("\nМеню:\n");
+        printf("1. Добавить студента\n");
+        printf("2. Удалить студента по имени\n");
+        printf("3. Изменить GPA студенту\n");
+        printf("4. Показать средний GPA по институту\n");
+        printf("5. Вывести всю таблицу\n");
+        printf("0. Выход\n");
+        printf("Выберите действие: ");
 
-    return EXIT_SUCCESS;
+        if (scanf("%d", &choice) != 1)
+        {
+            printf("Ошибка ввода. Попробуйте снова.\n");
+            continue;
+        }
+
+        switch (choice)
+        {
+        case 1:
+            if (!add_to_table_from_user(my))
+            {
+                fprintf(stderr, "Ошибка при добавлении студента!\n");
+            }
+            break;
+        case 2:
+            printf("Введите имя студента для удаления: ");
+            scanf("%255s", input);
+            delete_by_name(my, input);
+            break;
+        case 3:
+            printf("Введите имя студента, которому нужно изменить GPA: ");
+            scanf("%255s", input);
+            printf("Введите новое значение GPA: ");
+            float new_gpa_in;
+            if (scanf("%f", &new_gpa_in) != 1)
+            {
+                printf("Ошибка ввода GPA. Попробуйте снова.\n");
+                break;
+            }
+            new_gpa(my, search_key_by_name(my, input), new_gpa_in);
+            break;
+        case 4:
+            printf("Введите номер института для расчета среднего GPA: ");
+            scanf("%255s", input);
+            print_average_gpa_by_institute(my, input);
+            break;
+        case 5:
+            print_table(my);
+            break;
+        case 0:
+            free_table(my);
+            exit(EXIT_SUCCESS);
+        default:
+            printf("Неверный выбор. Попробуйте снова.\n");
+        }
+        free_table(my);
+
+        return EXIT_SUCCESS;
+    }
 }
