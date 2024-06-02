@@ -3,7 +3,6 @@
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
-#include <uuid/uuid.h>
 #include <sys/types.h>
 #include <stdbool.h>
 
@@ -387,7 +386,7 @@ bool add_to_table_from_user(Table *table)
     }
     clear_stdin();
     printf("\nОценка:\n▷▷▷ ");
-    if (scanf("%f", &gpa) != 1)
+    if (scanf("%f", &gpa) != 1 && gpa > 5.00)
     {
         fprintf(stderr, "Ошибка при вводе оценки\n");
         CLEAR_VARS_IN_ADD_FROM_USER;
@@ -456,8 +455,9 @@ int main(void)
     Table *my = create_table();
     int choice;
     char input[256];
+    bool is_running = true;
 
-    while (1)
+    while (is_running)
     {
         print_menu();
         if (scanf("%d", &choice) != 1)
@@ -500,8 +500,8 @@ int main(void)
             print_table(my);
             break;
         case 0:
-            free_table(my);
-            exit(EXIT_SUCCESS);
+            is_running = false;
+            break;
         default:
             printf("Неверный выбор. Попробуйте снова.\n");
         }

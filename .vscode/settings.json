@@ -50,7 +50,8 @@
         "string": "c",
         "unordered_map": "c",
         "queue_dyn_lib.h": "c",
-        "merge_sort.h": "c"
+        "merge_sort.h": "c",
+        "types.h": "c"
     },
     "makefile.launchConfigurations": [
         {
