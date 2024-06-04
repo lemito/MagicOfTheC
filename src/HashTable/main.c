@@ -112,31 +112,38 @@ void set(Table *table, const char *key, const char *name, const char *age, const
     cell *work_cell = table->cells[slot];
     cell *prev = NULL;
 
-    if (work_cell == NULL)
+    while (work_cell!= NULL && strcmp(work_cell->key, key) < 0)
     {
-        table->cells[slot] = create_cell(key, name, age, institute, gpa);
-        return;
-    }
-
-    while (work_cell != NULL)
-    {
-        if (strcmp(work_cell->key, key) == 0)
-        {
-            free(work_cell->value->name);
-            free(work_cell->value->age);
-            free(work_cell->value->institute);
-            work_cell->value->name = strdup(name);
-            work_cell->value->age = strdup(age);
-            work_cell->value->institute = strdup(institute);
-            work_cell->value->gpa = gpa;
-            return;
-        }
         prev = work_cell;
         work_cell = work_cell->next;
     }
 
-    prev->next = create_cell(key, name, age, institute, gpa);
+    if (work_cell!= NULL && strcmp(work_cell->key, key) == 0)
+    {
+        free(work_cell->value->name);
+        free(work_cell->value->age);
+        free(work_cell->value->institute);
+        work_cell->value->name = strdup(name);
+        work_cell->value->age = strdup(age);
+        work_cell->value->institute = strdup(institute);
+        work_cell->value->gpa = gpa;
+    }
+    else
+    {
+        cell *new_cell = create_cell(key, name, age, institute, gpa);
+        if (prev == NULL)
+        {
+            new_cell->next = table->cells[slot];
+            table->cells[slot] = new_cell;
+        }
+        else
+        {
+            new_cell->next = prev->next;
+            prev->next = new_cell;
+        }
+    }
 }
+
 
 row *get_row(Table *table, const char *key)
 {
@@ -386,9 +393,14 @@ bool add_to_table_from_user(Table *table)
     }
     clear_stdin();
     printf("\nОценка:\n▷▷▷ ");
-    if (scanf("%f", &gpa) != 1 && gpa > 5.00)
+    if (scanf("%f", &gpa) != 1)
     {
         fprintf(stderr, "Ошибка при вводе оценки\n");
+        CLEAR_VARS_IN_ADD_FROM_USER;
+        return false;
+    }
+    if (gpa > 5.00f) {
+        printf("Оценка не может быть больше 5.00\n");
         CLEAR_VARS_IN_ADD_FROM_USER;
         return false;
     }
@@ -487,6 +499,10 @@ int main(void)
             if (scanf("%f", &new_gpa_in) != 1)
             {
                 printf("Ошибка ввода GPA. Попробуйте снова.\n");
+                break;
+            }
+            if (new_gpa_in > 5.00f) {
+                printf("Оценка не может быть больше 5.00\n");
                 break;
             }
             new_gpa(my, search_key_by_name(my, input), new_gpa_in);
