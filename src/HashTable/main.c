@@ -450,6 +450,28 @@ char *search_key_by_name(Table *table, char *name)
     return NULL;
 }
 
+void write_table_to_file(Table *pTable, FILE *pFile) {
+        if (pTable == NULL)
+        {
+            fprintf(stdout, "Таблица пуста");
+            return;
+        }
+        for (unsigned int i = 0; i < TABLE_SIZE; i++)
+        {
+            cell *current_cell = pTable->cells[i];
+            while (current_cell != NULL)
+            {
+                fprintf(pFile, "Key: %s, Name: %s, Age: %s, Institute: %s, GPA: %.2f\n",
+                       current_cell->key,
+                       current_cell->value->name,
+                       current_cell->value->age,
+                       current_cell->value->institute,
+                       current_cell->value->gpa);
+                current_cell = current_cell->next;
+            }
+        }
+}
+
 void print_menu()
 {
     puts("Меню:");
@@ -515,6 +537,12 @@ int main(void)
         case 5:
             print_table(my);
             break;
+        case 6:
+            printf("Введите название файла для сохранения: ");
+            char file_name[25];
+            scanf("%24s", file_name);
+            FILE* output = fopen(file_name, "w");
+            write_table_to_file(my, output);
         case 0:
             is_running = false;
             break;
@@ -525,3 +553,4 @@ int main(void)
     free_table(my);
     return EXIT_SUCCESS;
 }
+
