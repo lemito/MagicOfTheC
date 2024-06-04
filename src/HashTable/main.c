@@ -484,6 +484,23 @@ void print_menu()
     puts("Выберите действие: ");
 }
 
+void read_table_from_file(Table *pTable, FILE *pFile) {
+    if (pFile == NULL || pTable == NULL) {
+        fprintf(stderr, "Файл или таблица пусты");
+        return;
+    }
+    char *name = malloc(sizeof(char) * 10);
+    char *age = malloc(sizeof(char) * 3);
+    char *institute = malloc(sizeof(char) * 3);
+    float gpa = 0.0f;
+    char* key = malloc(sizeof(char) * 64);
+
+    while (fscanf(pFile, "Key: %63[^,], Name: %9[^,], Age: %2[^,], Institute: %2[^,], GPA: %f\n", key, name, age, institute, &gpa) == 5) {
+        set(pTable, key, name, age, institute, gpa);
+    }
+}
+
+
 int main(void)
 {
     Table *my = create_table();
@@ -543,6 +560,16 @@ int main(void)
             scanf("%24s", file_name);
             FILE* output = fopen(file_name, "w");
             write_table_to_file(my, output);
+            fclose(output);
+            break;
+        case 7:
+            printf("Введите название файла сохранения: ");
+            char file_name2[25];
+            scanf("%24s", file_name2);
+            FILE* input_file = fopen(file_name2, "r");
+            read_table_from_file(my, input_file);
+            fclose(input_file);
+            break;
         case 0:
             is_running = false;
             break;
