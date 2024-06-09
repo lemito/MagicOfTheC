@@ -74,8 +74,14 @@ target_link_libraries(lab26 merge_sort MagicOfTheC_queue_static_lib)
 target_link_libraries(stress26 merge_sort MagicOfTheC_queue_static_lib)
 target_link_libraries(kp9 heap_sort MagicOfTheC_binary_search_lib)
 target_link_libraries(BigAlegra_gmp gmp gmpxx)
+
 target_include_directories(HashTable PRIVATE ${UUID_INCLUDE_DIRS})
 target_link_libraries(HashTable PRIVATE ${UUID_LIBRARIES})
+
 add_executable(hash2 src/HashTable/__.new.c)
+
 add_executable(Deikstra src/Deikstra/Deikstra.c)
-add_executable(polymorphism src/polymorphism/main.c)
+
+add_executable(polymorphism_NotTypesPoiners src/polymorphism/main2.c)
+target_link_libraries(polymorphism_NotTypesPoiners m)
+
