@@ -24,7 +24,7 @@ typedef CmpType (*PCmpFunction)(PObject U, PObject V);
 // Тип указателя на функцию, будет во всех типах элементов очереди.
 typedef void (*PProcedure)(PObject);
 
-// Тип указатель на функция для хранения в TExtcutable.
+// Тип указатель на функцию для хранения в TExtcutable.
 typedef void (*PDrawProc)(void);
 
 typedef void* TValue;
