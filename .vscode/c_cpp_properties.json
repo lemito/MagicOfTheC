@@ -3,10 +3,9 @@
         {
             "name": "Linux",
             "includePath": [
-                "${workspaceFolder}/**",
-                // "${workspaceFolder}/include"
+                "${workspaceFolder}/**"
             ],
-            "compilerPath": "/usr/bin/clang-14",
+            "compilerPath": "/usr/bin/gcc",
             "intelliSenseMode": "linux-clang-x64",
             "configurationProvider": "ms-vscode.makefile-tools"
         }
