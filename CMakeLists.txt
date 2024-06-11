@@ -53,6 +53,11 @@ add_executable(list_cycled
     src/linear_list_cycled/iterator/iterator.c
 )
 add_executable(main src/meow/main.c)
+
+add_executable(dequeue src/dequeue/main.c)
+target_link_libraries(dequeue MagicOfTheC_vector)
+
+
 add_executable(kp9 src/kp9/main.c src/kp9/table.h src/kp9/table.c)
 add_executable(MagicOfTheC_exp_tree src/lab24/main.c)
 add_executable(stress26 src/lab26/stress.c)
@@ -85,3 +90,4 @@ add_executable(Deikstra src/Deikstra/Deikstra.c)
 add_executable(polymorphism_NotTypesPoiners src/polymorphism/main2.c)
 target_link_libraries(polymorphism_NotTypesPoiners m)
 
+add_executable(classes src/polymorphism/main3.c)
