@@ -27,7 +27,20 @@ int height(const Tree *tree)
 {
     if (tree == NULL)
         return 0;
-    return max(height(tree->left), height(tree->right));
+
+    int leftHeight = 0;
+    int rightHeight = 0;
+
+    if (tree->left!= NULL) {
+        leftHeight = height(tree->left);
+    }
+
+    if (tree->right!= NULL) {
+        rightHeight = height(tree->right);
+    }
+
+    // 1 -- корень
+    return 1 + max(leftHeight, rightHeight);
 }
 
 Tree *create_root_tree(const int value)
@@ -40,49 +53,6 @@ Tree *create_root_tree(const int value)
     return tree;
 }
 
-//Tree *add_element_tree(Tree *root, const int value)
-//{
-//
-//    if (root == NULL)
-//    {
-//        SUCCESS("Выполнено.");
-//        return create_root_tree(value);
-//    }
-//    Tree *NewTree = (Tree *)malloc(sizeof(Tree));
-//    NewTree->data = value;
-//    Tree *tree1 = root;
-//    Tree *tree2 = NULL;
-//    while (tree1 != NULL)
-//    {
-//        tree2 = tree1;
-//        if (value < tree1->data)
-//        {
-//            tree1 = tree1->left;
-//        }
-//        else if (value > tree1->data)
-//        {
-//            tree1 = tree1->right;
-//        }
-//        else
-//        {
-//            WARNING("Элемент с таким значением уже есть, введите новый.");
-//            return root;
-//        }
-//    }
-//    NewTree->parent = tree2;
-//    NewTree->left = NULL;
-//    NewTree->right = NULL;
-//    if (value < tree2->data)
-//    {
-//        tree2->left = NewTree;
-//    }
-//    else
-//    {
-//        tree2->right = NewTree;
-//    }
-//    SUCCESS("Выполнено.");
-//    return root;
-//}
 Tree *add_element_tree(Tree *root, const int value)
 {
     if (root == NULL)
