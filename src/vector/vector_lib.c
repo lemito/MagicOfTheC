@@ -69,4 +69,5 @@ void Destroy(Vector *v)
     if (v->data != NULL) {
         FREE_AND_NULL(v->data);
     }
+    v->size = 0;
 }

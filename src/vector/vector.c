@@ -17,5 +17,10 @@ int main()
     putchar('\n');
     printf("Size = %d \n", Size(&vector));
     Destroy(&vector);
+    printf("Vector size after deletion: %d\n", Size(&vector));
+    if (vector.data == NULL)
+    {
+        printf("Vector data pointer is NULL\n");
+    }
     return 0;
 }
