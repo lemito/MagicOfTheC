@@ -83,6 +83,8 @@ int main(void)
         scanf("%c", &choise);
     }
 
+
+
     puts("Работа окончена!");
 
     return 0;
