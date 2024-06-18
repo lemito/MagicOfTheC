@@ -91,3 +91,5 @@ add_executable(polymorphism_NotTypesPoiners src/polymorphism/main2.c)
 target_link_libraries(polymorphism_NotTypesPoiners m)
 
 add_executable(classes src/polymorphism/main3.c)
+add_executable(AVLtree src/AVLtree/main.c)
+add_executable(SparceMatrix src/SparceMatrix.cpp)

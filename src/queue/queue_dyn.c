@@ -22,5 +22,13 @@ int main()
 
     printf("\n");
 
+
+    Destroy(&qwer);
+
+    printf("Size destroy = %d\n", qwer.size);
+    if (qwer.first == NULL && qwer.last == NULL){
+        puts("All ok!\n");
+    }
+
     return 0;
 }

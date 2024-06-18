@@ -37,7 +37,7 @@ bool Pop(stack *s)
 
 int Top(stack *s)
 {
-    return s->data[s->size--];
+    return s->data[s->size-1];
 }
 
 void Destroy(stack *s)

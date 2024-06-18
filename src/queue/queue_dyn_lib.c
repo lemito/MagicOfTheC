@@ -18,7 +18,7 @@ int Size(queue *q)
     return q->size;
 }
 
-bool Push(queue *q, const char* t)
+bool Push(queue *q, const char *t)
 {
     if (!(q->last->next = malloc(sizeof(struct Item))))
         return false;
@@ -39,7 +39,7 @@ bool Pop(queue *q)
     return true;
 }
 
-char* Top(const queue *q)
+char *Top(const queue *q)
 {
     if (q->first != q->last)
         return q->first->data;
@@ -48,20 +48,10 @@ char* Top(const queue *q)
 void Destroy(queue *q)
 {
     while (!Empty(q))
-    {
-        struct Item *pi = q->first;
-        q->first = q->first->next;
-        if (pi->data!= NULL) {
-            for (int i = 0; i < 25; i++) {
-                free(pi->data[i]);
-            }
-            free(pi->data);
-        }
-        FREE_AND_NULL(pi);
-    }
+        Pop(q);
+    free(q->first);
+    q->first = q->last = NULL;
     q->size = 0;
-    q->first = NULL;
-    q->last = NULL;
 }
 
 void Reverse(queue *q)

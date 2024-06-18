@@ -12,54 +12,54 @@ typedef struct
 } stack;
 
 /**
- * @brief 
- * 
- * @param s 
+ * @brief
+ *
+ * @param s
  */
 void Create(stack *s);
 /**
- * @brief 
- * 
- * @param s 
- * @return true 
- * @return false 
+ * @brief
+ *
+ * @param s
+ * @return true
+ * @return false
  */
 bool Empty(stack *s);
 /**
- * @brief 
- * 
- * @param s 
- * @return int 
+ * @brief
+ *
+ * @param s
+ * @return int
  */
 int Size(stack *s);
 /**
- * @brief 
- * 
- * @param s 
- * @param t 
- * @return true 
- * @return false 
+ * @brief
+ *
+ * @param s
+ * @param t
+ * @return true
+ * @return false
  */
 bool Push(stack *s, int t);
 /**
- * @brief 
- * 
- * @param s 
- * @return true 
- * @return false 
+ * @brief
+ *
+ * @param s
+ * @return true
+ * @return false
  */
 bool Pop(stack *s);
 /**
- * @brief 
- * 
- * @param s 
- * @return int 
+ * @brief
+ *
+ * @param s
+ * @return int
  */
 int Top(stack *s);
 /**
- * @brief 
- * 
- * @param s 
+ * @brief
+ *
+ * @param s
  */
 void Destroy(stack *s);
 

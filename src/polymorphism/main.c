@@ -206,9 +206,14 @@ void ExampleDraw(void){
 }
 
 int main(){
-    Draw(NewCircle(10, 10, 5));
-    Draw(NewTriangle(1,2 ,3 ,4 ,5 ,6));
-    Draw(NewExecutable(ExampleDraw));
-    DestroyObject(NewCircle(10, 10, 5));
+    TValue circle = NewCircle(10, 10, 5);
+    TValue triangle = NewTriangle(1,2 ,3 ,4 ,5 ,6);
+    TValue daemon = NewExecutable(ExampleDraw);
+    Draw(circle);
+    Draw(triangle);
+    Draw(daemon);
+    DestroyObject(circle);
+    DestroyObject(triangle);
+    DestroyObject(daemon);
     return 0;
 }
