@@ -1,7 +1,7 @@
 /**
  * DFS
- * Input: n (count of vertex), m (count of edges), st (start vertex)
- * Output: dfs path from st to st
+ * Input: n (count of vertex), m (count of edges), st (start vertex); matrix of adjust
+ * Output: dfs path from st to st (indexes)
  */
 #include <algorithm>
 #include <iostream>
