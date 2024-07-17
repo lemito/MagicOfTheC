@@ -3,7 +3,7 @@ project(MagicOfTheC LANGUAGES C CXX)
 
 # Set C and C++ standards
 set(CMAKE_C_STANDARD 11)
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 
 # Add custom module path
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
@@ -100,3 +100,4 @@ add_executable(bfs src/algo/bfs.cpp)
 add_executable(Bellman_Ford src/algo/Bellman–Ford.cpp)
 add_executable(Dijkstra_graph src/algo/Dijkstra_graph.cpp)
 add_executable(z_func src/algo/z_func.cpp)
+add_executable(oop_test src/cpp/oop_test.cpp)
