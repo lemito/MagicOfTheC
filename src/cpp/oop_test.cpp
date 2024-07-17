@@ -44,6 +44,11 @@ class Animals {
   }
 
   /**
+   * Деструктор класса
+   */
+  virtual ~Animals() = default;
+
+  /**
    * Виртуальный метод, его можно перегрузить (override)
    * Её можно сначала вызвать в наследнике, потом переопределить
    */
@@ -73,11 +78,13 @@ class Mammals : public Animals {
  public:
   Mammals() = default;
 
+  // тут инициализация наследника
   Mammals([[maybe_unused]] std::string name, u_int8_t age, double weight,
           std::string color, int countLegs)
-      : Animals(std::move(name), age, weight, std::move(color)) {
-    this->countLegs = countLegs;
-  }
+      // инициализируем родителя в наследнике (то есть класс Animals
+      : Animals(std::move(name), age, weight, std::move(color)),
+        // более короткая запись для инициализации класса - список инициализации
+        countLegs(countLegs) {}
 
   virtual void eat_food() { std::cout << "Млекопитающие едят\n"; }
 

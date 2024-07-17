@@ -51,7 +51,26 @@
         "unordered_map": "c",
         "queue_dyn_lib.h": "c",
         "merge_sort.h": "c",
-        "types.h": "c"
+        "types.h": "c",
+        "cctype": "cpp",
+        "clocale": "cpp",
+        "cmath": "cpp",
+        "compare": "cpp",
+        "cstdarg": "cpp",
+        "cstdint": "cpp",
+        "cstdlib": "cpp",
+        "cwctype": "cpp",
+        "exception": "cpp",
+        "algorithm": "cpp",
+        "iterator": "cpp",
+        "numeric": "cpp",
+        "utility": "cpp",
+        "iosfwd": "cpp",
+        "iostream": "cpp",
+        "numbers": "cpp",
+        "ostream": "cpp",
+        "streambuf": "cpp",
+        "cinttypes": "cpp"
     },
     "makefile.launchConfigurations": [
         {
