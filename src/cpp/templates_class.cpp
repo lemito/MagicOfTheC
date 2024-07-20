@@ -10,6 +10,7 @@ class Matrix {
 
   void PreInit() {
     size_t maxSize = 0;
+    this->rows = data[0].size();
     for (const auto& row : data) {
       if (row.size() > maxSize) {
         maxSize = row.size();
@@ -19,11 +20,13 @@ class Matrix {
     for (auto& row : data) {
       row.resize(maxSize);
     }
+
+    this->columns = maxSize;
   }
 
  public:
   Matrix(const std::vector<std::vector<T>>& d) : data(d) { PreInit(); }
-  Matrix(size_t rows, size_t columns) {
+  Matrix(size_t rows, size_t columns): rows(rows), columns(columns) {
     data.resize(rows);
     for (auto& row : data) row.resize(columns);
   }
@@ -32,11 +35,8 @@ class Matrix {
   T& operator()(size_t i, size_t j) { return data[i][j]; }
   auto begin() const { return data.begin(); }
   auto end() const { return data.cend(); }
-  size_t GetRows() { return data.size(); }
-  size_t GetColumns() {
-    if (data.empty()) return 0;
-    return data[0].size();
-  }
+  size_t GetRows() const { return this->rows; }
+  size_t GetColumns() const { return this->columns; }
 
   /**
    * Переопределение оператора ВВОДА
