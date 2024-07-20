@@ -1,6 +1,7 @@
 /**
  * Пример ООП на C++
  */
+#include <cstdint>
 #include <format>
 #include <iostream>
 #include <string>
@@ -31,7 +32,7 @@ class Animals {
    */
  private:
   std::string name;
-  u_int8_t age{};
+  uint8_t age{};
   double weight{};
   std::string color;
 
@@ -205,6 +206,8 @@ int main() {
     zoo.push_back(hu);
     zoo.push_back(fi);
     zoo.push_back(m2);
+
+
   } catch (const WrongWeightException& exception) {
     std::cerr << "Ошибка в весе " << exception.weight << '\n';
   } catch (const WrongAgeException& exception) {
@@ -217,5 +220,6 @@ int main() {
   for (auto animal : zoo) {
     animal->present();
   }
+
   return 0;
 }
