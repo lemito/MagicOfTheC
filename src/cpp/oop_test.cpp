@@ -8,6 +8,21 @@
 #include <vector>
 
 /**
+ * Пример ошибки
+ */
+struct WrongWeightException {
+  double weight;
+};
+
+struct WrongAgeException {
+  u_int8_t age;
+};
+
+struct WrongIqException {
+  size_t iq;
+};
+
+/**
  * Родительский класс
  */
 class Animals {
@@ -37,6 +52,15 @@ class Animals {
    * @param color окраска (цвет)
    */
   Animals(std::string name, u_int8_t age, double weight, std::string color) {
+    /**
+     * Пример ошибки
+     */
+    if (weight < 0 || weight > 200000) {
+      throw WrongWeightException(weight);
+    }
+    if (age < 0 || age > 150) {
+      throw WrongAgeException(age);
+    }
     this->name = std::move(name);
     this->age = age;
     this->weight = weight;
@@ -149,6 +173,7 @@ class Humans : public Mammals {
   Humans(std::string name, u_int8_t age, double weight, std::string color,
          size_t iq)
       : Mammals(std::move(name), age, weight, std::move(color), 2) {
+    if (iq > 350) throw WrongIqException(iq);
     this->iq = iq;
   }
 
@@ -167,15 +192,27 @@ class Humans : public Mammals {
 
 int main() {
   std::vector<Animals*> zoo;
-  auto* m = new Animals("q", 2, 2.5, "red");
-  auto* parrot = new Birds("qq", 2, 2.5, "red", 7.5);
-  auto* hu = new Humans("qqq", 2, 2.5, "red", 175);
-  auto* fi = new Fishes("qqq", 2, 2.5, "red", false);
 
-  zoo.push_back(m);
-  zoo.push_back(parrot);
-  zoo.push_back(hu);
-  zoo.push_back(fi);
+  try {
+    auto* m = new Animals("q", 2, 2.5, "red");
+    auto* parrot = new Birds("qq", 2, 2.5, "red", 7.5);
+    auto* hu = new Humans("qqq", 2, 2.5, "red", 175);
+    auto* fi = new Fishes("qqq", 2, 2.5, "red", false);
+    auto* m2 = new Animals("q2", 2, 255000, "red");
+
+    zoo.push_back(m);
+    zoo.push_back(parrot);
+    zoo.push_back(hu);
+    zoo.push_back(fi);
+    zoo.push_back(m2);
+  } catch (const WrongWeightException& exception) {
+    std::cerr << "Ошибка в весе " << exception.weight << '\n';
+  } catch (const WrongAgeException& exception) {
+    std::cerr << "Ошибка в возрасте " << exception.age << '\n';
+  }
+  catch (const WrongIqException& exception) {
+    std::cerr << "Неправдободобный iq= " << exception.iq << '\n';
+  }
 
   for (auto animal : zoo) {
     animal->present();
