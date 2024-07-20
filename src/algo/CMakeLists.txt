@@ -1,0 +1,6 @@
+add_executable(Eratosphen Eratosphen.cpp)
+add_executable(dfs dfs.cpp)
+add_executable(bfs bfs.cpp)
+add_executable(Bellman_Ford Bellman–Ford.cpp)
+add_executable(Dijkstra_graph Dijkstra_graph.cpp)
+add_executable(z_func z_func.cpp)

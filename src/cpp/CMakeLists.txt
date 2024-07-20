@@ -1,0 +1,2 @@
+add_executable(oop_test oop_test.cpp)
+add_executable(variadic_function Variadic_function.cpp)

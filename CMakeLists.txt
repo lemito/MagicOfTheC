@@ -94,11 +94,8 @@ add_executable(classes src/polymorphism/main3.c)
 add_executable(AVLtree src/AVLtree/main.c)
 add_executable(SparceMatrix src/SparceMatrix.cpp)
 add_executable(qwer src/polymorphism/qwer.c)
-add_executable(Eratosphen src/algo/Eratosphen.cpp)
-add_executable(dfs src/algo/dfs.cpp)
-add_executable(bfs src/algo/bfs.cpp)
-add_executable(Bellman_Ford src/algo/Bellman–Ford.cpp)
-add_executable(Dijkstra_graph src/algo/Dijkstra_graph.cpp)
-add_executable(z_func src/algo/z_func.cpp)
-add_executable(oop_test src/cpp/oop_test.cpp)
-add_executable(variadic_function src/cpp/Variadic_function.cpp)
+
+add_subdirectory(src/cpp)
+add_subdirectory(src/algo)
+
+
