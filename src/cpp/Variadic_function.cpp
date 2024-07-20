@@ -32,7 +32,7 @@ void yet_another_format(const char* fmt, ...) {
   va_start(arg_list, fmt);
 
   // для каждого символа в формат-строке
-  for (const char* c = fmt; *c != '\0'; ++c) {
+  for (const char* c = fmt; *c != (char)NULL; ++c) {
     // символ начинается с '%'? возможно символ форматирования...
     if (*c == '%') {
       // следующий символ
