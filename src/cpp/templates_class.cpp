@@ -29,19 +29,48 @@ class Matrix {
   }
 
   std::vector<T>& operator[](size_t i) { return data[i]; }
-  T& operator () (size_t i, size_t j) {
-    return data[i][j];
-  }
-  auto begin() const {
-      return data.begin();
-  }
-  auto end() const {
-    return data.cend();
-  }
+  T& operator()(size_t i, size_t j) { return data[i][j]; }
+  auto begin() const { return data.begin(); }
+  auto end() const { return data.cend(); }
   size_t GetRows() { return data.size(); }
   size_t GetColumns() {
     if (data.empty()) return 0;
     return data[0].size();
+  }
+
+  /**
+   * Переопределение оператора ВВОДА
+   * @param stream
+   * @param matrix
+   * @return
+   */
+  friend std::istream& operator>>(std::istream& stream, Matrix<T>& matrix) {
+    const size_t r = matrix.GetRows();
+    const size_t c = matrix.GetColumns();
+    for (size_t i = 0; i != r; ++i) {
+      for (size_t j = 0; j != c; ++j) {
+        stream >> matrix(i, j);
+      }
+    }
+    return stream;
+  }
+
+  /**
+   * Переопределение оператора ВЫВОДА
+   * @param stream
+   * @param matrix
+   * @return
+   */
+  friend std::ostream& operator<<(std::ostream& stream, Matrix<T>& matrix) {
+    const size_t r = matrix.GetRows();
+    const size_t c = matrix.GetColumns();
+    for (size_t i = 0; i != r; ++i) {
+      for (size_t j = 0; j != c; ++j) {
+        stream << matrix(i, j) << ' ';
+      }
+      std::cout << '\n';
+    }
+    return stream;
   }
 };
 
@@ -54,11 +83,7 @@ int main() {
   std::cout << m2.GetColumns() << "\n";
   m2[1][1] = 52;
   std::cout << m2[1][1] << "\n";
-  for (const auto& row : m1) {
-    for (const auto& elem : row) {
-      std::cout << elem << ' ';
-    }
-    std::cout << '\n';
-  }
+
+  std::cout << m1;
   return 0;
 }
