@@ -31,7 +31,7 @@ class Matrix {
     for (auto& row : data) row.resize(columns);
   }
 
-  std::vector<T>& operator[](size_t i) { return data[i]; }
+  std::vector<T>& operator[](size_t i) { return this->data[i]; }
   T& operator()(size_t i, size_t j) { return data[i][j]; }
   auto begin() const { return data.begin(); }
   auto end() const { return data.cend(); }
