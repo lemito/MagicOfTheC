@@ -8,6 +8,40 @@
 unique_ptr и shared_ptr из стандартной библиотеки.
 (Источник)[https://education.yandex.ru/handbook/cpp/article/raii-and-smart-pointers]
 */
-int main(){
+#include <cstdio>
+#include <iostream>
+
+/**
+ * Прикол класса в том, что файл открывается при инициализации объекта, а
+ * закрывается - при уничтожении поэтому за памятью больше можно не следить
+ */
+class MyFile {
+ private:
+  std::FILE* data;
+
+ public:
+  explicit MyFile(const std::string& file_name)
+      : data(std::fopen(file_name.c_str(), "r")) {
+    if (this->data == nullptr) std::cout << "Ошибка";
+  }
+  ~MyFile() { std::fclose(this->data); }
+  std::string Read() const {
+    char buf[100];
+    std::fscanf(this->data, "%99s", buf);
+    return buf;
+  }
+};
+
+int main() {
+  std::FILE* f = std::fopen("input.txt", "w");
+  if (f == nullptr) std::cout << "Ошибка";
+  char buf[100];
+  //  std::fscanf(f, "%99s", buf);
+  std::fputs("qwertgfdszxc", f);
+  std::fclose(f);
+
+  MyFile f2("input.txt");
+  auto from_f2 = f2.Read();
+  std::cout << from_f2 << '\n';
   return 0;
 }
