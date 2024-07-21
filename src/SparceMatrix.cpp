@@ -3,6 +3,13 @@
 #include <cstdlib>
 #include <iostream>
 
+#define FREE_AND_NULL(ptr) \
+    do                     \
+    {                      \
+        free(ptr);         \
+        ptr = NULL;        \
+    } while (0)
+
 typedef struct Item
 {
     uint32_t row;
@@ -105,7 +112,8 @@ void shiftRight(Item *from, uint32_t count, uint32_t shiftSize)
     }
 }
 
-void  initMatrix(SparceMatrix* matric, uint32_t rows, uint32_t columns, uint32_t size, uint32_t capacity){
+void initMatrix(SparceMatrix *matric, uint32_t rows, uint32_t columns, uint32_t size, uint32_t capacity)
+{
     matric->items = (Item *)malloc(capacity * sizeof(Item));
     matric->size = size;
     matric->capacity = capacity;
@@ -113,13 +121,22 @@ void  initMatrix(SparceMatrix* matric, uint32_t rows, uint32_t columns, uint32_t
     matric->columns = columns;
 }
 
-int32_t scalyar(SparceMatrix* first, SparceMatrix* second){
+static inline void DestroySparceMatrix(SparceMatrix *matrix)
+{
+    matrix->capacity = matrix->columns = matrix->rows = matrix->size = 0;
+    FREE_AND_NULL(matrix->items);
+    // FREE_AND_NULL(matrix);
+}
+
+int32_t scalyar(SparceMatrix *first, SparceMatrix *second)
+{
     int32_t res = 0;
     uint32_t cnt = first->columns;
-    for (uint32_t j = 0; j < cnt; ++j){
+    for (uint32_t j = 0; j < cnt; ++j)
+    {
         int32_t val1 = GetAt(first, j, 1);
         int32_t val2 = GetAt(second, j, 1);
-        std::cout << "+" << val1*val2 << "_";
+        std::cout << "+" << val1 * val2 << "_";
         res += val1 * val2;
     }
     return res;
@@ -154,7 +171,8 @@ int main()
     std::cout << "scalyar vector1*vector2";
     std::cout << "=" << scalyar(&vector1, &vector2);
 
-    free(vector1.items);
-    free(vector2.items);
+    DestroySparceMatrix(&vector1);
+    DestroySparceMatrix(&vector2);
+
     return 0;
 }
