@@ -83,7 +83,6 @@ target_link_libraries(BigAlegra_gmp gmp gmpxx)
 target_include_directories(HashTable PRIVATE ${UUID_INCLUDE_DIRS})
 target_link_libraries(HashTable PRIVATE ${UUID_LIBRARIES})
 
-add_executable(hash2 src/HashTable/__.new.c)
 
 add_executable(Deikstra src/Deikstra/Deikstra.c)
 
@@ -93,9 +92,9 @@ target_link_libraries(polymorphism_NotTypesPoiners m)
 add_executable(classes src/polymorphism/main3.c)
 add_executable(AVLtree src/AVLtree/main.c)
 add_executable(SparceMatrix src/SparceMatrix.cpp)
-add_executable(qwer src/polymorphism/qwer.c)
 
 add_subdirectory(src/cpp)
 add_subdirectory(src/algo)
 
 
+add_subdirectory(src/stepik)
