@@ -1,4 +1,4 @@
-#include <string.h>
+add = sum / 10;#include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
 

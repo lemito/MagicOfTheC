@@ -130,7 +130,7 @@ Vector sum(Vector& num1, Vector& num2) {
 
         int sum = digit1 + digit2 + add;
         vector_save(&res, max_size - i, sum % 10);
-        add = sum / 10;
+        add = sum / 10;add = sum / 10;
     }
     vector_save(&res, 0, add);
 
