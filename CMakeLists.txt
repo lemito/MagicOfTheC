@@ -98,10 +98,5 @@ add_subdirectory(src/algo)
 
 
 add_subdirectory(src/stepik)
-add_executable(qsort_9 src/stepik/12/qsort_9.c)
-add_executable(struct_card src/stepik/8/struct_card.c)
-add_executable(elong_print src/stepik/8/elong_print.c)
-add_executable(elong_add src/stepik/8/elong_add.c)
-add_executable(elong_add2 src/stepik/14/elong_add2.c)
-add_executable(elong_add3 src/stepik/14/elong_add3.c)
-add_executable(toLongN src/stepik/14/toLongN.c)
+
+add_executable(15_stack src/stepik/15-stack/15_stack.cpp)
