@@ -22,6 +22,7 @@ struct Stack_static {
   T data[N] = {};
   size_t size;
 
+  // это init в види инициализирующего списка, в Си - все в функции
   Stack_static() : size(0) { memset(this->data, 0, sizeof(T)); }
   void Print() {
     for (size_t i = 0; i < this->size; ++i) {
