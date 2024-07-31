@@ -100,3 +100,4 @@ add_subdirectory(src/algo)
 add_subdirectory(src/stepik)
 
 add_executable(15_stack src/stepik/15-stack/15_stack_static.cpp)
+add_executable(stack_skobki src/stepik/15-stack/stack_skobki.cpp)
