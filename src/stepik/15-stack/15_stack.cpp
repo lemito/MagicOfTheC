@@ -10,10 +10,12 @@
 #include <cstring>
 
 #define N 8
+// тут тоже на С++ можно использовать template <typename T>
 typedef int T;
 
 class OOPStack {
  private:
+  // может быть заменено на std::vector
   T data[N] = {};
   size_t size;
 
@@ -93,7 +95,7 @@ void stack_clear(Stack* st) {
 size_t stack_size(Stack* st) { return st->size; }
 
 int main() {
-  /*
+/*
   Stack st;
   Stack* st_ptr = &st;
   stack_init(st_ptr);
@@ -113,15 +115,15 @@ int main() {
   stack_push(st_ptr, 7);
   stack_push(st_ptr, 9);
   printf("full: %s\n", stack_is_full(st_ptr) ? "YES" : "NO");  // YES
-   */
-  OOPStack st;
-  printf("%zu\n", st.Size());
-  st.Push(5);
-  st.Push(7);
-  st.Push(9);
-  printf("%zu\n", st.Size());
-  st.Print();
-  printf("%d\n", st.Pop());
-  printf("%zu\n", st.Size());
-  st.Print();
+*/
+  OOPStack st1;
+  printf("%zu\n", st1.Size());
+  st1.Push(5);
+  st1.Push(7);
+  st1.Push(9);
+  printf("%zu\n", st1.Size());
+  st1.Print();
+  printf("%d\n", st1.Pop());
+  printf("%zu\n", st1.Size());
+  st1.Print();
 }
