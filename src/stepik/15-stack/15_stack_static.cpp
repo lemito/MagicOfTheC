@@ -4,6 +4,8 @@
  * Stack st;
  * Stack* st_ptr = &st;
  * И переделать сами функции
+ *
+ * Версия на статическом массиве
  */
 #include <cstddef>
 #include <cstdio>
@@ -15,12 +17,12 @@ typedef int T;
 
 // тут может быть и class, но, оказывается, struct также может - а для учения
 // это даже удобнее - двустороняя связь с Си
-struct OOPStack_static {
+struct Stack_static {
   // может быть заменено на std::vector
   T data[N] = {};
   size_t size;
 
-  OOPStack_static() : size(0) { memset(this->data, 0, sizeof(T)); }
+  Stack_static() : size(0) { memset(this->data, 0, sizeof(T)); }
   void Print() {
     for (size_t i = 0; i < this->size; ++i) {
       printf("%d ", this->data[i]);
@@ -114,7 +116,7 @@ int main() {
     stack_push(st_ptr, 9);
     printf("full: %s\n", stack_is_full(st_ptr) ? "YES" : "NO");  // YES
   */
-  OOPStack_static st1;
+  Stack_static st1;
   printf("%zu\n", st1.Size());
   st1.Push(5);
   st1.Push(7);
