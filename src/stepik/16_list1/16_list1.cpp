@@ -18,7 +18,7 @@ struct List {
 
   List() : root(NULL), size(0) {};
   List(Node* r) : root(r), size(1) {};
-  void Print() {
+  void Print() const {
     for (Node* p = root; p != NULL; p = p->next) {
       printf("%d ", p->data);
     }
