@@ -46,6 +46,10 @@ struct Stack_static {
   }
 
   size_t Size() const { return this->size; }
+
+  ~Stack_static(){
+    this->stack_clear();
+  }
 };
 
 
