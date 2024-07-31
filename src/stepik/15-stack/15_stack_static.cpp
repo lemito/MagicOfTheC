@@ -13,30 +13,26 @@
 // тут тоже на С++ можно использовать template <typename T>
 typedef int T;
 
-class OOPStack {
- private:
+// тут может быть и class, но, оказывается, struct также может - а для учения
+// это даже удобнее - двустороняя связь с Си
+struct OOPStack_static {
   // может быть заменено на std::vector
   T data[N] = {};
   size_t size;
 
- public:
-  OOPStack() : size(0) { memset(this->data, 0, sizeof(T)); }
+  OOPStack_static() : size(0) { memset(this->data, 0, sizeof(T)); }
   void Print() {
     for (size_t i = 0; i < this->size; ++i) {
       printf("%d ", this->data[i]);
     }
     puts("");
   }
-  void Push(T obj){
+  void Push(T obj) {
     this->data[this->size] = obj;
     ++this->size;
   }
-  T Pop(){
-    return this->data[--this->size];
-  }
-  T Get(){
-    return this->data[this->size-1];
-  }
+  T Pop() { return this->data[--this->size]; }
+  T Get() { return this->data[this->size - 1]; }
   bool Is_empty() const { return this->size == 0; }
 
   bool Is_full() const { return this->size == N; }
@@ -48,6 +44,8 @@ class OOPStack {
 
   size_t Size() const { return this->size; }
 };
+
+
 
 typedef struct Stack_ {
   // в C инициализация не нужна
@@ -95,28 +93,28 @@ void stack_clear(Stack* st) {
 size_t stack_size(Stack* st) { return st->size; }
 
 int main() {
-/*
-  Stack st;
-  Stack* st_ptr = &st;
-  stack_init(st_ptr);
-  printf("empty: %s\n", stack_is_empty(st_ptr) ? "YES" : "NO");  // YES
-  stack_push(st_ptr, 5);
-  stack_push(st_ptr, 7);
-  stack_push(st_ptr, 9);
-  stack_print(st_ptr);
-  printf("%d\n", stack_pop(st_ptr));
-  stack_print(st_ptr);
-  printf("empty: %s\n", stack_is_empty(st_ptr) ? "YES" : "NO");  // NO
-  printf("full: %s\n", stack_is_full(st_ptr) ? "YES" : "NO");    // NO
-  stack_push(st_ptr, 5);
-  stack_push(st_ptr, 7);
-  stack_push(st_ptr, 9);
-  stack_push(st_ptr, 5);
-  stack_push(st_ptr, 7);
-  stack_push(st_ptr, 9);
-  printf("full: %s\n", stack_is_full(st_ptr) ? "YES" : "NO");  // YES
-*/
-  OOPStack st1;
+  /*
+    Stack st;
+    Stack* st_ptr = &st;
+    stack_init(st_ptr);
+    printf("empty: %s\n", stack_is_empty(st_ptr) ? "YES" : "NO");  // YES
+    stack_push(st_ptr, 5);
+    stack_push(st_ptr, 7);
+    stack_push(st_ptr, 9);
+    stack_print(st_ptr);
+    printf("%d\n", stack_pop(st_ptr));
+    stack_print(st_ptr);
+    printf("empty: %s\n", stack_is_empty(st_ptr) ? "YES" : "NO");  // NO
+    printf("full: %s\n", stack_is_full(st_ptr) ? "YES" : "NO");    // NO
+    stack_push(st_ptr, 5);
+    stack_push(st_ptr, 7);
+    stack_push(st_ptr, 9);
+    stack_push(st_ptr, 5);
+    stack_push(st_ptr, 7);
+    stack_push(st_ptr, 9);
+    printf("full: %s\n", stack_is_full(st_ptr) ? "YES" : "NO");  // YES
+  */
+  OOPStack_static st1;
   printf("%zu\n", st1.Size());
   st1.Push(5);
   st1.Push(7);
