@@ -96,9 +96,8 @@ class BinTree {
 
   bool contains(T obj) { return _search(this->root, obj) != nullptr; }
 
-  friend std::ostream& operator<<(std::ostream& os, const BinIt<T>& tree) {
+  friend std::ostream& operator<<(std::ostream& os, BinTree<T>& tree) {
     tree.print(os);
-    os;
     return os;
   }
 };
@@ -112,7 +111,8 @@ int main() {
   tr.insert(7);
   tr.insert(14);
   tr.insert(20);
-  tr.print(std::cout);
+//  tr.print(std::cout);
+  std::cout << tr;
   bool f1 = tr.contains(14);
   std::cout << '\n';
   bool f2 = tr.contains(52);
