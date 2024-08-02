@@ -7,6 +7,11 @@
 #include <iostream>
 #include <ostream>
 
+#define attr_ND [[nodiscard]]
+#ifdef NULL
+#define NULL nullptr
+#endif
+
 template <typename T>
 class BinIt {
  private:
@@ -17,12 +22,13 @@ class BinIt {
 
  public:
   BinIt() = default;
-  BinIt(T data) : data(data), parent(nullptr), left(nullptr), right(nullptr) {};
+  explicit BinIt(T data)
+      : data(data), parent(nullptr), left(nullptr), right(nullptr) {};
   void SetData(T obj) { this->data = obj; }
-  T GetData() const { return this->data; }
-  BinIt* Left() const { return this->left; }
-  BinIt* Right() const { return this->right; }
-  BinIt* Parent() const { return this->parent; }
+  attr_ND T GetData() const { return this->data; }
+  attr_ND BinIt* Left() const { return this->left; }
+  attr_ND BinIt* Right() const { return this->right; }
+  attr_ND BinIt* Parent() const { return this->parent; }
   void SetLeft(BinIt* node) { this->left = node; }
   void SetRight(BinIt* node) { this->right = node; }
   void SetParent(BinIt* node) { this->parent = node; }
