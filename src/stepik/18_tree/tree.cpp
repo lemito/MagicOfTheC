@@ -44,32 +44,33 @@ class BinTree {
   }
 
   void _insert(BinIt<T>* node, T obj) {
-    if (obj < node->GetData()) {
-      if (node->Left() == nullptr) {
-        node->SetLeft(new BinIt<T>(obj));
-        node->Left()->SetParent(node);
+    while (true) {
+      if (obj < node->GetData()) {
+        if (node->Left() == nullptr) {
+          node->SetLeft(new BinIt<T>(obj));
+          node->Left()->SetParent(node);
+          break;
+        } else {
+          node = node->Left();
+        }
       } else {
-        _insert(node->Left(), obj);
-      }
-    } else {
-      if (node->Right() == nullptr) {
-        node->SetRight(new BinIt<T>(obj));
-        node->Right()->SetParent(node);
-      } else {
-        _insert(node->Right(), obj);
+        if (node->Right() == nullptr) {
+          node->SetRight(new BinIt<T>(obj));
+          node->Right()->SetParent(node);
+          break;
+        } else {
+          node = node->Right();
+        }
       }
     }
   }
 
   BinIt<T>* _search(BinIt<T>* node, T obj) {
-    if (node == NULL) return NULL;
-    do {
-      if (obj < node->GetData()) return _search(node->Left(), obj);
-      if (obj > node->GetData()) return _search(node->Right(), obj);
-      if (obj == node->GetData()) {
-        return node;
-      }
-    } while (node->Left() != NULL && node->Right() != NULL);
+    while (node != NULL) {
+      if (obj < node->GetData()) node = node->Left();
+      if (obj > node->GetData()) node = node->Right();
+      if (obj == node->GetData()) return node;
+    }
     return NULL;
   }
 
@@ -111,7 +112,7 @@ int main() {
   tr.insert(7);
   tr.insert(14);
   tr.insert(20);
-//  tr.print(std::cout);
+  //  tr.print(std::cout);
   std::cout << tr;
   bool f1 = tr.contains(14);
   std::cout << '\n';
