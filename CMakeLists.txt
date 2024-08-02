@@ -99,9 +99,3 @@ add_subdirectory(src/algo)
 
 add_subdirectory(src/stepik)
 
-add_executable(15_stack src/stepik/15-stack/15_stack_static.cpp)
-add_executable(stack_skobki src/stepik/15-stack/stack_skobki.cpp)
-add_executable(16_stack1 src/stepik/16_list1/16_list1.cpp)
-add_executable(list2 src/stepik/17_list_withNextPrev/list2.cpp)
-add_executable(18_tree src/stepik/18_tree/18_tree.c)
-add_executable(tree src/stepik/18_tree/tree.cpp)
