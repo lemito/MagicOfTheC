@@ -5,6 +5,7 @@
  * TODO: можно пойти дальше и сделать его версию AVL или Red&Black
  */
 #include <iostream>
+#include <memory>
 #include <ostream>
 
 #define attr_ND [[nodiscard]]
@@ -38,6 +39,7 @@ template <typename T>
 class BinTree {
  private:
   BinIt<T>* root;
+//  std::shared_ptr<BinTree<T>> root;
 
   void _print(BinIt<T>* node, std::ostream& os, size_t level) {
     if (node != nullptr) {
@@ -156,6 +158,13 @@ class BinTree {
     tree.print(os);
     return os;
   }
+
+  friend std::istream&  operator>>(std::istream& is, BinTree<T>& tree){
+    T elem;
+    is >> elem;
+    tree.insert(elem);
+    return is;
+  }
 };
 
 int main() {
@@ -166,7 +175,7 @@ int main() {
   tr.insert(1);
   tr.insert(7);
   tr.insert(14);
-  tr.insert(20);
+  std::cin >> tr;
   //  tr.print(std::cout);
   std::cout << tr;
   //  bool f1 = tr.contains(14);
