@@ -80,6 +80,53 @@ class BinTree {
     return NULL;
   }
 
+  void _remove(BinIt<T>* node) {
+    // лист
+    if (node->Left() == NULL || node->Right() == NULL) {
+      if (node->Parent()->Left() == node)
+        node->Parent()->SetLeft(NULL);
+      else
+        node->Parent()->SetRight(NULL);
+      delete node;
+      node = NULL;
+      return;
+    } else if (node->Left() == NULL || node->Right() == NULL) {  // 1 потомок
+      if (node->Parent()->Right() == node) {
+        if (node->Right() != NULL) {
+          node->Parent()->SetRight(node->Right());
+        } else if (node->Left() != NULL) {
+          node->Parent()->SetRight(node->Left());
+        }
+      } else {
+        if (node->Right() != NULL) {
+          node->Parent()->SetLeft(node->Right());
+        } else if (node->Left() != NULL) {
+          node->Parent()->SetLeft(node->Left());
+        }
+      }
+      delete node;
+      node = NULL;
+      return;
+    } else {  // 2 потомка
+      auto* tmp = node->Right();
+      while (tmp->Left() != NULL) {
+        tmp = tmp->Left();
+      }
+      node->SetData(tmp->GetData());
+      if (tmp->Parent()->Left() == tmp) {
+        tmp->Parent()->SetLeft(tmp->Right());
+      } else {
+        tmp->Parent()->SetRight(tmp->Right());
+      }
+      if (tmp->Right() != NULL) {
+        tmp->Right()->SetParent(tmp->Parent());
+      }
+      delete tmp;
+      node = NULL;
+      return;
+    }
+  }
+
  public:
   BinTree() : root(nullptr) {};
   void insert(T obj) {
@@ -92,16 +139,18 @@ class BinTree {
     }
   }
 
-  void remove(T obj) {
-    // TODO: сделать :)
-  }
-
   void print(std::ostream& os) {
     _print(this->root, os, 0);
     std::cout << '\n';
   }
 
   bool contains(T obj) { return _search(this->root, obj) != nullptr; }
+
+  void remove(T obj) {
+    if (!contains(obj)) return;
+    auto* work = _search(this->root, obj);
+    _remove(work);
+  }
 
   friend std::ostream& operator<<(std::ostream& os, BinTree<T>& tree) {
     tree.print(os);
@@ -120,9 +169,12 @@ int main() {
   tr.insert(20);
   //  tr.print(std::cout);
   std::cout << tr;
-  bool f1 = tr.contains(14);
+  //  bool f1 = tr.contains(14);
+  //  std::cout << '\n';
+  //  bool f2 = tr.contains(52);
+  //  std::cout << f1 << ' ' << f2;
+  tr.remove(5);
   std::cout << '\n';
-  bool f2 = tr.contains(52);
-  std::cout << f1 << ' ' << f2;
+  std::cout << tr;
   return 0;
 }
