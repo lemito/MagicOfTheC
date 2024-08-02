@@ -6,10 +6,20 @@
 #include <algorithm>
 #include <cstdio>
 #include <cstdlib>
+
+#define attr_MU [[maybe_unused]]
+#define attr_ND [[nodiscard]]
+#ifdef NULL
+#define NULL nullptr
+#endif
+
 typedef int T;
 
 struct Node {
   T data;
+  /**
+  * TODO: попробовать умные указатели
+  */
   struct Node* next;
   struct Node* prev;
 
@@ -22,19 +32,13 @@ struct Node {
    */
   Node(Node* next, T data, Node* prev) : data(data), next(next), prev(prev) {};
 
-  [[maybe_unused]] [[nodiscard]] inline T get_data() const {
-    return this->data;
-  }
+  attr_ND inline T get_data() const { return this->data; }
 
-  [[maybe_unused]] inline void set_data(T obj) { this->data = obj; }
+  attr_MU inline void set_data(T obj) { this->data = obj; }
 
-  [[maybe_unused]] [[nodiscard]] Node* Next() const {
-    return this->next;
-  }
+  attr_MU attr_ND Node* Next() const { return this->next; }
 
-  [[maybe_unused]] [[nodiscard]] Node* Prev() const {
-    return this->prev;
-  }
+  attr_MU attr_ND Node* Prev() const { return this->prev; }
 };
 
 struct List {
@@ -113,8 +117,9 @@ struct List {
     delete it;
   }
 
-  [[nodiscard]] bool IsEmpty() const {
-    return this->root->next == this->root && this->root->prev == this->root || this->size == 0;
+  attr_ND bool IsEmpty() const {
+    return this->root->next == this->root && this->root->prev == this->root ||
+           this->size == 0;
   }
 
   /**
@@ -122,7 +127,7 @@ struct List {
    * @param obj
    * @return
    */
-  [[nodiscard]] Node* l_search(T obj) const {
+  attr_ND Node* l_search(T obj) const {
     Node* res = this->root->next;
     while (res != this->root) {
       if (res->data == obj) {
@@ -138,7 +143,7 @@ struct List {
    * @param ix
    * @return Node*
    */
-  [[nodiscard]] Node* search(size_t ix) const {
+  attr_ND Node* search(size_t ix) const {
     Node* cur = this->root;
     for (size_t cnt = 0; cnt < ix + 1; ++cnt) {
       cur = cur->next;
@@ -208,7 +213,7 @@ struct List {
     }
   }
 
-    ~List() { this->Destroy(); }
+  ~List() { this->Destroy(); }
 };
 
 int main() {
