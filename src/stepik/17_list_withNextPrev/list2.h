@@ -229,11 +229,23 @@ struct List {
     }
   }
 
+  T Pop_First() {
+    if (IsEmpty()) return T(NULL);
+    auto first = this->root->next;
+    T res = first->get_data();
+    first->next->prev = this->root;
+    this->root->next = first->next;
+//    printf("%d\n", res);
+    --this->size;
+    return res;
+  }
+
   ~List() { this->Destroy(); }
 };
 
+/*
 int main() {
-  List ll;
+  List<int> ll;
   ll.Push_back(22);
   ll.Push_back(2222);
   ll.Push_back(5);
@@ -246,6 +258,23 @@ int main() {
   //  Node* dvatsatdva = ll.l_search(4);
   //  ll.Remove(22);
   ll.Print();
+  std::cout << '\n';
+  auto it_begin = ll.begin();
+  auto it_end = ll.end();
+  auto it_rend = ll.rend();
+  auto it_rbegin = ll.rbegin();
+  for (auto it = it_begin; it != it_end; ++it) {
+    std::cout << *it << " ";
+  }
+  std::cout << '\n';
+  size_t cnt = 0;
+  for (auto it = it_rbegin; it != it_rend && cnt < ll.Size(); --it, ++cnt) {
+    std::cout << *it << " ";
+  }
+  std::cout << '\n';
+  //  --it_begin;
+  --it_rend;
+  std::cout << *(it_rend) << std::endl;  // должно быть 4
   //  printf("%d", ll.search(1)->data);
   //  printf("\t%d\t", ll.IsEmpty());
   //  ll.swap(dvatsatdva, dvatsatdva22);
@@ -253,3 +282,4 @@ int main() {
   //  ll.Destroy();
   return 0;
 }
+ */
