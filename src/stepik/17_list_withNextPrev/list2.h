@@ -229,15 +229,21 @@ struct List {
     }
   }
 
-  T Pop_First() {
-    if (IsEmpty()) return T(NULL);
+  T First(){
     auto first = this->root->next;
     T res = first->get_data();
+    return res;
+  }
+
+  void Pop_First() {
+    if (IsEmpty()) return T(NULL);
+    auto first = this->root->next;
+//    T res = first->get_data();
     first->next->prev = this->root;
     this->root->next = first->next;
 //    printf("%d\n", res);
     --this->size;
-    return res;
+//    return res;
   }
 
   ~List() { this->Destroy(); }
