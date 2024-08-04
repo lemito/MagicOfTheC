@@ -296,14 +296,14 @@ class List {
     }
   }
 
-  T First(){
+  T First() {
     auto first = this->root->next;
     T res = first->get_data();
     return res;
   }
 
   void Pop_First() {
-    if (IsEmpty()) return T(NULL);
+    if (IsEmpty()) throw ListEmpty();
     auto first = this->root->next;
     first->next->prev = this->root;
     this->root->next = first->next;
