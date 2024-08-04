@@ -13,9 +13,6 @@
 
 #define attr_MU [[maybe_unused]]
 #define attr_ND [[nodiscard]]
-#ifdef NULL
-#define NULL nullptr
-#endif
 
 typedef int T;
 
@@ -27,7 +24,8 @@ struct Node {
   std::shared_ptr<Node> next;
   std::shared_ptr<Node> prev;
 
-  Node() : data(0), next(NULL), prev(NULL) {};
+  // public:
+  Node() : data(0), next(nullptr), prev(nullptr) {};
   /**
    *
    * @param next
@@ -240,12 +238,9 @@ struct List {
   void Pop_First() {
     if (IsEmpty()) return T(NULL);
     auto first = this->root->next;
-//    T res = first->get_data();
     first->next->prev = this->root;
     this->root->next = first->next;
-//    printf("%d\n", res);
     --this->size;
-//    return res;
   }
 
   ~List() { this->Destroy(); }
