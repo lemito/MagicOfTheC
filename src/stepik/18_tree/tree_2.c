@@ -1,8 +1,12 @@
+/**
+ * Распечатайте последовательность натуральных чисел по возрастанию, печатая
+ * каждое число один раз. Для решения задачи используйте бинарное дерево.
+ */
 #include <stdio.h>
 
 #include "18_ctree_lib.h"
 
-void tree_inline_print(Node* tree){
+void tree_inline_print(Node* tree) {
   if (tree == NULL) return;
   tree_inline_print(tree->left);
   printf("%d ", tree->data);
