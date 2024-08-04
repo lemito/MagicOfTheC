@@ -14,8 +14,7 @@
 #define attr_MU [[maybe_unused]]
 #define attr_ND [[nodiscard]]
 
-typedef int T;
-
+template <typename T>
 struct Node {
   T data;
   /**
@@ -44,7 +43,9 @@ struct Node {
   attr_MU attr_ND std::shared_ptr<Node> Prev() const { return this->prev; }
 };
 
-struct List {
+template <typename T>
+class List {
+ private:
   // всегда околонулевой; схема -
   // https://stepik.org/media/attachments/lesson/308797/dlist_barier_model.png
   //  Node* root;
