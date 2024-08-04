@@ -49,17 +49,83 @@ class List {
   // всегда околонулевой; схема -
   // https://stepik.org/media/attachments/lesson/308797/dlist_barier_model.png
   //  Node* root;
-  std::shared_ptr<Node> root;
-  size_t size;
+  std::shared_ptr<Node<T>> root;
+  size_t size{};
+
+ public:
+  /**
+   * Доп класс LIterator [шок, но можно делать класс в классе]
+   */
+  class LIterator {
+   private:
+    std::shared_ptr<Node<T>> cur;
+
+   public:
+    explicit LIterator(std::shared_ptr<Node<T>> obj) : cur(std::move(obj)) {};
+
+    LIterator& operator++() {
+      cur = cur->next;
+      return *this;
+    }
+
+    LIterator operator++(int) {
+      LIterator tmp = *this;
+      ++(*this);
+      return tmp;
+    }
+
+    LIterator& operator--() {
+      cur = cur->prev;
+      return *this;
+    }
+
+    LIterator operator--(int) {
+      LIterator tmp = *this;
+      --(*this);
+      return tmp;
+    }
+
+    T& operator*() { return cur->data; }
+    bool operator==(const LIterator& other) const { return cur == other.cur; }
+    bool operator!=(const LIterator& other) const { return cur != other.cur; }
+  };
+
+  /**
+   * Класс ошибки - список пуст
+   */
+  class ListEmpty : public std::exception {
+   public:
+    ListEmpty() { std::cerr << "Список пуст\n"; }
+  };
 
   List() {
     //    this->root = new Node;
-    this->root = std::make_shared<Node>();
+    this->root = std::make_shared<Node<T>>();
     this->root->prev = this->root->next = this->root;
     this->root->data = 0;
     this->size = 0;
   };
-  explicit List(std::shared_ptr<Node> r) : root(std::move(r)), size(1) {};
+  attr_MU explicit List(std::shared_ptr<Node<T>> r)
+      : root(std::move(r)), size(1){};
+
+  explicit List(std::vector<T> obj) {
+    List();
+    for (auto& elem : obj) Push_back(elem);
+  }
+
+  size_t Size() { return this->size; }
+
+  long GetCount(const std::shared_ptr<Node<T>>&) {
+    return this->root.use_count();
+  };
+
+  LIterator begin() { return LIterator(this->root->next); }
+
+  LIterator end() { return LIterator(this->root); }
+
+  LIterator rbegin() { return LIterator(this->root->prev); }
+
+  LIterator rend() { return LIterator(this->root); }
 
   void Print() const {
     //    for (Node* p = this->root->next; p != this->root; p = p->next) {
@@ -75,7 +141,7 @@ class List {
 
   void Push_back(T obj) {
     //    Node* head = new Node(this->root, obj, this->root->prev);
-    auto head = std::make_shared<Node>(this->root, obj, this->root->prev);
+    auto head = std::make_shared<Node<T>>(this->root, obj, this->root->prev);
     this->root->prev->next = head;
     this->root->prev = head;
     head->next = this->root;
@@ -127,15 +193,14 @@ class List {
    * Удаление элемента по итератору
    * @param it
    */
-  void Remove(const std::shared_ptr<Node>& it) {
+  void Remove(const std::shared_ptr<Node<T>>& it) {
     it->prev->next = it->next;
     it->next->prev = it->prev;
     --this->size;
   }
 
   attr_ND bool IsEmpty() const {
-    return this->root->next == this->root &&
-               this->root->prev == this->root ||
+    return this->root->next == this->root && this->root->prev == this->root ||
            this->size == 0;
   }
 
@@ -144,7 +209,7 @@ class List {
    * @param obj
    * @return
    */
-  attr_ND std::shared_ptr<Node> l_search(T obj) const {
+  attr_ND std::shared_ptr<Node<T>> l_search(T obj) const {
     auto res = this->root->next;
     while (res != this->root) {
       if (res->data == obj) {
@@ -189,7 +254,8 @@ class List {
     this->size = 0;
   }
 
-  void swap(const std::shared_ptr<Node>& a, const std::shared_ptr<Node>& b) {
+  attr_MU static void swap(const std::shared_ptr<Node<T>>& a,
+                           const std::shared_ptr<Node<T>>& b) {
     if (a == b) return;
 
     auto a_prev = a->prev;
