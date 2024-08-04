@@ -40,3 +40,8 @@ target_link_libraries(list_3 PUBLIC list2)
 add_library(18_ctree_lib 18_tree/18_ctree_lib.h)
 add_executable(tree_2 18_tree/tree_2.c)
 target_link_libraries(tree_2 PUBLIC 18_ctree_lib)
+add_executable(tree_4 18_tree/tree_4.cpp)
+target_link_libraries(tree_4 PUBLIC 18_ctree_lib)
+
+add_executable(tree_3 18_tree/tree_3.c)
+target_link_libraries(tree_3 PUBLIC 18_ctree_lib)
