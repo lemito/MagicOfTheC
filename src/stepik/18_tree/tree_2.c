@@ -1,0 +1,19 @@
+#include <stdio.h>
+
+#include "18_ctree_lib.h"
+
+void tree_inline_print(Node* tree){
+  if (tree == NULL) return;
+  tree_inline_print(tree->left);
+  printf("%d ", tree->data);
+  tree_inline_print(tree->right);
+}
+
+int main(void) {
+  int inpt;
+  while (scanf("%d", &inpt) == 1 && inpt != 0) {
+    tree = tree_add(tree, inpt);
+  }
+  tree_inline_print(tree);
+  return 0;
+}
