@@ -153,7 +153,7 @@ class List {
    * @param obj
    * @param it
    */
-  void Insert(T obj, const std::shared_ptr<Node>& it) {
+  void Insert(T obj, const std::shared_ptr<Node<T>>& it) {
     //    Node* new_node = new Node(it->next, obj, it);
     auto new_node = std::make_shared<Node>(it->next, obj, it);
     it->next = new_node;
