@@ -25,7 +25,8 @@ add_executable(elong_add2 14/elong_add2.c)
 add_executable(elong_add3 14/elong_add3.c)
 add_executable(toLongN 14/toLongN.c)
 add_executable(15_stack_dyn 15-stack/15_stack_dyn.cpp)
-add_executable(15_stack 15-stack/15_stack_static.cpp)
+add_executable(15_stack 15-stack/15_stack_static.cpp
+        18_tree/tree_2.c)
 add_executable(stack_skobki 15-stack/stack_skobki.cpp)
 add_executable(16_stack1 16_list1/16_list1.cpp)
 
@@ -35,3 +36,7 @@ add_executable(list_3 17_list_withNextPrev/list_3.cpp)
 
 add_library(list2 17_list_withNextPrev/list2.h)
 target_link_libraries(list_3 PUBLIC list2)
+
+add_library(18_ctree_lib 18_tree/18_ctree_lib.h)
+add_executable(tree_2 18_tree/tree_2.c)
+target_link_libraries(tree_2 PUBLIC 18_ctree_lib)
