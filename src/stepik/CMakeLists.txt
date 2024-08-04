@@ -28,6 +28,10 @@ add_executable(15_stack_dyn 15-stack/15_stack_dyn.cpp)
 add_executable(15_stack 15-stack/15_stack_static.cpp)
 add_executable(stack_skobki 15-stack/stack_skobki.cpp)
 add_executable(16_stack1 16_list1/16_list1.cpp)
-add_executable(list2 17_list_withNextPrev/list2.cpp)
+
 add_executable(18_tree 18_tree/18_tree.c)
 add_executable(tree 18_tree/tree.cpp)
+add_executable(list_3 17_list_withNextPrev/list_3.cpp)
+
+add_library(list2 17_list_withNextPrev/list2.h)
+target_link_libraries(list_3 PUBLIC list2)
