@@ -159,12 +159,12 @@ struct List {
    * @param ix
    * @return Node*
    */
-  attr_ND std::shared_ptr<Node> search(size_t ix) const {
+  attr_ND std::shared_ptr<Node<T>> at(size_t ix) const {
     auto cur = this->root;
     for (size_t cnt = 0; cnt < ix + 1; ++cnt) {
       cur = cur->next;
     }
-    printf("__%d__\n", cur->data);
+    //    printf("__%d__\n", cur->data);
     return cur;
   }
 
