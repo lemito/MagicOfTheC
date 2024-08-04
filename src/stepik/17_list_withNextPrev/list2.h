@@ -310,6 +310,20 @@ class List {
     --this->size;
   }
 
+  attr_MU T Last(){
+    auto last = this->root->prev;
+    return last->get_data();
+  }
+
+  attr_MU void PopLast(){
+    if (this->IsEmpty()) throw ListEmpty();
+    auto last = this->root->prev;
+    last->prev->next = this->root;
+    this->root->prev = last->prev->next;
+    --this->size;
+
+  }
+
   ~List() { this->Destroy(); }
 };
 
