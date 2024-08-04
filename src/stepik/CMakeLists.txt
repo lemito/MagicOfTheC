@@ -45,3 +45,5 @@ target_link_libraries(tree_4 PUBLIC 18_ctree_lib)
 
 add_executable(tree_3 18_tree/tree_3.c)
 target_link_libraries(tree_3 PUBLIC 18_ctree_lib)
+add_executable(tree_5 18_tree/tree_5.c)
+target_link_libraries(tree_3 PUBLIC 18_ctree_lib m)
