@@ -4,7 +4,7 @@
  */
 #include <stdio.h>
 
-#include "18_ctree_lib.h"
+#include "18_ctree_lib.c"
 
 void tree_inline_print(Node* tree) {
   if (tree == NULL) return;

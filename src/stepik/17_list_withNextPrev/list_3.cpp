@@ -2,7 +2,7 @@
  * Пьяница
  * https://stepik.org/lesson/659477/step/2?unit=656913
  */
-#include "list2.h"
+#include "list2.cpp"
 
 #define N 1000000
 

@@ -7,7 +7,7 @@
  */
 #include <stdio.h>
 
-#include "18_ctree_lib.h"
+#include "18_ctree_lib.c"
 
 #define MAX(a, b) (a > b ? a : b)
 

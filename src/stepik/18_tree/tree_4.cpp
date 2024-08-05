@@ -5,7 +5,7 @@
  * существует в дереве, добавлять его не надо. Балансировка дерева не
  * производится.
  */
-#include "18_ctree_lib.h"
+#include "18_ctree_lib.c"
 
 void tree_inline_print(Node* tree) {
   if (tree == NULL) return;

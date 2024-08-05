@@ -1,10 +1,3 @@
-//
-// Created by lemito on 8/4/24.
-//
-
-#ifndef MAGICOFTHEC_SRC_STEPIK_18_TREE_18_CTREE_LIB_H_
-#define MAGICOFTHEC_SRC_STEPIK_18_TREE_18_CTREE_LIB_H_
-
 #include <malloc.h>
 #include <stdbool.h>
 #include <stddef.h>
@@ -113,5 +106,3 @@ Node* tree_delete(Node* tree, T obj) {
   }
   return tree;
 }
-
-#endif  // MAGICOFTHEC_SRC_STEPIK_18_TREE_18_CTREE_LIB_H_
