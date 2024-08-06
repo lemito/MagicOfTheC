@@ -98,4 +98,3 @@ add_subdirectory(src/algo)
 
 
 add_subdirectory(src/stepik)
-add_executable(qsort_5 src/stepik/12/qsort_5.c)
