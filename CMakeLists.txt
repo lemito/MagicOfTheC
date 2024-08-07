@@ -98,4 +98,3 @@ add_subdirectory(src/algo)
 
 
 add_subdirectory(src/stepik)
-add_executable(str_bomb5 src/stepik/11/str_bomb5.cpp)
