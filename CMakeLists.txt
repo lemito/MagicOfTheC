@@ -98,3 +98,4 @@ add_subdirectory(src/algo)
 
 
 add_subdirectory(src/stepik)
+add_executable(vector_merge src/cpp/vector_merge.cpp)
