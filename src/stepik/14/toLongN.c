@@ -1,6 +1,5 @@
 // TODO: попытаться сломать
 #include <assert.h>
-#include <ctype.h>
 #include <malloc.h>
 #include <stdio.h>
 #include <string.h>
@@ -23,7 +22,7 @@ void cleaner_LongN(LongN* x) {
 // начало
 
 #define INT_TO_CHAR(i) (i + '0')
-#define CHAR_TO_INT(c) (c - '0')
+#define CHAR_TO_INT(c) (int)(c - '0')
 
 LongN getLongN(char* s) {
   LongN res;
@@ -32,7 +31,6 @@ LongN getLongN(char* s) {
       res.sign = 0;
       s++;
       break;
-
     case '-':  // -123
       res.sign = 1;
       s++;
@@ -44,10 +42,10 @@ LongN getLongN(char* s) {
   size_t slen = strlen(s);
   res.n = (slen % 2 == 0) ? (int)(slen / 2) : (int)((slen / 2) + 1);
   res.dig = (char*)malloc(sizeof(char) * res.n);
-  //  memset(res.dig, 0, res.n);
   for (size_t i = 0; i < slen; i += 2) {
-    res.dig[i / 2] = (slen - 2 - i == -1 ? 0 : (s[slen - 2 - i] - '0') * 10) +
-                     (s[slen - 1 - i] - '0');
+    res.dig[i / 2] =
+        (char)(slen - 2 - i == -1 ? 0 : CHAR_TO_INT(s[slen - 2 - i]) * 10) +
+        CHAR_TO_INT(s[slen - 1 - i]);
   }
   return res;
 }
