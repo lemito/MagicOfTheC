@@ -42,8 +42,8 @@ LongN getLongN(char* s) {
   size_t slen = strlen(s);
   res.n = (slen % 2 == 0) ? (int)(slen / 2) : (int)((slen / 2) + 1);
   res.dig = (char*)malloc(sizeof(char) * res.n);
-  for (size_t i = 0; i < slen; i += 2) {
-    res.dig[i / 2] =
+  for (size_t i = 0, j = 0; i < slen; i += 2, j++) {
+    res.dig[j] =
         (char)(slen - 2 - i == -1 ? 0 : CHAR_TO_INT(s[slen - 2 - i]) * 10) +
         CHAR_TO_INT(s[slen - 1 - i]);
   }
