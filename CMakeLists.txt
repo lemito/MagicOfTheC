@@ -79,23 +79,16 @@ target_link_libraries(lab26 merge_sort MagicOfTheC_queue_static_lib)
 target_link_libraries(stress26 merge_sort MagicOfTheC_queue_static_lib)
 target_link_libraries(kp9 heap_sort MagicOfTheC_binary_search_lib)
 target_link_libraries(BigAlegra_gmp gmp gmpxx)
-
 target_include_directories(HashTable PRIVATE ${UUID_INCLUDE_DIRS})
 target_link_libraries(HashTable PRIVATE ${UUID_LIBRARIES})
-
-
 add_executable(Deikstra src/Deikstra/Deikstra.c)
-
 add_executable(polymorphism_NotTypesPoiners src/polymorphism/main2.c)
 target_link_libraries(polymorphism_NotTypesPoiners m)
-
 add_executable(classes src/polymorphism/main3.c)
 add_executable(AVLtree src/AVLtree/main.c)
 add_executable(SparceMatrix src/SparceMatrix.cpp)
-
 add_subdirectory(src/cpp)
 add_subdirectory(src/algo)
-
-
 add_subdirectory(src/stepik)
 add_executable(vector_merge src/cpp/vector_merge.cpp)
+add_executable(type_generic_test src/type_generic.c)
