@@ -13,6 +13,19 @@
                 "CMAKE_CXX_COMPILER": "/usr/bin/g++",
                 "CMAKE_BUILD_TYPE": "Debug"
             }
+        },
+        {
+            "name": "GCC Win",
+            "displayName": "GCC 13.2.0 x86_64-w64-mingw32",
+            "description": "Using compilers: C = C:\\mingw64\\bin\\gcc.exe, CXX = C:\\mingw64\\bin\\g++.exe",
+            "generator": "MinGW Makefiles",
+            "binaryDir": "${sourceDir}/out/build/${presetName}",
+            "cacheVariables": {
+                "CMAKE_INSTALL_PREFIX": "${sourceDir}/out/install/${presetName}",
+                "CMAKE_C_COMPILER": "C:\\mingw64\\bin\\gcc.exe",
+                "CMAKE_CXX_COMPILER": "C:\\mingw64\\bin\\g++.exe",
+                "CMAKE_BUILD_TYPE": "Debug"
+            }
         }
     ]
 }

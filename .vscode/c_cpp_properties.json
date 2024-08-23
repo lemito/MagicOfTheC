@@ -8,6 +8,15 @@
             "compilerPath": "/usr/bin/gcc",
             "intelliSenseMode": "linux-clang-x64",
             "configurationProvider": "ms-vscode.makefile-tools"
+        },
+        {
+            "name": "Win",
+            "includePath": [
+                "${workspaceFolder}/**"
+            ],
+            "windowsSdkVersion": "10.0.22621.0",
+            "compilerPath": "C:/mingw64/bin/g++.exe",
+            "intelliSenseMode": "windows-gcc-x64"
         }
     ],
     "version": 4

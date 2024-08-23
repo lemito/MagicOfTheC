@@ -5,13 +5,13 @@ project(MagicOfTheC LANGUAGES C CXX)
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_CXX_STANDARD 20)
 
-# Add custom module path
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
-
-# Find required libraries
-find_package(GMP REQUIRED)
-find_library(UUID_LIBRARIES uuid)
-find_path(UUID_INCLUDE_DIRS uuid/uuid.h)
+## Add custom module path
+#set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
+#
+## Find required libraries
+#find_package(GMP REQUIRED)
+#find_library(UUID_LIBRARIES uuid)
+#find_path(UUID_INCLUDE_DIRS uuid/uuid.h)
 
 # Define libraries
 add_library(MagicOfTheC_vector STATIC src/vector/vector_lib.c)
@@ -92,3 +92,7 @@ add_subdirectory(src/algo)
 add_subdirectory(src/stepik)
 add_executable(vector_merge src/cpp/vector_merge.cpp)
 add_executable(type_generic_test src/type_generic.c)
+add_library(BaseIterator src/cpp/BaseIterator.h)
+set_target_properties(BaseIterator PROPERTIES LINKER_LANGUAGE CXX)
+add_executable(LList src/cpp/listt.cpp)
+add_executable(LVecor src/cpp/LVecor.cpp)
