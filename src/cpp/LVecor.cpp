@@ -1,12 +1,15 @@
 #include <iostream>
 
+#define MAX(a, b) (a > b ? a : b)
+#define MIN(a, b) (a < b ? a : b)
+
 #include "BaseIterator.h"
 namespace LVector {
 template <typename T>
 class LVectorIterator final : public BaseIteratorNS::BaseIterator<T> {
  public:
   explicit LVectorIterator(T* data) : _data(data) {}
-  ~LVectorIterator() override;
+  ~LVectorIterator() override = default;
 
   LVectorIterator* Next() override;
   LVectorIterator* Prev() override;
@@ -26,10 +29,10 @@ class LVectorIterator final : public BaseIteratorNS::BaseIterator<T> {
   T* _data;
 };
 
-template <typename T>
-LVectorIterator<T>::~LVectorIterator() {
-  delete _data;
-}
+// template <typename T>
+// LVectorIterator<T>::~LVectorIterator() {
+//   delete _data;
+// }
 
 template <typename T>
 LVectorIterator<T>* LVectorIterator<T>::Next() {
@@ -106,13 +109,29 @@ class LVector {
   size_t _size;
   size_t _capacity;
   T* _data;
+
+  /**
+   * Возвращает новый массив данных с больших/меньшим кол-вом памяти
+   * @param new_size
+   * @return
+   */
+  T* _resize(const size_t new_size) {
+    T* new_data = new T[new_size];
+    // std::copy(_data, _data +  MIN(_size, new_size), new_data);
+    memmove(new_data, _data, MAX(_capacity, _size));
+    // _size = new_size;
+    return new_data;
+  }
 };
 
 template <typename T>
 void LVector<T>::push_back(T obj) {
   _data[_size] = obj;
   ++_size;
-  ++_capacity;
+  if (_capacity <= _size) {
+    _capacity += 10;
+    _data = _resize(_capacity);
+  }
 }
 template <typename T>
 size_t LVector<T>::size() {
