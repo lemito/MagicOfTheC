@@ -119,7 +119,7 @@ class LVector {
   }
 
   LVectorIterator<T> begin() const { return _data[0]; }
-  LVectorIterator<T> end() const { return _data[_size]; }
+  LVectorIterator<T> end() const { return _data[0 + _size]; }
 
  private:
   size_t _size;      // размер
@@ -166,6 +166,7 @@ void Printer_by_ix(LVector::LVector<int>& ll) {
   std::cout << '\n';
 }
 
+// todo: доработать итераторы
 void Printer_by_it(LVector::LVector<int>& ll) {
   for (auto it = ll.begin(); it != ll.end(); ++it) {
     std::cout << *it << ' ';
