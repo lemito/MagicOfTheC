@@ -100,7 +100,15 @@ class LVector {
 
   size_t size();
 
-  T operator[](size_t index) const { return _data[index]; }
+  T operator[](size_t index) {
+    if (index > _size) throw std::out_of_range("Index not found");
+    return _data[index];
+  }
+
+  T operator[](size_t index) const {
+    if (index > _size) throw std::out_of_range("Index not found");
+    return _data[index];
+  }
 
   LVectorIterator<T> begin() const { return LVectorIterator<T>(_data); }
   LVectorIterator<T> end() const { return LVectorIterator<T>(_data + _size); }
@@ -162,5 +170,11 @@ int main() {
   ll.push_back(5);
   // Printer_by_ix(ll);
   Printer_by_it(ll);
+  try {
+    int error = ll[10];
+    std::cout << error << std::endl;
+  } catch (std::exception& e) {
+    std::cerr << e.what();
+  }
   return 0;
 }
