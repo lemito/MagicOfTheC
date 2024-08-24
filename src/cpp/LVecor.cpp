@@ -1,7 +1,11 @@
 #include <iostream>
+#include <typeinfo>
 
 #define MAX(a, b) (a > b ? a : b)
 #define MIN(a, b) (a < b ? a : b)
+#define TERMINATOR_PTR nullptr
+
+#define RESIZE(ptr, new_size) (_new_ptr = )
 
 #include "BaseIterator.h"
 namespace LVector {
@@ -9,7 +13,7 @@ template <typename T>
 class LVectorIterator final : public BaseIteratorNS::BaseIterator<T> {
  public:
   LVectorIterator() = default;
-  explicit LVectorIterator(T data, size_t ix) : _data(data), _ix(ix) {}
+  explicit LVectorIterator(T data, const size_t ix) : _ix(ix), _data(data) {}
   ~LVectorIterator() override = default;
 
   LVectorIterator* Next() override;
@@ -35,10 +39,10 @@ class LVectorIterator final : public BaseIteratorNS::BaseIterator<T> {
   void set_ix(size_t ix) { _ix = ix; }
 
  private:
-  size_t _ix;
-  T _data{};
-  LVectorIterator* _next = nullptr;
-  LVectorIterator* _prev = nullptr;
+  size_t _ix = 0;
+  T _data = 0;
+  LVectorIterator* _next = TERMINATOR_PTR;
+  LVectorIterator* _prev = TERMINATOR_PTR;
 };
 
 // template <typename T>
@@ -68,21 +72,25 @@ inline const T& LVectorIterator<T>::operator*() const {
 
 template <typename T>
 LVectorIterator<T>* LVectorIterator<T>::operator++() {
+  _ix++;
   return _next;
 }
 
 template <typename T>
 LVectorIterator<T>* LVectorIterator<T>::operator++(int) {
+  ++_ix;
   return _next;
 }
 
 template <typename T>
 LVectorIterator<T>* LVectorIterator<T>::operator--() {
+  _ix--;
   return _prev;
 }
 
 template <typename T>
 LVectorIterator<T>* LVectorIterator<T>::operator--(int) {
+  --_ix;
   return _prev;
 }
 
@@ -118,8 +126,10 @@ class LVector {
     return _data[index].data();
   }
 
+  T at(size_t index) const { return this[index]; }
+
   LVectorIterator<T> begin() const { return _data[0]; }
-  LVectorIterator<T> end() const { return _data[0 + _size]; }
+  LVectorIterator<T> end() const { return _data[_size - 1]; }
 
  private:
   size_t _size;      // размер
@@ -133,7 +143,7 @@ class LVector {
    * @return
    */
   LVectorIterator<T>* _resize(const size_t new_size) {
-    LVectorIterator<T>* new_data = new LVectorIterator<T>[new_size];
+    auto* new_data = new LVectorIterator<T>[new_size];
     memcpy(new_data, _data, _size * sizeof(LVectorIterator<T>));
     delete[] _data;
     return new_data;
@@ -168,7 +178,11 @@ void Printer_by_ix(LVector::LVector<int>& ll) {
 
 // todo: доработать итераторы
 void Printer_by_it(LVector::LVector<int>& ll) {
-  for (auto it = ll.begin(); it != ll.end(); ++it) {
+  // auto bb = ll.begin();
+  // auto ee = ll.end();
+  // std::cout << bb.data() << ' ' << ee.data();
+  auto it = ll.begin();
+  for (; it != ll.end(); ++it) {
     std::cout << *it << ' ';
   }
   std::cout << '\n';
@@ -181,11 +195,11 @@ int main() {
   ll.push_back(5);
   Printer_by_ix(ll);
   // Printer_by_it(ll);
-  try {
-    int error = ll[10];
-    std::cout << error << std::endl;
-  } catch (std::exception& e) {
-    std::cerr << e.what();
-  }
+  // try {
+  //   const int error = ll[10];
+  //   std::cout << error << std::endl;
+  // } catch (std::exception& e) {
+  //   std::cerr << e.what();
+  // }
   return 0;
 }
