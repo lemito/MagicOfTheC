@@ -1,6 +1,11 @@
+set (CMAKE_CXX_STANDARD 23)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+
 add_executable(oop_test oop_test.cpp)
 add_executable(variadic_function Variadic_function.cpp)
 add_executable(templates_func templates_func.cpp)
 add_executable(Matrix templates_class.cpp)
 add_executable(raii raii.cpp)
 add_executable(smart_ptrs smart_ptrs.cpp)
+add_executable(hello hello.cpp)
