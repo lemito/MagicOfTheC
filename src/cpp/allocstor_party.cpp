@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <iostream>
 #include <memory>
 #include <vector>
@@ -21,7 +22,11 @@ class EasyVec {
       : _size(size),
         _data(traits_t1::allocate(_alloc, size)),
         _capacity(size) {}
-  ~EasyVec() { traits_t1::deallocate(_alloc, _data, _capacity); }
+  ~EasyVec() {
+    if (_data) {
+      traits_t1::deallocate(_alloc, _data, _capacity);
+    }
+  }
 
   size_t size() const { return _size; }
 
@@ -29,7 +34,36 @@ class EasyVec {
 
   const _Tp& operator[](size_t index) const { return _data[index]; }
 
-  void destruct() { traits_t1::deallocate(_alloc, _data, _capacity); }
+  void destruct() {
+    if (_data) {
+      traits_t1::deallocate(_alloc, _data, _capacity);
+      _data = nullptr;
+      _capacity = 0;
+      _size = 0;
+    }
+  }
+
+  /**
+   * Создает новый _data, копируя информацию из старого
+   * @param new_size
+   * @return
+   */
+  data_type_ptr reallocate(size_t new_size) {
+    data_type_ptr newobj = traits_t1::allocate(_alloc, new_size);
+    if (_data) {
+      std::copy(_data, _data + _size, newobj);
+      traits_t1::deallocate(_alloc, _data, _capacity);
+    }
+    _capacity = new_size;
+    return newobj;
+  }
+
+  void resize(const size_t new_size) {
+    if (new_size > _capacity) {
+      _data = reallocate(new_size);
+    }
+    _size = new_size;
+  }
 };
 
 int main() {
@@ -48,12 +82,19 @@ int main() {
   mytrait::construct(mya, ptr2, 15);
   std::cout << *ptr2 << ' ' << ptr2 << '\n';
   mytrait::deallocate(mya, ptr2, 1);
+  // ======================
 
-  EasyVec<int> meow;
-  meow[0] = 5;
-  meow[1] = 4;
-  for (int i = 0; i < 2; ++i) std::cout << meow[i] << ' ';
+  // мое чудо
+  EasyVec<int> meow(10);
+  for (int i = 0; i < 11; ++i) meow[i] = i * 4;
+  for (int i = 0; i < 11; ++i) std::cout << meow[i] << ' ';
+  std::cout << std::endl;
+
+  meow.resize(5);
+  for (int i = 0; i < 5; ++i) std::cout << meow[i] << ' ';
   meow.destruct();
+  // ======================
+
   std::cout << std::endl;
   return 0;
 }
