@@ -18,8 +18,8 @@ class BaseIterator {
   virtual T &operator*();
   virtual const T &operator*() const;
 
-  virtual BaseIterator<T> *Next();
-  virtual BaseIterator<T> *Prev();
+  virtual BaseIterator *Next();
+  virtual BaseIterator *Prev();
 
   virtual BaseIterator *operator++() { return nullptr; }
   virtual BaseIterator *operator++(int) { return nullptr; }
@@ -73,6 +73,6 @@ inline void BaseIterator<T>::PushData(T obj) {
 }
 template <typename T>
 inline T BaseIterator<T>::GetData() {
-  return *(this->_data);
+  return *(_data);
 }
 }  // namespace BaseIteratorNS
