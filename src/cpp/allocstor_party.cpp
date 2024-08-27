@@ -22,17 +22,19 @@ class EasyVec {
       : _size(size),
         _data(traits_t1::allocate(_alloc, size)),
         _capacity(size) {}
-  ~EasyVec() {
-    if (_data) {
-      traits_t1::deallocate(_alloc, _data, _capacity);
-    }
-  }
+  ~EasyVec() { destruct(); }
 
   size_t size() const { return _size; }
 
-  _Tp& operator[](size_t index) { return _data[index]; }
+  _Tp& operator[](size_t index) {
+    if (index > _size) throw std::out_of_range("out_of_range");
+    return _data[index];
+  }
 
-  const _Tp& operator[](size_t index) const { return _data[index]; }
+  const _Tp& operator[](size_t index) const {
+    if (index > _size) throw std::out_of_range("out_of_range");
+    return _data[index];
+  }
 
   void destruct() {
     if (_data) {
@@ -91,7 +93,7 @@ int main() {
   std::cout << std::endl;
 
   meow.resize(5);
-  for (int i = 0; i < 5; ++i) std::cout << meow[i] << ' ';
+  for (int i = 0; i <= 5; ++i) std::cout << meow[i] << ' ';
   meow.destruct();
   // ======================
 
