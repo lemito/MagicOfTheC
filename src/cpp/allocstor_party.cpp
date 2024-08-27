@@ -6,15 +6,16 @@
 template <typename _Tp, typename _Alloc = std::allocator<_Tp>,
           typename traits_t1 = std::allocator_traits<_Alloc> >
 class EasyVec {
-  typedef _Alloc alloc_object;
-  typedef _Tp data_type;
-  typedef _Tp* data_type_ptr;
+  typedef _Alloc alloc_object;  // объект аллокатара
+  typedef _Tp data_type;        // тип хранимого значения
+  typedef _Tp &data_ref;        // ссылочный тип к типу
+  typedef _Tp *data_ptr;        // хранилище (кусочек памяти)
 
- private:
+  // private:
   size_t _size = 0;
   size_t _capacity = 0;
   alloc_object _alloc;
-  data_type_ptr _data = nullptr;
+  data_ptr _data = nullptr;
 
  public:
   EasyVec() : _data(traits_t1::allocate(_alloc, 10)), _capacity(10) {}
@@ -24,14 +25,14 @@ class EasyVec {
         _capacity(size) {}
   ~EasyVec() { destruct(); }
 
-  size_t size() const { return _size; }
+  [[nodiscard]] size_t size() const { return _size; }
 
-  _Tp& operator[](size_t index) {
+  data_ref operator[](size_t index) {
     if (index > _size) throw std::out_of_range("out_of_range");
     return _data[index];
   }
 
-  const _Tp& operator[](size_t index) const {
+  const data_ref operator[](size_t index) const {
     if (index > _size) throw std::out_of_range("out_of_range");
     return _data[index];
   }
@@ -50,14 +51,23 @@ class EasyVec {
    * @param new_size
    * @return
    */
-  data_type_ptr reallocate(size_t new_size) {
-    data_type_ptr newobj = traits_t1::allocate(_alloc, new_size);
+  data_ptr reallocate(size_t new_size) {
+    data_ptr newobj = traits_t1::allocate(_alloc, new_size);
     if (_data) {
       std::copy(_data, _data + _size, newobj);
       traits_t1::deallocate(_alloc, _data, _capacity);
     }
     _capacity = new_size;
     return newobj;
+  }
+
+  void push_back(data_type obj) {
+    _data[_size] = obj;
+    ++_size;
+    if (_capacity <= _size) {
+      _capacity += 10;
+      _data = resize(_capacity);
+    }
   }
 
   void resize(const size_t new_size) {
@@ -72,7 +82,7 @@ int main() {
   std::allocator<int> mya;
 
   // обычное использование
-  int* ptr1 = mya.allocate(1);
+  int *ptr1 = mya.allocate(1);
   std::cout << *ptr1 << ' ' << ptr1 << '\n';
   mya.deallocate(ptr1, 1);
   // ======================
@@ -80,7 +90,7 @@ int main() {
   // можно использовать и traits (что-то похожее на итератор - интерфейс для
   // работы с итератором)
   using mytrait = std::allocator_traits<decltype(mya)>;
-  int* ptr2 = mytrait::allocate(mya, 1);
+  int *ptr2 = mytrait::allocate(mya, 1);
   mytrait::construct(mya, ptr2, 15);
   std::cout << *ptr2 << ' ' << ptr2 << '\n';
   mytrait::deallocate(mya, ptr2, 1);
@@ -94,7 +104,7 @@ int main() {
 
   meow.resize(5);
   for (int i = 0; i <= 5; ++i) std::cout << meow[i] << ' ';
-  meow.destruct();
+  // meow.destruct();
   // ======================
 
   std::cout << std::endl;
