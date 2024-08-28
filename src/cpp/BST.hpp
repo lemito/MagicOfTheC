@@ -1,6 +1,23 @@
 #ifndef BST_HPP
 #define BST_HPP
 
+
+/**
+ * @brief Ошибка. Текст пишется красным цветом
+ *
+ */
+#define ERROR(format, ...) printf("\033[1;31m%s\033[0m\n", text)
+/**
+ * @brief Предупреждение. Текст пишется жёлтым цветом
+ *
+ */
+#define WARNING(text) printf("\033[1;33m%s\033[0m\n", text)
+/**
+ * @brief Успешное выполнение чего-либо, логирование. Текст пишется зелёным цветом
+ *
+ */
+#define SUCCESS(text) printf("\033[1;32m%s\033[0m\n", text)
+
 #include <memory>
 
 namespace bst {
@@ -91,6 +108,7 @@ class BST {
   data_type maximum();
   [[nodiscard]] size_t node_count() const;
   _TreeIterator_ptr search(data_type obj);
+  bool contains(data_type obj);
 
   /**
    * ЛКП
