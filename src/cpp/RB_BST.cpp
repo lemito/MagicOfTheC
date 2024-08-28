@@ -61,7 +61,10 @@ void BST<_Tp, _Alloc, traits_t1>::insert(data_type obj) {
 }
 
 template <typename _Tp, typename _Alloc, typename traits_t1>
-void BST<_Tp, _Alloc, traits_t1>::remove(data_type obj) {}
+void BST<_Tp, _Alloc, traits_t1>::remove(data_type obj) {
+  _Node_ptr for_del = search(obj)->cur;
+  std::clog << for_del->_data << ' ' << std::endl;
+}
 
 template <typename _Tp, typename _Alloc, typename traits_t1>
 typename BST<_Tp, _Alloc, traits_t1>::data_type
@@ -169,6 +172,7 @@ int main() {
     meow.insert(53);
     meow.insert(53);
     meow.print();
+    meow.remove(51);
   }  // тут деструктор для BST
   // auto it = meow.contains(52);
   auto be = smsmsm.begin();

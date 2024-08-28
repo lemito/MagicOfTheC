@@ -92,6 +92,7 @@ struct TreeIterator {
 
 template <typename _Tp, typename _Alloc = std::allocator<_Tp>,
           typename traits_t1 = std::allocator_traits<_Alloc> >
+// todo: Доделаю потом, а может и нет
 class BST {
   typedef _Alloc alloc_object;                   // объект аллокатара
   typedef _Tp data_type;                         // тип хранимого значения
