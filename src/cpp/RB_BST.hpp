@@ -1,7 +1,6 @@
 #ifndef BST_HPP
 #define BST_HPP
 
-
 /**
  * @brief Ошибка. Текст пишется красным цветом
  *
@@ -13,31 +12,38 @@
  */
 #define WARNING(text) printf("\033[1;33m%s\033[0m\n", text)
 /**
- * @brief Успешное выполнение чего-либо, логирование. Текст пишется зелёным цветом
+ * @brief Успешное выполнение чего-либо, логирование. Текст пишется зелёным
+ * цветом
  *
  */
 #define SUCCESS(text) printf("\033[1;32m%s\033[0m\n", text)
 
+#include <bits/stl_tree.h>
+#include <stack>
 #include <memory>
 
 namespace bst {
+enum _Rb_tree_color { _S_red = false, _S_black = true };
 
 template <typename _Tp, typename _Alloc = std::allocator<_Tp>,
           typename traits_t1 = std::allocator_traits<_Alloc> >
 struct Node {
-  typedef _Alloc alloc_object;  // объект аллокатара
-  typedef _Tp data_type;        // тип хранимого значения
-  typedef _Tp& data_ref;        // ссылочный тип к типу
-  typedef _Tp* data_ptr;        // хранилище (кусочек памяти)
-  typedef Node _Self;           // объект узла
-  typedef Node* _Self_ptr;      // указатель на узел
-  typedef Node& _Self_ref;      // ссылочный тип на узел
+  typedef _Alloc alloc_object;         // объект аллокатара
+  typedef _Tp data_type;               // тип хранимого значения
+  typedef _Tp& data_ref;               // ссылочный тип к типу
+  typedef _Tp* data_ptr;               // хранилище (кусочек памяти)
+  typedef Node _Self;                  // объект узла
+  typedef Node* _Self_ptr;             // указатель на узел
+  typedef Node& _Self_ref;             // ссылочный тип на узел
+  typedef _Rb_tree_color _Node_color;  // вдруг захочу сделать RB дерево
 
   _Self_ptr _parent = nullptr;
   _Self_ptr _left = nullptr;
   _Self_ptr _right = nullptr;
 
   _Tp _data;
+
+  _Node_color _color = _S_red;
 
   /**
    *
@@ -102,6 +108,9 @@ class BST {
   size_t _node_count = 0;       // количество узлов
 
  public:
+  BST() = default;
+  ~BST();
+
   void insert(data_type obj);
   void remove(data_type obj);
   data_type minimum();
@@ -110,10 +119,14 @@ class BST {
   _TreeIterator_ptr search(data_type obj);
   bool contains(data_type obj);
 
-  /**
-   * ЛКП
-   */
-  void LRR();
+  virtual _TreeIterator begin();
+  virtual _TreeIterator end();
+
+  void print();
+
+ private:
+  void _print_impl(_Node_ptr root, std::string indent, bool last);
+  void _clear(_Node_ptr node);
 };
 
 }  // namespace bst
