@@ -4,6 +4,18 @@
 #include <set>
 
 namespace bst {
+template <typename _Tp, typename _Alloc, typename traits_t1>
+inline void Node<_Tp, _Alloc, traits_t1>::rotateLeft(_Self_ptr cur) {}
+
+template <typename _Tp, typename _Alloc, typename traits_t1>
+inline void Node<_Tp, _Alloc, traits_t1>::rotateRight(_Self_ptr cur) {}
+
+template <typename _Tp, typename _Alloc, typename traits_t1>
+inline void Node<_Tp, _Alloc, traits_t1>::insert_rebalance(_Self_ptr obj) {}
+
+template <typename _Tp, typename _Alloc, typename traits_t1>
+inline void Node<_Tp, _Alloc, traits_t1>::remove_rebalance(_Self_ptr obj) {}
+
 template <typename _Tp>
 void TreeIterator<_Tp>::parent() {
   this->cur = this->cur->_parent;
@@ -68,11 +80,19 @@ void BST<_Tp, _Alloc, traits_t1>::remove(data_type obj) {
 
 template <typename _Tp, typename _Alloc, typename traits_t1>
 typename BST<_Tp, _Alloc, traits_t1>::data_type
-BST<_Tp, _Alloc, traits_t1>::minimum() {}
+BST<_Tp, _Alloc, traits_t1>::minimum() {
+  _Node_ptr cur = _header;
+  while (cur != nullptr) cur = cur->_left;
+  return cur->_data;
+}
 
 template <typename _Tp, typename _Alloc, typename traits_t1>
 typename BST<_Tp, _Alloc, traits_t1>::data_type
-BST<_Tp, _Alloc, traits_t1>::maximum() {}
+BST<_Tp, _Alloc, traits_t1>::maximum() {
+  _Node_ptr cur = _header;
+  while (cur != nullptr) cur = cur->_right;
+  return cur->_data;
+}
 
 template <typename _Tp, typename _Alloc, typename traits_t1>
 size_t BST<_Tp, _Alloc, traits_t1>::node_count() const {
