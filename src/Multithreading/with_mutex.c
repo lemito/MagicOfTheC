@@ -32,6 +32,6 @@ int main(void) {
   pthread_join(th1, NULL);
   pthread_join(th2, NULL);
 
-  pthread_attr_destroy(&locker);
+  pthread_mutex_unlock(&locker);
   return 0;
 }
