@@ -95,3 +95,4 @@ add_executable(type_generic_test src/type_generic.c)
 
 add_executable(11 src/leet/ContainerWithMostWater.cpp)
 add_executable(12 src/leet/IntToRoman.cpp)
+add_executable(threadCreating src/Multithreading/threadCreating.c)
