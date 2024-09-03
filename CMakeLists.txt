@@ -93,3 +93,5 @@ add_subdirectory(src/stepik)
 add_executable(vector_merge src/cpp/vector_merge.cpp)
 add_executable(type_generic_test src/type_generic.c)
 
+add_executable(11 src/leet/ContainerWithMostWater.cpp)
+add_executable(12 src/leet/IntToRoman.cpp)
