@@ -354,13 +354,13 @@ int main() {
   insert(&root, 7);
   insert(&root, 17);
 
-  LOG("B+ Tree:\n");
+  LOG("B+ Tree:\n", NULL)
   printTree(root, 0);
 
   delete (&root, 12);
   delete (&root, 20);
   delete (&root, 30);
-  LOG("\nB+ Tree after deletion:\n");
+  LOG("\nB+ Tree after deletion:\n", NULL);
   printTree(root, 0);
 
   return 0;
